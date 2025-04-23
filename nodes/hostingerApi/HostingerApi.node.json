@@ -1,0 +1,20 @@
+{
+	"node": "n8n-nodes-base.HostingerApi",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"API"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.hostinger.com/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://developers.hostinger.com/"
+			}
+		]
+	}
+}
