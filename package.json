@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-hostinger-api",
-  "version": "0.1.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Hostinger API n8n Node",
   "keywords": [
     "n8n-community-node-package"
   ],

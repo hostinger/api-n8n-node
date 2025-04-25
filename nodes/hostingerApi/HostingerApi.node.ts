@@ -1,12 +1,14 @@
-import type {
+import {
+	ApplicationError,
 	IDataObject,
 	IExecuteFunctions,
 	IHttpRequestMethods,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	NodeConnectionType,
 } from 'n8n-workflow';
-import { NodeConnectionType } from 'n8n-workflow';
+
 
 export class HostingerApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -20,8 +22,8 @@ export class HostingerApi implements INodeType {
 		defaults: {
 			name: 'Hostinger API',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionType.Main],
+		outputs: [NodeConnectionType.Main],
 		credentials: [
 			{
 				name: 'hostingerApi',
@@ -51,7 +53,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'FireWall', value: 'firewall' },
 					{ name: 'Malware Scanner', value: 'malware' },
 					{ name: 'OS Templates', value: 'osTemplates' },
-					{ name: 'Post-install Scripts', value: 'installScripts' },
+					{ name: 'Post-Install Scripts', value: 'installScripts' },
 					{ name: 'PTR Records', value: 'ptrRecords' },
 					{ name: 'Public Keys', value: 'publicKeys' },
 					{ name: 'Recovery', value: 'recovery' },
@@ -132,16 +134,16 @@ export class HostingerApi implements INodeType {
 				name: 'vpsAction',
 				type: 'options',
 				options: [
-					{ name: 'Activate Firewall', value: 'activateFirewall' },
-					{ name: 'Deactivate Firewall', value: 'deactivateFirewall' },
-					{ name: 'Get Firewall', value: 'getFirewall' },
-					{ name: 'Delete Firewall', value: 'deleteFirewall' },
-					{ name: 'List Firewalls', value: 'listFirewalls' },
-					{ name: 'Create Firewall', value: 'createFirewall' },
-					{ name: 'Update Firewall Rule', value: 'updateFirewallRule' },
-					{ name: 'Delete Firewall Rule', value: 'deleteFirewallRule' },
-					{ name: 'Create Firewall Rule', value: 'createFirewallRule' },
-					{ name: 'Sync Firewall', value: 'syncFirewall' },
+					{ name: 'Firewall Activate', value: 'activateFirewall' },
+					{ name: 'Firewall Create', value: 'createFirewall' },
+					{ name: 'Firewall Deactivate', value: 'deactivateFirewall' },
+					{ name: 'Firewall Delete', value: 'deleteFirewall' },
+					{ name: 'Firewall Get', value: 'getFirewall' },
+					{ name: 'Firewall List', value: 'listFirewalls' },
+					{ name: 'Firewall Rule Create', value: 'createFirewallRule' },
+					{ name: 'Firewall Rule Delete', value: 'deleteFirewallRule' },
+					{ name: 'Firewall Rule Update', value: 'updateFirewallRule' },
+					{ name: 'Firewall Sync', value: 'syncFirewall' },
 				],
 				default: 'activateFirewall',
 				displayOptions: {
@@ -186,11 +188,11 @@ export class HostingerApi implements INodeType {
 				name: 'vpsAction',
 				type: 'options',
 				options: [
-					{ name: 'Get Post Install Script', value: 'getPostInstallScript' },
-					{ name: 'Update Post Install Script', value: 'updatePostInstallScript' },
-					{ name: 'Delete Post Install Script', value: 'deletePostInstallScript' },
-					{ name: 'List Post Install Scripts', value: 'listPostInstallScripts' },
-					{ name: 'Create Post Install Script', value: 'createPostInstallScript' },
+					{ name: 'Post Install Script Create', value: 'createPostInstallScript' },
+					{ name: 'Post Install Script Delete', value: 'deletePostInstallScript' },
+					{ name: 'Post Install Script Get', value: 'getPostInstallScript' },
+					{ name: 'Post Install Script List', value: 'listPostInstallScripts' },
+					{ name: 'Post Install Script Update', value: 'updatePostInstallScript' },
 				],
 				default: 'getPostInstallScript',
 				displayOptions: {
@@ -253,20 +255,20 @@ export class HostingerApi implements INodeType {
 				name: 'vpsAction',
 				type: 'options',
 				options: [
-					{ name: 'Get VM Public Keys', value: 'getVmPublicKeys' },
-					{ name: 'Update Hostname', value: 'updateHostname' },
-					{ name: 'Delete Hostname', value: 'deleteHostname' },
-					{ name: 'Get VM', value: 'getVm' },
-					{ name: 'List VMs', value: 'listVms' },
-					{ name: 'Get VM Metrics', value: 'getVmMetrics' },
+					{ name: 'Get Metrics', value: 'getVmMetrics' },
+					{ name: 'Get Public Keys', value: 'getVmPublicKeys' },
+					{ name: 'Hostname Reset', value: 'resetHostname' },
+					{ name: 'Hostname Update', value: 'updateHostname' },
+					{ name: 'Recreate', value: 'recreateVm' },
+					{ name: 'Restart', value: 'restartVm' },
+					{ name: 'Setup', value: 'setupVm' },
+					{ name: 'Start', value: 'startVm' },
+					{ name: 'Stop', value: 'stopVm' },
 					{ name: 'Update Nameservers', value: 'updateNameservers' },
 					{ name: 'Update Panel Password', value: 'updatePanelPassword' },
-					{ name: 'Recreate VM', value: 'recreateVm' },
-					{ name: 'Restart VM', value: 'restartVm' },
 					{ name: 'Update Root Password', value: 'updateRootPassword' },
-					{ name: 'Setup VM', value: 'setupVm' },
-					{ name: 'Start VM', value: 'startVm' },
-					{ name: 'Stop VM', value: 'stopVm' },
+					{ name: 'Virtual Machine Get', value: 'getVm' },
+					{ name: 'Virtual Machine List', value: 'listVms' },
 				],
 				default: 'getVm',
 				displayOptions: {
@@ -280,14 +282,14 @@ export class HostingerApi implements INodeType {
 				name: 'dnsAction',
 				type: 'options',
 				options: [
-					{ name: 'Get DNS Snapshot', value: 'getDnsSnapshot' },
-					{ name: 'List DNS Snapshots', value: 'listDnsSnapshots' },
-					{ name: 'Restore DNS Snapshot', value: 'restoreDnsSnapshot' },
-					{ name: 'Get DNS Zone', value: 'getDnsZone' },
-					{ name: 'Update DNS Zone', value: 'updateDnsZone' },
-					{ name: 'Delete DNS Zone', value: 'deleteDnsZone' },
-					{ name: 'Reset DNS Zone', value: 'resetDnsZone' },
-					{ name: 'Validate DNS Zone', value: 'validateDnsZone' },
+					{ name: 'DNS Snapshot Get', value: 'getDnsSnapshot' },
+					{ name: 'DNS Snapshot List', value: 'listDnsSnapshots' },
+					{ name: 'DNS Snapshot Restore', value: 'restoreDnsSnapshot' },
+					{ name: 'DNS Zone Delete', value: 'deleteDnsZone' },
+					{ name: 'DNS Zone Get', value: 'getDnsZone' },
+					{ name: 'DNS Zone Reset', value: 'resetDnsZone' },
+					{ name: 'DNS Zone Update', value: 'updateDnsZone' },
+					{ name: 'DNS Zone Validate', value: 'validateDnsZone' },
 				],
 				default: 'listDnsSnapshots',
 				displayOptions: {
@@ -318,13 +320,13 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						vpsAction: [
-							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'deleteHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm'
+							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm'
 						]
 					}
 				}
 			},
 			{
-				displayName: 'Date from',
+				displayName: 'Date From',
 				name: 'date_from',
 				type: 'string',
 				default: '',
@@ -337,7 +339,7 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
-				displayName: 'Date to',
+				displayName: 'Date To',
 				name: 'date_to',
 				type: 'string',
 				default: '',
@@ -457,7 +459,7 @@ export class HostingerApi implements INodeType {
 				name: 'requestBody',
 				type: 'json',
 				default: '{}',
-				description: 'Raw JSON body for POST/PUT requests.',
+				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
 						vpsAction: [
@@ -471,7 +473,7 @@ export class HostingerApi implements INodeType {
 				name: 'requestBody',
 				type: 'json',
 				default: '{}',
-				description: 'Raw JSON body for POST/PUT requests.',
+				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
 						category: ['domains', 'dns']
@@ -501,7 +503,7 @@ export class HostingerApi implements INodeType {
 					action = this.getNodeParameter('domainsAction', i) as string;
 					break;
 				default:
-					throw new Error(`Unknown category: ${category}`);
+					throw new ApplicationError(`Unknown category: ${category}`);
 			}
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
@@ -566,7 +568,7 @@ export class HostingerApi implements INodeType {
 				//VPS Virtual Machine
 				case 'getVmPublicKeys': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/public-keys`; break;
 				case 'updateHostname': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
-				case 'deleteHostname': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
+				case 'resetHostname': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
 				case 'getVm': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}`; break;
 				case 'listVms': endpoint = '/api/vps/v1/virtual-machines'; break;
 				case 'getVmMetrics': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/metrics?date_from=${getParam('date_from')}&date_to=${getParam('date_to')}`; break;
@@ -591,7 +593,7 @@ export class HostingerApi implements INodeType {
 				//Domains
 				case 'checkDomainAvailability': method = 'POST'; endpoint = '/api/domains/v1/availability'; break;
 
-				default: throw new Error(`Unsupported action: ${action}`);
+				default: throw new ApplicationError(`Unsupported action: ${action}`);
 			}
 
 			const requestConfig = {
