@@ -600,6 +600,9 @@ export class HostingerApi implements INodeType {
 				method,
 				url: 'https://developers.hostinger.com' + endpoint,
 				body: requestBody,
+				headers: {
+					'User-Agent': 'hostinger-n8n-node',
+				},
 				json: true,
 			};
 
