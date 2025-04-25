@@ -20,8 +20,8 @@ export class HostingerApi implements INodeType {
 		defaults: {
 			name: 'Hostinger API',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'hostingerApi',
@@ -38,7 +38,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'DNS', value: 'dns' },
 					{ name: 'Domains', value: 'domains' },
 				],
-				default: '',
+				default: 'vps',
 			},
 			{
 				displayName: 'Subcategory',
@@ -47,18 +47,18 @@ export class HostingerApi implements INodeType {
 				options: [
 					{ name: 'Actions', value: 'actions' },
 					{ name: 'Backups', value: 'backups' },
-					{ name: 'Data centers', value: 'dataCenters' },
-					{ name: 'PTR records', value: 'ptrRecords' },
-					{ name: 'Firewall', value: 'firewall' },
+					{ name: 'Data Centers', value: 'dataCenters' },
+					{ name: 'FireWall', value: 'firewall' },
 					{ name: 'Malware Scanner', value: 'malware' },
 					{ name: 'OS Templates', value: 'osTemplates' },
-					{ name: 'Post-install scripts', value: 'installScripts' },
-					{ name: 'Public keys', value: 'publicKeys' },
+					{ name: 'Post-install Scripts', value: 'installScripts' },
+					{ name: 'PTR Records', value: 'ptrRecords' },
+					{ name: 'Public Keys', value: 'publicKeys' },
 					{ name: 'Recovery', value: 'recovery' },
 					{ name: 'Snapshots', value: 'snapshots' },
 					{ name: 'Virtual Machine', value: 'virtualMachine' },
 				],
-				default: '',
+				default: 'virtualMachine',
 				displayOptions: {
 					show: {
 						category: [
@@ -75,7 +75,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Get Action', value: 'getAction' },
 					{ name: 'List Actions', value: 'listActions' },
 				],
-				default: '',
+				default: 'getAction',
 				displayOptions: {
 					show: {
 						subcategory: ['actions'],
@@ -91,7 +91,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'List Backups', value: 'listBackups' },
 					{ name: 'Restore Backup', value: 'restoreBackup' },
 				],
-				default: '',
+				default: 'listBackups',
 				displayOptions: {
 					show: {
 						subcategory: ['backups'],
@@ -105,7 +105,7 @@ export class HostingerApi implements INodeType {
 				options: [
 					{ name: 'List Data Centers', value: 'listDataCenters' },
 				],
-				default: '',
+				default: 'listDataCenters',
 				displayOptions: {
 					show: {
 						subcategory: ['dataCenters'],
@@ -120,7 +120,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Create PTR', value: 'createPTR' },
 					{ name: 'Delete PTR', value: 'deletePTR' }
 				],
-				default: '',
+				default: 'createPTR',
 				displayOptions: {
 					show: {
 						subcategory: ['ptrRecords'],
@@ -143,7 +143,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Create Firewall Rule', value: 'createFirewallRule' },
 					{ name: 'Sync Firewall', value: 'syncFirewall' },
 				],
-				default: '',
+				default: 'activateFirewall',
 				displayOptions: {
 					show: {
 						subcategory: ['firewall'],
@@ -159,7 +159,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Add Monarx', value: 'addMonarx' },
 					{ name: 'Remove Monarx', value: 'removeMonarx' },
 				],
-				default: '',
+				default: 'getMonarx',
 				displayOptions: {
 					show: {
 						subcategory: ['malware'],
@@ -174,7 +174,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Get Template', value: 'getTemplate' },
 					{ name: 'List Templates', value: 'listTemplates' },
 				],
-				default: '',
+				default: 'getTemplate',
 				displayOptions: {
 					show: {
 						subcategory: ['osTemplates'],
@@ -192,7 +192,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'List Post Install Scripts', value: 'listPostInstallScripts' },
 					{ name: 'Create Post Install Script', value: 'createPostInstallScript' },
 				],
-				default: '',
+				default: 'getPostInstallScript',
 				displayOptions: {
 					show: {
 						subcategory: ['installScripts'],
@@ -209,7 +209,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'List Public Keys', value: 'listPublicKeys' },
 					{ name: 'Create Public Key', value: 'createPublicKey' },
 				],
-				default: '',
+				default: 'attachPublicKey',
 				displayOptions: {
 					show: {
 						subcategory: ['publicKeys'],
@@ -224,7 +224,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Create Recovery', value: 'createRecovery' },
 					{ name: 'Delete Recovery', value: 'deleteRecovery' },
 				],
-				default: '',
+				default: 'createRecovery',
 				displayOptions: {
 					show: {
 						subcategory: ['recovery'],
@@ -241,7 +241,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Delete Snapshot', value: 'deleteSnapshot' },
 					{ name: 'Restore Snapshot', value: 'restoreSnapshot' },
 				],
-				default: '',
+				default: 'getSnapshot',
 				displayOptions: {
 					show: {
 						subcategory: ['snapshots'],
@@ -268,7 +268,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Start VM', value: 'startVm' },
 					{ name: 'Stop VM', value: 'stopVm' },
 				],
-				default: '',
+				default: 'getVm',
 				displayOptions: {
 					show: {
 						subcategory: ['virtualMachine'],
@@ -289,7 +289,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Reset DNS Zone', value: 'resetDnsZone' },
 					{ name: 'Validate DNS Zone', value: 'validateDnsZone' },
 				],
-				default: '',
+				default: 'listDnsSnapshots',
 				displayOptions: {
 					show: {
 						category: ['dns'],
@@ -303,7 +303,7 @@ export class HostingerApi implements INodeType {
 				options: [
 					{ name: 'Check Domain Availability', value: 'checkDomainAvailability' },
 				],
-				default: '',
+				default: 'checkDomainAvailability',
 				displayOptions: {
 					show: {
 						category: ['domains'],
