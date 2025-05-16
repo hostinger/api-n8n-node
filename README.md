@@ -76,6 +76,8 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.1**:
+	- Added `User-Agent` header
 - **v1.0.0**:
 	- Initial release
 	- Supports full suite of VPS operations including server management, monitoring, and networking.
