@@ -80,6 +80,7 @@ export class HostingerApi implements INodeType {
 				default: 'getAction',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['actions'],
 					},
 				},
@@ -96,6 +97,7 @@ export class HostingerApi implements INodeType {
 				default: 'listBackups',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['backups'],
 					},
 				},
@@ -110,6 +112,7 @@ export class HostingerApi implements INodeType {
 				default: 'listDataCenters',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['dataCenters'],
 					},
 				},
@@ -125,6 +128,7 @@ export class HostingerApi implements INodeType {
 				default: 'createPTR',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['ptrRecords'],
 					},
 				},
@@ -148,6 +152,7 @@ export class HostingerApi implements INodeType {
 				default: 'activateFirewall',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['firewall'],
 					},
 				},
@@ -164,6 +169,7 @@ export class HostingerApi implements INodeType {
 				default: 'getMonarx',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['malware'],
 					},
 				},
@@ -179,6 +185,7 @@ export class HostingerApi implements INodeType {
 				default: 'getTemplate',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['osTemplates'],
 					},
 				},
@@ -197,6 +204,7 @@ export class HostingerApi implements INodeType {
 				default: 'getPostInstallScript',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['installScripts'],
 					},
 				},
@@ -214,6 +222,7 @@ export class HostingerApi implements INodeType {
 				default: 'attachPublicKey',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['publicKeys'],
 					},
 				},
@@ -229,6 +238,7 @@ export class HostingerApi implements INodeType {
 				default: 'createRecovery',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['recovery'],
 					},
 				},
@@ -246,6 +256,7 @@ export class HostingerApi implements INodeType {
 				default: 'getSnapshot',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['snapshots'],
 					},
 				},
@@ -273,6 +284,7 @@ export class HostingerApi implements INodeType {
 				default: 'getVm',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						subcategory: ['virtualMachine'],
 					},
 				},
@@ -319,6 +331,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: [
 							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm'
 						]
@@ -332,6 +345,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: [
 							'getVmMetrics'
 						]
@@ -345,6 +359,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: [
 							'getVmMetrics'
 						]
@@ -358,6 +373,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['getAction']
 					}
 				}
@@ -369,6 +385,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['deleteBackup', 'restoreBackup']
 					}
 				}
@@ -380,6 +397,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: [
 							'activateFirewall', 'deactivateFirewall', 'getFirewall', 'deleteFirewall', 'updateFirewallRule', 'deleteFirewallRule', 'createFirewallRule', 'syncFirewall'
 						]
@@ -393,7 +411,8 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						vpsAction: [
+						category:    ['dns'],
+						dnsAction: [
 							'getDnsSnapshot', 'restoreDnsSnapshot'
 						]
 					}
@@ -417,6 +436,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['updateFirewallRule', 'deleteFirewallRule']
 					}
 				}
@@ -428,6 +448,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['getPostInstallScript', 'updatePostInstallScript', 'deletePostInstallScript']
 					}
 				}
@@ -439,6 +460,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['deletePublicKey']
 					}
 				}
@@ -450,6 +472,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: ['getTemplate']
 					}
 				}
@@ -462,6 +485,7 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
+						category:    ['vps'],
 						vpsAction: [
 							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updateHostname', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'updateRootPassword', 'setupVm'
 						]
