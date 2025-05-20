@@ -76,6 +76,8 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.3**:
+	- No significant changes
 - **v1.0.2**:
 	- Fixed inputs on category selection
 - **v1.0.1**:
