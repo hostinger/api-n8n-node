@@ -24,22 +24,37 @@ The Hostinger VPS node supports the following operations:
 
 - **Server Management**
 	- List VPS instances
-	- Start/Stop/Restart a VPS
+	- Start/Stop/Restart/Purchase a VPS
 	- Reinstall operating system
 	- Reset root password
+	- Manage SSH keys and post-install scripts
+
+- **Domain Management**
+	- List domains and check availability
+	- Purchase and manage domains
+	- Configure privacy protection and domain lock
+	- Manage DNS zones and records
+	- Domain forwarding and WHOIS profiles
 
 - **Monitoring**
 	- Fetch VPS resource usage (CPU, RAM, Disk)
 	- Get server status and uptime
+	- View action history
 
 - **Networking**
-	- Manage IP addresses
+	- Manage IP addresses and PTR records
 	- Configure firewall rules
-	- Enable/disable backups
+	- Enable/disable backups and snapshots
+	- Malware scanner integration
 
 - **Provisioning**
 	- Create new VPS instance
 	- Delete VPS instance
+	- Manage data centers and templates
+
+- **Billing**
+	- View catalog and pricing
+	- Manage payment methods and subscriptions
 
 ## Credentials
 
@@ -76,6 +91,13 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.4**:
+	- Added Purchase VM Method
+	- Added Billing methods
+	- Added Domain Portfolio methods
+	- Added Domain WHOIS methods
+	- Added Domain Forwarding methods
+	
 - **v1.0.3**:
 	- No significant changes
 - **v1.0.2**:

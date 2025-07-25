@@ -39,6 +39,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'VPS', value: 'vps' },
 					{ name: 'DNS', value: 'dns' },
 					{ name: 'Domains', value: 'domains' },
+					{ name: 'Billing', value: 'billing' },
 				],
 				default: 'vps',
 			},
@@ -65,6 +66,25 @@ export class HostingerApi implements INodeType {
 					show: {
 						category: [
 							'vps'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Subcategory',
+				name: 'domainSubcategory',
+				type: 'options',
+				options: [
+					{ name: 'Availability', value: 'availability' },
+					{ name: 'Portfolio', value: 'portfolio' },
+					{ name: 'WHOIS', value: 'whois' },
+					{ name: 'Forwarding', value: 'forwarding' },
+				],
+				default: 'availability',
+				displayOptions: {
+					show: {
+						category: [
+							'domains'
 						]
 					}
 				}
@@ -280,6 +300,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Update Root Password', value: 'updateRootPassword' },
 					{ name: 'Virtual Machine Get', value: 'getVm' },
 					{ name: 'Virtual Machine List', value: 'listVms' },
+					{ name: 'Purchase New Virtual Machine', value: 'purchaseVm' },
 				],
 				default: 'getVm',
 				displayOptions: {
@@ -321,6 +342,84 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						category: ['domains'],
+						domainSubcategory: ['availability'],
+					},
+				},
+			},
+			{
+				displayName: 'Domains Action',
+				name: 'domainsAction',
+				type: 'options',
+				options: [
+					{ name: 'Get Domain', value: 'getDomain' },
+					{ name: 'List Domains', value: 'listDomains' },
+					{ name: 'Purchase Domain', value: 'purchaseDomain' },
+					{ name: 'Enable Domain Lock', value: 'enableDomainLock' },
+					{ name: 'Disable Domain Lock', value: 'disableDomainLock' },
+					{ name: 'Enable Privacy Protection', value: 'enablePrivacyProtection' },
+					{ name: 'Disable Privacy Protection', value: 'disablePrivacyProtection' },
+					{ name: 'Update Nameservers', value: 'updateDomainNameservers' },
+				],
+				default: 'listDomains',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainSubcategory: ['portfolio'],
+					},
+				},
+			},
+			{
+				displayName: 'Domains Action',
+				name: 'domainsAction',
+				type: 'options',
+				options: [
+					{ name: 'Get WHOIS Profile', value: 'getWhoisProfile' },
+					{ name: 'Delete WHOIS Profile', value: 'deleteWhoisProfile' },
+					{ name: 'List WHOIS Profiles', value: 'listWhoisProfiles' },
+					{ name: 'Create WHOIS Profile', value: 'createWhoisProfile' },
+					{ name: 'Get WHOIS Profile Usage', value: 'getWhoisProfileUsage' },
+				],
+				default: 'listWhoisProfiles',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainSubcategory: ['whois'],
+					},
+				},
+			},
+			{
+				displayName: 'Domains Action',
+				name: 'domainsAction',
+				type: 'options',
+				options: [
+					{ name: 'Get Forwarding Data', value: 'getForwardingData' },
+					{ name: 'Delete Forwarding Data', value: 'deleteForwardingData' },
+					{ name: 'Create Forwarding Data', value: 'createForwardingData' },
+				],
+				default: 'getForwardingData',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainSubcategory: ['forwarding'],
+					},
+				},
+			},
+			{
+				displayName: 'Billing Action',
+				name: 'billingAction',
+				type: 'options',
+				options: [
+					{ name: 'Get catalog item list', value: 'getCatalogList' },
+					{ name: 'Set default payment method', value: 'setPaymentMethod' },
+					{ name: 'Delete payment method', value: 'deletePaymentMethod' },
+					{ name: 'Get payment method list', value: 'getPaymentList' },
+					{ name: 'Cancel subscription', value: 'deleteSubscription' },
+					{ name: 'Get subscription list', value: 'getSubscriptionList' },
+				],
+				default: 'getCatalogList',
+				displayOptions: {
+					show: {
+						category:    ['billing']
 					},
 				},
 			},
@@ -430,6 +529,37 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
+				displayName: 'Domain',
+				name: 'domain',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainsAction: [
+							'getDomain', 'enableDomainLock', 'disableDomainLock', 
+							'enablePrivacyProtection', 'disablePrivacyProtection', 
+							'updateDomainNameservers', 'getForwardingData', 
+							'deleteForwardingData'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'WHOIS ID',
+				name: 'whoisId',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainsAction: [
+							'getWhoisProfile', 'deleteWhoisProfile', 'getWhoisProfileUsage'
+						]
+					}
+				}
+			},
+			{
 				displayName: 'Rule ID',
 				name: 'ruleId',
 				type: 'string',
@@ -478,6 +608,30 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
+				displayName: 'Payment Method ID',
+				name: 'paymentMethodId',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						category:    ['billing'],
+						billingAction: ['setPaymentMethod', 'deletePaymentMethod']
+					}
+				}
+			},
+			{
+				displayName: 'Subscription ID',
+				name: 'subscriptionId',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						category:    ['billing'],
+						billingAction: ['deleteSubscription']
+					}
+				}
+			},
+			{
 				displayName: 'Request Body',
 				name: 'requestBody',
 				type: 'json',
@@ -500,10 +654,59 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
-						category: ['domains', 'dns']
+						category: ['dns']
 					}
 				}
-			}
+			},
+			{
+				displayName: 'Request Body',
+				name: 'requestBody',
+				type: 'json',
+				default: '{}',
+				description: 'Raw JSON body for POST/PUT requests',
+				displayOptions: {
+					show: {
+						category: ['domains'],
+						domainsAction: [
+							'checkDomainAvailability', 'purchaseDomain', 
+							'updateDomainNameservers', 'createWhoisProfile', 
+							'createForwardingData'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Request Body',
+				name: 'requestBody',
+				type: 'json',
+				default: `{
+				"item_id": "hostingercom-vps-kvm2-usd-1m",
+				"payment_method_id": 1327362,
+					"setup": {
+					"template_id": 1130,
+					"data_center_id": 19,
+					"post_install_script_id": 6324,
+					"password": "oMeNRustosIO",
+					"hostname": "my.server.tld",
+					"install_monarx": false,
+						"enable_backups": true,
+						"ns1": "4.3.2.1",
+						"ns2": "1.2.3.4",
+						"public_key": {
+						"name": "my-key",
+						"key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2X..."
+					}
+				}, 
+				"coupons": [[ "Coupon 3"]]
+				}`,
+				description: 'Raw JSON body for POST/PUT requests',
+				displayOptions: {
+					show: {
+						category: ['vps'],
+						vpsAction: ['purchaseVm']
+					}
+				}
+			},
 		]
 	};
 
@@ -525,6 +728,9 @@ export class HostingerApi implements INodeType {
 					break;
 				case 'domains':
 					action = this.getNodeParameter('domainsAction', i) as string;
+					break;
+				case 'billing':
+					action = this.getNodeParameter('billingAction', i) as string;
 					break;
 				default:
 					throw new ApplicationError(`Unknown category: ${category}`);
@@ -595,6 +801,7 @@ export class HostingerApi implements INodeType {
 				case 'resetHostname': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
 				case 'getVm': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}`; break;
 				case 'listVms': endpoint = '/api/vps/v1/virtual-machines'; break;
+				case 'purchaseVm': method = 'POST'; endpoint = '/api/vps/v1/virtual-machines'; break;
 				case 'getVmMetrics': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/metrics?date_from=${getParam('date_from')}&date_to=${getParam('date_to')}`; break;
 				case 'updateNameservers': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/nameservers`; break;
 				case 'updatePanelPassword': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/panel-password`; break;
@@ -614,8 +821,34 @@ export class HostingerApi implements INodeType {
 				case 'deleteDnsZone': method = 'DELETE'; endpoint = `/api/dns/v1/zones/${getParam('domain')}`; break;
 				case 'resetDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getParam('domain')}/reset`; break;
 				case 'validateDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getParam('domain')}/validate`; break;
-				//Domains
+				//Domains - Availability
 				case 'checkDomainAvailability': method = 'POST'; endpoint = '/api/domains/v1/availability'; break;
+				//Domains - Portfolio
+				case 'getDomain': method = 'GET'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}`; break;
+				case 'listDomains': method = 'GET'; endpoint = '/api/domains/v1/portfolio'; break;
+				case 'purchaseDomain': method = 'POST'; endpoint = '/api/domains/v1/portfolio'; break;
+				case 'enableDomainLock': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/domain-lock`; break;
+				case 'disableDomainLock': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/domain-lock`; break;
+				case 'enablePrivacyProtection': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/privacy-protection`; break;
+				case 'disablePrivacyProtection': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/privacy-protection`; break;
+				case 'updateDomainNameservers': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/nameservers`; break;
+				//Domains - WHOIS
+				case 'getWhoisProfile': method = 'GET'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}`; break;
+				case 'deleteWhoisProfile': method = 'DELETE'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}`; break;
+				case 'listWhoisProfiles': method = 'GET'; endpoint = '/api/domains/v1/whois'; break;
+				case 'createWhoisProfile': method = 'POST'; endpoint = '/api/domains/v1/whois'; break;
+				case 'getWhoisProfileUsage': method = 'GET'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}/usage`; break;
+				//Domains - Forwarding
+				case 'getForwardingData': method = 'GET'; endpoint = `/api/domains/v1/forwarding/${getParam('domain')}`; break;
+				case 'deleteForwardingData': method = 'DELETE'; endpoint = `/api/domains/v1/forwarding/${getParam('domain')}`; break;
+				case 'createForwardingData': method = 'POST'; endpoint = '/api/domains/v1/forwarding'; break;
+				//Billing
+				case 'getCatalogList': method = 'GET'; endpoint = '/api/billing/v1/catalog'; break;
+				case 'setPaymentMethod': method = 'POST'; endpoint = `/api/billing/v1/payment-methods/${getParam('paymentMethodId')}`; break;
+				case 'deletePaymentMethod': method = 'DELETE'; endpoint = `/api/billing/v1/payment-methods/${getParam('paymentMethodId')}`; break;
+				case 'getPaymentList': method = 'GET'; endpoint = '/api/billing/v1/payment-methods'; break;
+				case 'deleteSubscription': method = 'DELETE'; endpoint = `/api/billing/v1/subscriptions/${getParam('subscriptionId')}`; break;
+				case 'getSubscriptionList': method = 'GET'; endpoint = '/api/billing/v1/subscriptions'; break;
 
 				default: throw new ApplicationError(`Unsupported action: ${action}`);
 			}
