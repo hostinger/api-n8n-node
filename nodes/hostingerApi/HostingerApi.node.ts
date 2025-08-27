@@ -36,10 +36,11 @@ export class HostingerApi implements INodeType {
 				name: 'category',
 				type: 'options',
 				options: [
-					{ name: 'VPS', value: 'vps' },
+					{ name: 'Billing', value: 'billing' },
 					{ name: 'DNS', value: 'dns' },
 					{ name: 'Domains', value: 'domains' },
-					{ name: 'Billing', value: 'billing' },
+					{ name: 'Reach', value: 'reach' },
+					{ name: 'VPS', value: 'vps' },
 				],
 				default: 'vps',
 			},
@@ -424,6 +425,23 @@ export class HostingerApi implements INodeType {
 				},
 			},
 			{
+				displayName: 'Reach Action',
+				name: 'reachAction',
+				type: 'options',
+				options: [
+					{ name: 'List Contacts', value: 'listContacts' },
+					{ name: 'Create Contact', value: 'createContact' },
+					{ name: 'Delete Contact', value: 'deleteContact' },
+					{ name: 'List Contact Groups', value: 'listContactGroups' },
+				],
+				default: 'listContacts',
+				displayOptions: {
+					show: {
+						category: ['reach']
+					},
+				},
+			},
+			{
 				displayName: 'Virtual Machine ID',
 				name: 'virtualMachineId',
 				type: 'string',
@@ -707,6 +725,132 @@ export class HostingerApi implements INodeType {
 					}
 				}
 			},
+			{
+				displayName: 'Email',
+				name: 'contactEmail',
+				type: 'string',
+				default: '',
+				description: 'Email address for the contact',
+				required: true,
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['createContact']
+					}
+				}
+			},
+			{
+				displayName: 'Name',
+				name: 'contactName',
+				type: 'string',
+				default: '',
+				description: 'First name of the contact',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['createContact']
+					}
+				}
+			},
+			{
+				displayName: 'Surname',
+				name: 'contactSurname',
+				type: 'string',
+				default: '',
+				description: 'Last name of the contact',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['createContact']
+					}
+				}
+			},
+			{
+				displayName: 'Group UUIDs',
+				name: 'contactGroupUuids',
+				type: 'string',
+				default: '',
+				description: 'Comma-separated list of group UUIDs to assign the contact to',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['createContact']
+					}
+				}
+			},
+			{
+				displayName: 'Note',
+				name: 'contactNote',
+				type: 'string',
+				default: '',
+				description: 'Note about the contact (max 75 characters)',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['createContact']
+					}
+				}
+			},
+
+
+			{
+				displayName: 'Contact UUID',
+				name: 'contactUuid',
+				type: 'string',
+				default: '',
+				description: 'UUID of the contact to delete',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['deleteContact']
+					}
+				}
+			},
+			{
+				displayName: 'Group UUID',
+				name: 'groupUuid',
+				type: 'string',
+				default: '',
+				description: 'Filter contacts by group UUID',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['listContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Subscription Status',
+				name: 'subscriptionStatus',
+				type: 'options',
+				options: [
+					{ name: 'All', value: '' },
+					{ name: 'Subscribed', value: 'subscribed' },
+					{ name: 'Unsubscribed', value: 'unsubscribed' },
+				],
+				default: '',
+				description: 'Filter contacts by subscription status (leave as "All" to see all contacts)',
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['listContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Page',
+				name: 'page',
+				type: 'number',
+				default: 1,
+				description: 'Page number for pagination',
+				required: true,
+				displayOptions: {
+					show: {
+						category: ['reach'],
+						reachAction: ['listContacts']
+					}
+				}
+			},
 		]
 	};
 
@@ -732,6 +876,9 @@ export class HostingerApi implements INodeType {
 				case 'billing':
 					action = this.getNodeParameter('billingAction', i) as string;
 					break;
+				case 'reach':
+					action = this.getNodeParameter('reachAction', i) as string;
+					break;
 				default:
 					throw new ApplicationError(`Unknown category: ${category}`);
 			}
@@ -742,7 +889,35 @@ export class HostingerApi implements INodeType {
 			let requestBody: IDataObject | undefined;
 
 			try {
-				requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
+				// For Reach createContact, build request body from individual fields
+				if (category === 'reach' && action === 'createContact') {
+					const contactEmail = this.getNodeParameter('contactEmail', i) as string;
+					const contactName = this.getNodeParameter('contactName', i) as string;
+					const contactSurname = this.getNodeParameter('contactSurname', i) as string;
+					const contactGroupUuids = this.getNodeParameter('contactGroupUuids', i) as string;
+					const contactNote = this.getNodeParameter('contactNote', i) as string;
+					
+					const contactData: IDataObject = {
+						email: contactEmail
+					};
+
+					if (contactName) contactData.name = contactName;
+					if (contactSurname) contactData.surname = contactSurname;
+					if (contactNote) contactData.note = contactNote;
+
+					// Handle group UUIDs - convert comma-separated string to array
+					if (contactGroupUuids) {
+						const groupUuids = contactGroupUuids.split(',').map(uuid => uuid.trim()).filter(uuid => uuid);
+						if (groupUuids.length > 0) {
+							contactData.group_uuids = groupUuids;
+						}
+					}
+
+					requestBody = contactData;
+				} else {
+					// For other actions, use the request body field
+					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
+				}
 			} catch (e) {}
 
 			switch (action) {
@@ -849,6 +1024,23 @@ export class HostingerApi implements INodeType {
 				case 'getPaymentList': method = 'GET'; endpoint = '/api/billing/v1/payment-methods'; break;
 				case 'deleteSubscription': method = 'DELETE'; endpoint = `/api/billing/v1/subscriptions/${getParam('subscriptionId')}`; break;
 				case 'getSubscriptionList': method = 'GET'; endpoint = '/api/billing/v1/subscriptions'; break;
+				//Reach
+				case 'listContacts': 
+					let contactsEndpoint = `/api/reach/v1/contacts?page=${getParam('page')}`;
+					const groupUuid = this.getNodeParameter('groupUuid', i) as string;
+					const subscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
+
+					if (groupUuid) {
+						contactsEndpoint += `&group_uuid=${groupUuid}`;
+					}
+					if (subscriptionStatus) {
+						contactsEndpoint += `&subscription_status=${subscriptionStatus}`;
+					}
+					endpoint = contactsEndpoint;
+					break;
+				case 'createContact': method = 'POST'; endpoint = '/api/reach/v1/contacts'; break;
+				case 'deleteContact': method = 'DELETE'; endpoint = `/api/reach/v1/contacts/${getParam('contactUuid')}`; break;
+				case 'listContactGroups': endpoint = '/api/reach/v1/contacts/groups'; break;
 
 				default: throw new ApplicationError(`Unsupported action: ${action}`);
 			}
