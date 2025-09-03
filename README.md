@@ -1,8 +1,8 @@
 # n8n-nodes-hostinger-api
 
-This is an n8n community node. It lets you use Hostinger VPS API in your n8n workflows.
+This is an n8n community node. It lets you use Hostinger API in your n8n workflows.
 
-Hostinger VPS API allows you to manage your virtual private servers, automate provisioning, monitor resources, and perform various administrative actions programmatically.
+Hostinger API allows you to manage your virtual private servers, domains, billing, email marketing, and more. Automate provisioning, monitor resources, and perform various administrative actions programmatically.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
@@ -20,26 +20,48 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
-The Hostinger VPS node supports the following operations:
+The Hostinger API node supports the following operations:
 
 - **Server Management**
 	- List VPS instances
-	- Start/Stop/Restart a VPS
+	- Start/Stop/Restart/Purchase a VPS
 	- Reinstall operating system
 	- Reset root password
+	- Manage SSH keys and post-install scripts
+
+- **Domain Management**
+	- List domains and check availability
+	- Purchase and manage domains
+	- Configure privacy protection and domain lock
+	- Manage DNS zones and records
+	- Domain forwarding and WHOIS profiles
 
 - **Monitoring**
 	- Fetch VPS resource usage (CPU, RAM, Disk)
 	- Get server status and uptime
+	- View action history
 
 - **Networking**
-	- Manage IP addresses
+	- Manage IP addresses and PTR records
 	- Configure firewall rules
-	- Enable/disable backups
+	- Enable/disable backups and snapshots
+	- Malware scanner integration
 
 - **Provisioning**
 	- Create new VPS instance
 	- Delete VPS instance
+	- Manage data centers and templates
+
+- **Billing**
+	- View catalog and pricing
+	- Manage payment methods and subscriptions
+
+- **Email Marketing (Reach)**
+	- List and manage email contacts
+	- Create new contacts with custom fields
+	- Delete contacts by UUID
+	- Manage contact groups
+	- Filter contacts by subscription status
 
 ## Credentials
 
@@ -59,10 +81,10 @@ No known version incompatibilities at this time.
 
 ## Usage
 
-1. **Add the Hostinger VPS node** to your workflow.
-2. **Select the desired operation** (e.g., Start VPS, Get Status).
-3. **Provide required parameters**, such as VPS ID, action type, etc.
-4. **Execute the workflow** and automate your VPS management tasks.
+1. **Add the Hostinger API node** to your workflow.
+2. **Select the desired operation** (e.g., Start VPS, Create Contact, Check Domain).
+3. **Provide required parameters**, such as VPS ID, contact details, domain name, etc.
+4. **Execute the workflow** and automate your Hostinger management tasks.
 
 For more complex workflows, combine this node with standard n8n nodes such as HTTP Request, Function, and Set.
 
@@ -76,6 +98,16 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.5**:
+	- Added Email Marketing (Reach) endpoints
+
+- **v1.0.4**:
+	- Added Purchase VM Method
+	- Added Billing methods
+	- Added Domain Portfolio methods
+	- Added Domain WHOIS methods
+	- Added Domain Forwarding methods
+	
 - **v1.0.3**:
 	- No significant changes
 - **v1.0.2**:
