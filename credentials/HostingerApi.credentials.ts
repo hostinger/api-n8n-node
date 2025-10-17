@@ -1,5 +1,6 @@
 import {
 	IAuthenticateGeneric,
+	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
@@ -23,12 +24,21 @@ export class HostingerApi implements ICredentialType {
 			description: 'Enter your Hostinger API token',
 		},
 	];
+
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
 			headers: {
 				Authorization: '=Bearer {{$credentials.apiKey}}',
 			},
+		},
+	};
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: this.documentationUrl,
+			url: '/api/billing/v1/subscriptions',
+			method: 'GET',
 		},
 	};
 }
