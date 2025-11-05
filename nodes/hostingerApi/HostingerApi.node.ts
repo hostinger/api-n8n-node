@@ -52,6 +52,7 @@ export class HostingerApi implements INodeType {
 					{ name: 'Actions', value: 'actions' },
 					{ name: 'Backups', value: 'backups' },
 					{ name: 'Data Centers', value: 'dataCenters' },
+					{ name: 'Docker Manager', value: 'dockerManager' },
 					{ name: 'FireWall', value: 'firewall' },
 					{ name: 'Malware Scanner', value: 'malware' },
 					{ name: 'OS Templates', value: 'osTemplates' },
@@ -103,6 +104,30 @@ export class HostingerApi implements INodeType {
 					show: {
 						category:    ['vps'],
 						subcategory: ['actions'],
+					},
+				},
+			},
+			{
+				displayName: 'VPS Action',
+				name: 'vpsAction',
+				type: 'options',
+				options: [
+					{ name: 'Create Project', value: 'createProject' },
+					{ name: 'Delete Project', value: 'deleteProject' },
+					{ name: 'Get Project Logs', value: 'getLogs' },
+					{ name: 'List Containers', value: 'listContainers' },
+					{ name: 'List Contents', value: 'listContents' },
+					{ name: 'List Projects', value: 'listProjects' },
+					{ name: 'Restart Project', value: 'restartProject' },
+					{ name: 'Start Project', value: 'startProject' },
+					{ name: 'Stop Project', value: 'stopProject' },
+					{ name: 'Update Project', value: 'updateProject' },
+				],
+				default: 'listProjects',
+				displayOptions: {
+					show: {
+						category:    ['vps'],
+						subcategory: ['dockerManager'],
 					},
 				},
 			},
@@ -450,8 +475,20 @@ export class HostingerApi implements INodeType {
 					show: {
 						category:    ['vps'],
 						vpsAction: [
-							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm'
+							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm', 'listContainers', 'listProjects', 'listContents', 'createProject', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject'
 						]
+					}
+				}
+			},
+			{
+				displayName: 'Docker Project Name',
+				name: 'dockerProjectName',
+				type: 'string',
+				default: '',
+				displayOptions: {
+					show: {
+						category:    ['vps'],
+						vpsAction: ['listContainers', 'listContents', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject']
 					}
 				}
 			},
@@ -698,6 +735,25 @@ export class HostingerApi implements INodeType {
 				name: 'requestBody',
 				type: 'json',
 				default: `{
+  "project_name": "my-project-1",
+  "content": "",
+  "environment": null
+}`,
+				description: 'Raw JSON body for POST/PUT requests',
+				displayOptions: {
+					show: {
+						category: ['vps'],
+						vpsAction: [
+							'createProject'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Request Body',
+				name: 'requestBody',
+				type: 'json',
+				default: `{
 				"item_id": "hostingercom-vps-kvm2-usd-1m",
 				"payment_method_id": 1327362,
 					"setup": {
@@ -930,6 +986,17 @@ export class HostingerApi implements INodeType {
 				case 'restoreBackup': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/backups/${getParam('backupId')}/restore`; break;
 				//VPS Data Centers
 				case 'listDataCenters': endpoint = '/api/vps/v1/data-centers'; break;
+				//VPS Docker
+				case 'listContainers': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/containers`; break;
+				case 'listContents': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}`; break;
+				case 'listProjects': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker`; break;
+				case 'createProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker`; break;
+				case 'deleteProject': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/down`; break;
+				case 'getLogs': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/logs`; break;
+				case 'restartProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/restart`; break;
+				case 'startProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/start`; break;
+				case 'stopProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/stop`; break;
+				case 'updateProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/update`; break;
 				//VPS PTR
 				case 'createPTR': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/ptr`; break;
 				case 'deletePTR': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/ptr`; break;
