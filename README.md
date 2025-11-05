@@ -97,6 +97,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 * [Hostinger VPS Overview](https://www.hostinger.com/vps-hosting)
 
 ## Version history
+- **v1.0.8**:
+  	- Added VPS Docker Manager endpoints
+
 - **v1.0.7**:
   	- Added n8n credentials test
 
