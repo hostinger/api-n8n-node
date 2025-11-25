@@ -97,6 +97,10 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 * [Hostinger VPS Overview](https://www.hostinger.com/vps-hosting)
 
 ## Version history
+
+- **v1.0.9**:
+  	- Updated dependencies
+
 - **v1.0.8**:
   	- Added VPS Docker Manager endpoints
 
@@ -104,24 +108,27 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
   	- Added n8n credentials test
 
 - **v1.0.6**:
-	- Updated dependencies
+  	- Updated dependencies
 
 - **v1.0.5**:
 	- Added Email Marketing (Reach) endpoints
 
 - **v1.0.4**:
-	- Added Purchase VM Method
-	- Added Billing methods
-	- Added Domain Portfolio methods
-	- Added Domain WHOIS methods
-	- Added Domain Forwarding methods
+  	- Added Purchase VM Method
+  	- Added Billing methods
+  	- Added Domain Portfolio methods
+  	- Added Domain WHOIS methods
+  	- Added Domain Forwarding methods
 	
 - **v1.0.3**:
-	- No significant changes
+  	- No significant changes
+
 - **v1.0.2**:
-	- Fixed inputs on category selection
+  	- Fixed inputs on category selection
+
 - **v1.0.1**:
-	- Added `User-Agent` header
+  	- Added `User-Agent` header
+
 - **v1.0.0**:
-	- Initial release
-	- Supports full suite of VPS operations including server management, monitoring, and networking.
+  	- Initial release
+  	- Supports full suite of VPS operations including server management, monitoring, and networking.
