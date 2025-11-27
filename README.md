@@ -98,6 +98,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.10**:
+  	- Updated dependencies
+
 - **v1.0.9**:
   	- Updated dependencies
 
