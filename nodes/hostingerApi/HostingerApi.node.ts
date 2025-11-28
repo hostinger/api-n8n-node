@@ -7,6 +7,7 @@ import {
 	INodeType,
 	INodeTypeDescription,
 	NodeConnectionTypes,
+	NodeOperationError,
 } from 'n8n-workflow';
 
 
@@ -30,6 +31,7 @@ export class HostingerApi implements INodeType {
 				required: true,
 			},
 		],
+		usableAsTool: true,
 		properties: [
 			{
 				displayName: 'Category',
@@ -913,6 +915,7 @@ export class HostingerApi implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
+		const continueOnFail = this.continueOnFail();
 
 		for (let i = 0; i < items.length; i++) {
 
@@ -1124,9 +1127,29 @@ export class HostingerApi implements INodeType {
 
 			try {
 				const response = await this.helpers.httpRequestWithAuthentication.call(this, 'hostingerApi', requestConfig);
-				returnData.push({ json: { response } });
+				returnData.push({ json: { response }, pairedItem: { item: i } });
 			} catch (error) {
-				returnData.push({ json: { error: (error as Error).message, request: requestConfig } });
+				if (continueOnFail) {
+					const executionError = new NodeOperationError(
+						this.getNode(),
+						error as Error,
+						{ itemIndex: i }
+					);
+					returnData.push({
+						json: {
+							error: (error as Error).message,
+							request: requestConfig
+						},
+						pairedItem: { item: i },
+						error: executionError
+					});
+				} else {
+					throw new NodeOperationError(
+						this.getNode(),
+						error as Error,
+						{ itemIndex: i }
+					);
+				}
 			}
 		}
 
