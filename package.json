@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-hostinger-api",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Hostinger API n8n Node",
   "keywords": [
     "n8n-community-node-package"
@@ -41,7 +41,6 @@
     "eslint": "~8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.11.0",
     "gulp": "^5.0.0",
-    "n8n-workflow": "*",
     "prettier": "^2.7.1",
     "typescript": "~5.7.0"
   },
