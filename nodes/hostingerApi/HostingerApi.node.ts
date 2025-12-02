@@ -40,6 +40,7 @@ export class HostingerApi implements INodeType {
 				noDataExpression: true,
 				options: [
 					{ name: 'Billing', value: 'billing', },
+					// eslint-disable-next-line n8n-nodes-base/node-param-resource-with-plural-option
 					{ name: 'DNS', value: 'dns', },
 					{ name: 'Domain', value: 'domain', },
 					{ name: 'Domain Forwarding', value: 'domainForwarding', },
@@ -82,15 +83,25 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Create Project', value: 'createProject', action: 'Create Docker project'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete Docker project'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get Docker project logs'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'List Containers', value: 'listContainers', action: 'List Docker containers'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'List Contents', value: 'listContents', action: 'List Docker containers content'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'List Projects', value: 'listProjects', action: 'List Docker projects'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Restart Project', value: 'restartProject', action: 'Restart Docker project'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Start Project', value: 'startProject', action: 'Start Docker project'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Stop Project', value: 'stopProject', action: 'Stop Docker project'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Update Project', value: 'updateProject', action: 'Update Docker project'},
 				],
 				default: 'listProjects',
@@ -398,9 +409,13 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'List Contact Groups', value: 'listContactGroups', action: 'List Reach contact groups'},
 				],
 				default: 'listContacts',
