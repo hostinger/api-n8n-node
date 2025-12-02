@@ -529,7 +529,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['recreateVm']
+						operation: ['recreateVm', 'setupVm', 'getTemplate']
 					}
 				}
 			},
@@ -546,7 +546,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['recreateVm']
+						operation: ['recreateVm', 'updateRootPassword', 'setupVm']
 					}
 				}
 			},
@@ -563,7 +563,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['recreateVm']
+						operation: ['recreateVm', 'updatePanelPassword']
 					}
 				}
 			},
@@ -576,7 +576,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['recreateVm']
+						operation: ['recreateVm', 'setupVm']
 					}
 				}
 			},
@@ -620,6 +620,77 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['updateNameservers']
+					}
+				}
+			},
+			{
+				displayName: 'Data Center ID',
+				name: 'dataCenterId',
+				type: 'number',
+				required: true,
+				default: '',
+				description: 'The ID of the data center where the VPS will be set up',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['setupVm']
+					}
+				}
+			},
+			{
+				displayName: 'Install Monarx',
+				name: 'installMonarx',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to install Monarx malware scanner',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['setupVm']
+					}
+				}
+			},
+			{
+				displayName: 'Enable Backups',
+				name: 'enableBackups',
+				type: 'boolean',
+				default: true,
+				description: 'Whether to enable automatic backups',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['setupVm']
+					}
+				}
+			},
+			{
+				displayName: 'Public Key Name',
+				name: 'publicKeyName',
+				type: 'string',
+				default: '',
+				placeholder: 'my-key',
+				description: 'Name for the SSH public key',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['setupVm']
+					}
+				}
+			},
+			{
+				displayName: 'Public Key',
+				name: 'publicKey',
+				type: 'string',
+				typeOptions: {
+					rows: 4
+				},
+				default: '',
+				placeholder: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2X...',
+				description: 'SSH public key content',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['setupVm']
 					}
 				}
 			},
@@ -716,18 +787,6 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
-				displayName: 'Template ID',
-				name: 'templateId',
-				type: 'string',
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['getTemplate']
-					}
-				}
-			},
-			{
 				displayName: 'Payment Method ID',
 				name: 'paymentMethodId',
 				type: 'string',
@@ -761,7 +820,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
-							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updatePanelPassword', 'updateRootPassword', 'setupVm'
+							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery'
 						]
 					}
 				}
@@ -1034,6 +1093,14 @@ export class HostingerApi implements INodeType {
 
 					if (panelPassword) requestBody.panel_password = panelPassword;
 					if (postInstallScriptId) requestBody.post_install_script_id = postInstallScriptId;
+				} else if (operation === 'updatePanelPassword') {
+					// For updatePanelPassword, build request body from panelPassword field
+					const panelPassword = this.getNodeParameter('panelPassword', i) as string;
+					requestBody = { password: panelPassword };
+				} else if (operation === 'updateRootPassword') {
+					// For updateRootPassword, build request body from password field
+					const password = this.getNodeParameter('password', i) as string;
+					requestBody = { password: password };
 				} else if (operation === 'updateNameservers') {
 					// For updateNameservers, build request body from nameserver fields
 					const ns1 = this.getNodeParameter('ns1', i) as string;
@@ -1044,6 +1111,32 @@ export class HostingerApi implements INodeType {
 
 					if (ns2) requestBody.ns2 = ns2;
 					if (ns3) requestBody.ns3 = ns3;
+				} else if (operation === 'setupVm') {
+					// For setupVm, build request body from individual fields
+					const templateId = this.getNodeParameter('templateId', i) as number;
+					const dataCenterId = this.getNodeParameter('dataCenterId', i) as number;
+					const password = this.getNodeParameter('password', i) as string;
+					const postInstallScriptId = this.getNodeParameter('postInstallScriptId', i) as number;
+					const installMonarx = this.getNodeParameter('installMonarx', i) as boolean;
+					const enableBackups = this.getNodeParameter('enableBackups', i) as boolean;
+					const publicKeyName = this.getNodeParameter('publicKeyName', i) as string;
+					const publicKey = this.getNodeParameter('publicKey', i) as string;
+
+					requestBody = {
+						template_id: templateId,
+						data_center_id: dataCenterId,
+						password: password
+					};
+
+					if (postInstallScriptId) requestBody.post_install_script_id = postInstallScriptId;
+					if (installMonarx !== undefined) requestBody.install_monarx = installMonarx;
+					if (enableBackups !== undefined) requestBody.enable_backups = enableBackups;
+					if (publicKeyName && publicKey) {
+						requestBody.public_key = {
+							name: publicKeyName,
+							key: publicKey
+						};
+					}
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
