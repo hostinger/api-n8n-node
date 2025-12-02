@@ -581,6 +581,49 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
+				displayName: 'Nameserver 1',
+				name: 'ns1',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: '4.3.2.1',
+				description: 'Primary nameserver IP address',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['updateNameservers']
+					}
+				}
+			},
+			{
+				displayName: 'Nameserver 2',
+				name: 'ns2',
+				type: 'string',
+				default: '',
+				placeholder: '1.2.3.4',
+				description: 'Secondary nameserver IP address (optional)',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['updateNameservers']
+					}
+				}
+			},
+			{
+				displayName: 'Nameserver 3',
+				name: 'ns3',
+				type: 'string',
+				default: '',
+				placeholder: '5.2.3.4',
+				description: 'Tertiary nameserver IP address (optional)',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['updateNameservers']
+					}
+				}
+			},
+			{
 				displayName: 'Snapshot ID',
 				name: 'snapshotId',
 				type: 'string',
@@ -718,7 +761,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
-							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updateNameservers', 'updatePanelPassword', 'updateRootPassword', 'setupVm'
+							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updatePanelPassword', 'updateRootPassword', 'setupVm'
 						]
 					}
 				}
@@ -991,6 +1034,16 @@ export class HostingerApi implements INodeType {
 
 					if (panelPassword) requestBody.panel_password = panelPassword;
 					if (postInstallScriptId) requestBody.post_install_script_id = postInstallScriptId;
+				} else if (operation === 'updateNameservers') {
+					// For updateNameservers, build request body from nameserver fields
+					const ns1 = this.getNodeParameter('ns1', i) as string;
+					const ns2 = this.getNodeParameter('ns2', i) as string;
+					const ns3 = this.getNodeParameter('ns3', i) as string;
+
+					requestBody = { ns1 };
+
+					if (ns2) requestBody.ns2 = ns2;
+					if (ns3) requestBody.ns3 = ns3;
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
