@@ -42,330 +42,269 @@ export class HostingerApi implements INodeType {
 					{ name: 'Billing', value: 'billing', },
 					{ name: 'DNS', value: 'dns', },
 					{ name: 'Domain', value: 'domain', },
+					{ name: 'Domain Forwarding', value: 'domainForwarding', },
+					{ name: 'Domain WHOIS', value: 'whois', },
 					{ name: 'Reach', value: 'reach', },
 					{ name: 'VPS', value: 'vps', },
+					{ name: 'VPS Actions', value: 'vpsActions', },
+					{ name: 'VPS Backups', value: 'vpsBackups', },
+					{ name: 'VPS Data Centers', value: 'vpsDataCenters', },
+					{ name: 'VPS Docker Manager', value: 'vpsDocker', },
+					{ name: 'VPS Firewall', value: 'vpsFirewall', },
+					{ name: 'VPS Malware Scanner', value: 'vpsMonarx', },
+					{ name: 'VPS Post Install Scripts', value: 'vpsScripts', },
+					{ name: 'VPS PTR', value: 'vpsPTR', },
+					{ name: 'VPS Public Keys', value: 'vpsPublicKeys', },
+					{ name: 'VPS Snapshots', value: 'vpsSnapshots', },
+					{ name: 'VPS Templates', value: 'vpsTemplates', },
 				],
 				default: 'vps',
 			},
 			{
-				displayName: 'Subcategory',
-				name: 'subcategory',
-				type: 'options',
-				options: [
-					{ name: 'Actions', value: 'actions', },
-					{ name: 'Backups', value: 'backups', },
-					{ name: 'Data Centers', value: 'dataCenters', },
-					{ name: 'Docker Manager', value: 'dockerManager', },
-					{ name: 'FireWall', value: 'firewall', },
-					{ name: 'Malware Scanner', value: 'malware', },
-					{ name: 'OS Templates', value: 'osTemplates', },
-					{ name: 'Post-Install Scripts', value: 'installScripts', },
-					{ name: 'PTR Records', value: 'ptrRecords', },
-					{ name: 'Public Keys', value: 'publicKeys', },
-					{ name: 'Recovery', value: 'recovery', },
-					{ name: 'Snapshots', value: 'snapshots', },
-					{ name: 'Virtual Machine', value: 'virtualMachine', },
-				],
-				default: 'virtualMachine',
-				displayOptions: {
-					show: {
-						resource: [
-							'vps'
-						]
-					}
-				}
-			},
-			{
-				displayName: 'Subcategory',
-				name: 'domainSubcategory',
-				type: 'options',
-				options: [
-					{ name: 'Availability', value: 'availability', },
-					{ name: 'Portfolio', value: 'portfolio', },
-					{ name: 'WHOIS', value: 'whois', },
-					{ name: 'Forwarding', value: 'forwarding', },
-				],
-				default: 'availability',
-				displayOptions: {
-					show: {
-						resource: [
-							'domains'
-						]
-					}
-				}
-			},
-			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Action', value: 'getAction', },
-					{ name: 'List Actions', value: 'listActions', },
+					{ name: 'Get Action', value: 'getAction', action: 'Get VPS action'},
+					{ name: 'List Actions', value: 'listActions', action: 'List VPS actions'},
 				],
 				default: 'getAction',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['actions'],
+						resource: ['vpsActions'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create Project', value: 'createProject', },
-					{ name: 'Delete Project', value: 'deleteProject', },
-					{ name: 'Get Project Logs', value: 'getLogs', },
-					{ name: 'List Containers', value: 'listContainers', },
-					{ name: 'List Contents', value: 'listContents', },
-					{ name: 'List Projects', value: 'listProjects', },
-					{ name: 'Restart Project', value: 'restartProject', },
-					{ name: 'Start Project', value: 'startProject', },
-					{ name: 'Stop Project', value: 'stopProject', },
-					{ name: 'Update Project', value: 'updateProject', },
+					{ name: 'Create Project', value: 'createProject', action: 'Create Docker project'},
+					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete Docker project'},
+					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get Docker project logs'},
+					{ name: 'List Containers', value: 'listContainers', action: 'List Docker containers'},
+					{ name: 'List Contents', value: 'listContents', action: 'List Docker containers content'},
+					{ name: 'List Projects', value: 'listProjects', action: 'List Docker projects'},
+					{ name: 'Restart Project', value: 'restartProject', action: 'Restart Docker project'},
+					{ name: 'Start Project', value: 'startProject', action: 'Start Docker project'},
+					{ name: 'Stop Project', value: 'stopProject', action: 'Stop Docker project'},
+					{ name: 'Update Project', value: 'updateProject', action: 'Update Docker project'},
 				],
 				default: 'listProjects',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['dockerManager'],
+						resource: ['vpsDocker'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Delete Backup', value: 'deleteBackup', },
-					{ name: 'List Backups', value: 'listBackups', },
-					{ name: 'Restore Backup', value: 'restoreBackup', },
+					{ name: 'Delete Backup', value: 'deleteBackup', action: 'Delete VPS backup'},
+					{ name: 'List Backups', value: 'listBackups', action: 'List VPS backups'},
+					{ name: 'Restore Backup', value: 'restoreBackup', action: 'Restore VPS backup'},
 				],
 				default: 'listBackups',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['backups'],
+						resource: ['vpsBackups'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'List Data Centers', value: 'listDataCenters', },
+					{ name: 'List Data Centers', value: 'listDataCenters', action: 'List VPS data centers'},
 				],
 				default: 'listDataCenters',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['dataCenters'],
+						resource: ['vpsDataCenters'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create PTR', value: 'createPTR', },
-					{ name: 'Delete PTR', value: 'deletePTR', }
+					{ name: 'Create PTR', value: 'createPTR', action: 'Create PTR record'},
+					{ name: 'Delete PTR', value: 'deletePTR', action: 'Delete PTR record'},
 				],
 				default: 'createPTR',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['ptrRecords'],
+						resource: ['vpsPTR'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Firewall Activate', value: 'activateFirewall', },
-					{ name: 'Firewall Create', value: 'createFirewall', },
-					{ name: 'Firewall Deactivate', value: 'deactivateFirewall', },
-					{ name: 'Firewall Delete', value: 'deleteFirewall', },
-					{ name: 'Firewall Get', value: 'getFirewall', },
-					{ name: 'Firewall List', value: 'listFirewalls', },
-					{ name: 'Firewall Rule Create', value: 'createFirewallRule', },
-					{ name: 'Firewall Rule Delete', value: 'deleteFirewallRule', },
-					{ name: 'Firewall Rule Update', value: 'updateFirewallRule', },
-					{ name: 'Firewall Sync', value: 'syncFirewall', },
+					{ name: 'Firewall Activate', value: 'activateFirewall', action: 'Activate VPS firewall'},
+					{ name: 'Firewall Create', value: 'createFirewall', action: 'Create VPS firewall'},
+					{ name: 'Firewall Deactivate', value: 'deactivateFirewall', action: 'Deactivate VPS firewall'},
+					{ name: 'Firewall Delete', value: 'deleteFirewall', action: 'Delete VPS firewall'},
+					{ name: 'Firewall Get', value: 'getFirewall', action: 'Get VPS firewall'},
+					{ name: 'Firewall List', value: 'listFirewalls', action: 'List VPS firewalls'},
+					{ name: 'Firewall Rule Create', value: 'createFirewallRule', action: 'Create VPS firewall rule'},
+					{ name: 'Firewall Rule Delete', value: 'deleteFirewallRule', action: 'Delete VPS firewall rule'},
+					{ name: 'Firewall Rule Update', value: 'updateFirewallRule', action: 'Update VPS firewall rule'},
+					{ name: 'Firewall Sync', value: 'syncFirewall', action: 'Sync VPS firewall'},
 				],
 				default: 'activateFirewall',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['firewall'],
+						resource: ['vpsFirewall'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Monarx', value: 'getMonarx', },
-					{ name: 'Add Monarx', value: 'addMonarx', },
-					{ name: 'Remove Monarx', value: 'removeMonarx', },
+					{ name: 'Get Monarx', value: 'getMonarx', action: 'Get VPS malware scanner status'},
+					{ name: 'Add Monarx', value: 'addMonarx', action: 'Add VPS malware scanner'},
+					{ name: 'Remove Monarx', value: 'removeMonarx', action: 'Remove VPS malware scanner'},
 				],
 				default: 'getMonarx',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['malware'],
+						resource: ['vpsMonarx'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Template', value: 'getTemplate', },
-					{ name: 'List Templates', value: 'listTemplates', },
+					{ name: 'Get Template', value: 'getTemplate', action: 'Get VPS template'},
+					{ name: 'List Templates', value: 'listTemplates', action: 'List VPS templates'},
 				],
 				default: 'getTemplate',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['osTemplates'],
+						resource: ['vpsTemplates'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Post Install Script Create', value: 'createPostInstallScript', },
-					{ name: 'Post Install Script Delete', value: 'deletePostInstallScript', },
-					{ name: 'Post Install Script Get', value: 'getPostInstallScript', },
-					{ name: 'Post Install Script List', value: 'listPostInstallScripts', },
-					{ name: 'Post Install Script Update', value: 'updatePostInstallScript', },
+					{ name: 'Post Install Script Create', value: 'createPostInstallScript', action: 'Create VPS post install script'},
+					{ name: 'Post Install Script Delete', value: 'deletePostInstallScript', action: 'Delete VPS post install script'},
+					{ name: 'Post Install Script Get', value: 'getPostInstallScript', action: 'Get VPS post install script'},
+					{ name: 'Post Install Script List', value: 'listPostInstallScripts', action: 'List VPS post install scripts'},
+					{ name: 'Post Install Script Update', value: 'updatePostInstallScript', action: 'Update VPS post install script'},
 				],
 				default: 'getPostInstallScript',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['installScripts'],
+						resource: ['vpsScripts'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Attach Public Key', value: 'attachPublicKey', },
-					{ name: 'Delete Public Key', value: 'deletePublicKey', },
-					{ name: 'List Public Keys', value: 'listPublicKeys', },
-					{ name: 'Create Public Key', value: 'createPublicKey', },
+					{ name: 'Attach Public Key', value: 'attachPublicKey', action: 'Attach VPS public key'},
+					{ name: 'Delete Public Key', value: 'deletePublicKey', action: 'Delete VPS public key'},
+					{ name: 'List Public Keys', value: 'listPublicKeys', action: 'List VPS public keys'},
+					{ name: 'Create Public Key', value: 'createPublicKey', action: 'Create VPS public key'},
 				],
 				default: 'attachPublicKey',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['publicKeys'],
+						resource: ['vpsPublicKeys'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create Recovery', value: 'createRecovery', },
-					{ name: 'Delete Recovery', value: 'deleteRecovery', },
-				],
-				default: 'createRecovery',
-				displayOptions: {
-					show: {
-						category:    ['vps'],
-						subresource: ['recovery'],
-					},
-				},
-			},
-			{
-				displayName: 'VPS Action',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				options: [
-					{ name: 'Get Snapshot', value: 'getSnapshot', },
-					{ name: 'Create Snapshot', value: 'createSnapshot', },
-					{ name: 'Delete Snapshot', value: 'deleteSnapshot', },
-					{ name: 'Restore Snapshot', value: 'restoreSnapshot', },
+					{ name: 'Get Snapshot', value: 'getSnapshot', action: 'Get VPS snapshot'},
+					{ name: 'Create Snapshot', value: 'createSnapshot', action: 'Create VPS snapshot'},
+					{ name: 'Delete Snapshot', value: 'deleteSnapshot', action: 'Delete VPS snapshot'},
+					{ name: 'Restore Snapshot', value: 'restoreSnapshot', action: 'Restore VPS snapshot'},
 				],
 				default: 'getSnapshot',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['snapshots'],
+						resource: ['vpsSnapshots'],
 					},
 				},
 			},
 			{
-				displayName: 'VPS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Metrics', value: 'getVmMetrics', },
-					{ name: 'Get Public Keys', value: 'getVmPublicKeys', },
-					{ name: 'Hostname Reset', value: 'resetHostname', },
-					{ name: 'Hostname Update', value: 'updateHostname', },
-					{ name: 'Purchase New Virtual Machine', value: 'purchaseVm', },
-					{ name: 'Recreate', value: 'recreateVm', },
-					{ name: 'Restart', value: 'restartVm', },
-					{ name: 'Setup', value: 'setupVm', },
-					{ name: 'Start', value: 'startVm', },
-					{ name: 'Stop', value: 'stopVm', },
-					{ name: 'Update Nameservers', value: 'updateNameservers', },
-					{ name: 'Update Panel Password', value: 'updatePanelPassword', },
-					{ name: 'Update Root Password', value: 'updateRootPassword', },
-					{ name: 'Virtual Machine Get', value: 'getVm', },
-					{ name: 'Virtual Machine List', value: 'listVms', },
+					{ name: 'Get Metrics', value: 'getVmMetrics', action: 'Get VPS metrics'},
+					{ name: 'Get Public Keys', value: 'getVmPublicKeys', action: 'Get VPS public keys'},
+					{ name: 'Get VPS', value: 'getVm', action: 'Get VPS'},
+					{ name: 'Hostname Reset', value: 'resetHostname', action: 'Reset VPS hostname'},
+					{ name: 'Hostname Update', value: 'updateHostname', action: 'Update VPS hostname'},
+					{ name: 'List VPS', value: 'listVms', action: 'List VPS'},
+					{ name: 'Purchase New VPS', value: 'purchaseVm', action: 'Purchase new VPS'},
+					{ name: 'Recreate', value: 'recreateVm', action: 'Recreate VPS'},
+					{ name: 'Restart', value: 'restartVm', action: 'Restart VPS'},
+					{ name: 'Setup', value: 'setupVm', action: 'Setup VPS'},
+					{ name: 'Start', value: 'startVm', action: 'Start VPS'},
+					{ name: 'Start Recovery', value: 'createRecovery', action: 'Start VPS recovery mode'},
+					{ name: 'Stop', value: 'stopVm', action: 'Stop VPS'},
+					{ name: 'Stop Recovery', value: 'deleteRecovery', action: 'Stop VPS recovery mode'},
+					{ name: 'Update Nameservers', value: 'updateNameservers', action: 'Update VPS nameservers'},
+					{ name: 'Update Panel Password', value: 'updatePanelPassword', action: 'Update VPS control panel password'},
+					{ name: 'Update Root Password', value: 'updateRootPassword', action: 'Update VPS root password'},
 				],
 				default: 'getVm',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
-						subresource: ['virtualMachine'],
+					resource: ['vps'],
 					},
 				},
 			},
 			{
-				displayName: 'DNS Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'DNS Snapshot Get', value: 'getDnsSnapshot', action: 'Dns snapshot get a dns',},
-					{ name: 'DNS Snapshot List', value: 'listDnsSnapshots', action: 'Dns snapshot list a dns',},
-					{ name: 'DNS Snapshot Restore', value: 'restoreDnsSnapshot', action: 'Dns snapshot restore a dns',},
-					{ name: 'DNS Zone Delete', value: 'deleteDnsZone', action: 'Dns zone delete a dns',},
-					{ name: 'DNS Zone Get', value: 'getDnsZone', action: 'Dns zone get a dns',},
-					{ name: 'DNS Zone Reset', value: 'resetDnsZone', action: 'Dns zone reset a dns',},
-					{ name: 'DNS Zone Update', value: 'updateDnsZone', action: 'Dns zone update a dns',},
-					{ name: 'DNS Zone Validate', value: 'validateDnsZone', action: 'Dns zone validate a dns',},
+					{ name: 'DNS Snapshot Get', value: 'getDnsSnapshot', action: 'Get DNS snapshot'},
+					{ name: 'DNS Snapshot List', value: 'listDnsSnapshots', action: 'List DNS snapshots'},
+					{ name: 'DNS Snapshot Restore', value: 'restoreDnsSnapshot', action: 'Restore DNS snapshot'},
+					{ name: 'DNS Zone Delete', value: 'deleteDnsZone', action: 'Delete DNS zone'},
+					{ name: 'DNS Zone Get', value: 'getDnsZone', action: 'Get DNS zone'},
+					{ name: 'DNS Zone Reset', value: 'resetDnsZone', action: 'Reset DNS zone'},
+					{ name: 'DNS Zone Update', value: 'updateDnsZone', action: 'Update DNS zone'},
+					{ name: 'DNS Zone Validate', value: 'validateDnsZone', action: 'Validate DNS zone'},
 				],
 				default: 'listDnsSnapshots',
 				displayOptions: {
@@ -375,112 +314,94 @@ export class HostingerApi implements INodeType {
 				},
 			},
 			{
-				displayName: 'Domains Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Check Domain Availability', value: 'checkDomainAvailability', action: 'Check dmain availability a domain',},
-				],
-				default: 'checkDomainAvailability',
-				displayOptions: {
-					show: {
-						resource: ['domain'],
-						domainSubresource: ['availability'],
-					},
-				},
-			},
-			{
-				displayName: 'Domains Action',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				options: [
-					{ name: 'Disable Domain Lock', value: 'disableDomainLock', action: 'Disable domain lock a domain',},
-					{ name: 'Disable Privacy Protection', value: 'disablePrivacyProtection', action: 'Disable privacy protection a domain',},
-					{ name: 'Enable Domain Lock', value: 'enableDomainLock', action: 'Enable domain lock a domain',},
-					{ name: 'Enable Privacy Protection', value: 'enablePrivacyProtection', action: 'Enable privacy protection a domain',},
-					{ name: 'Get Domain', value: 'getDomain', action: 'Get domain a domain',},
-					{ name: 'List Domains', value: 'listDomains', action: 'List domains a domain',},
-					{ name: 'Purchase Domain', value: 'purchaseDomain', action: 'Purchase domain a domain',},
-					{ name: 'Update Nameservers', value: 'updateDomainNameservers', action: 'Update nameservers a domain',},
+					{ name: 'Check Domain Availability', value: 'checkDomainAvailability', action: 'Check domain availability',},
+					{ name: 'Disable Domain Lock', value: 'disableDomainLock', action: 'Disable domain lock'},
+					{ name: 'Disable Privacy Protection', value: 'disablePrivacyProtection', action: 'Disable domain privacy protection'},
+					{ name: 'Enable Domain Lock', value: 'enableDomainLock', action: 'Enable domain lock'},
+					{ name: 'Enable Privacy Protection', value: 'enablePrivacyProtection', action: 'Enable domain privacy protection'},
+					{ name: 'Get Domain', value: 'getDomain', action: 'Get a domain'},
+					{ name: 'List Domains', value: 'listDomains', action: 'List domains'},
+					{ name: 'Purchase Domain', value: 'purchaseDomain', action: 'Purchase domain'},
+					{ name: 'Update Nameservers', value: 'updateDomainNameservers', action: 'Update domain nameservers'},
 				],
 				default: 'listDomains',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
-						domainSubresource: ['portfolio'],
+					resource: ['domain'],
 					},
 				},
 			},
 			{
-				displayName: 'Domains Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create WHOIS Profile', value: 'createWhoisProfile', action: 'Create WHOIS profile a domain',},
-					{ name: 'Delete WHOIS Profile', value: 'deleteWhoisProfile', action: 'Delete WHOIS profile a domain',},
-					{ name: 'Get WHOIS Profile', value: 'getWhoisProfile', action: 'Get WHOIS profile a domain',},
-					{ name: 'Get WHOIS Profile Usage', value: 'getWhoisProfileUsage', action: 'Get WHOIS profile usage a domain',},
-					{ name: 'List WHOIS Profiles', value: 'listWhoisProfiles', action: 'List WHOIS profiles a domain',},
+					{ name: 'Create WHOIS Profile', value: 'createWhoisProfile', action: 'Create WHOIS profile'},
+					{ name: 'Delete WHOIS Profile', value: 'deleteWhoisProfile', action: 'Delete WHOIS profile'},
+					{ name: 'Get WHOIS Profile', value: 'getWhoisProfile', action: 'Get WHOIS profile'},
+					{ name: 'Get WHOIS Profile Usage', value: 'getWhoisProfileUsage', action: 'Get WHOIS profile usage'},
+					{ name: 'List WHOIS Profiles', value: 'listWhoisProfiles', action: 'List WHOIS profiles'},
 				],
 				default: 'listWhoisProfiles',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
-						domainSubresource: ['whois'],
+						resource: ['whois'],
 					},
 				},
 			},
 			{
-				displayName: 'Domains Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Forwarding Data', value: 'getForwardingData', action: 'Get forwarding data a domain',},
-					{ name: 'Delete Forwarding Data', value: 'deleteForwardingData', action: 'Delete forwarding data a domain',},
-					{ name: 'Create Forwarding Data', value: 'createForwardingData', action: 'Create forwarding data a domain',},
+					{ name: 'Get Forwarding Data', value: 'getForwardingData', action: 'Get domain forwarding'},
+					{ name: 'Delete Forwarding Data', value: 'deleteForwardingData', action: 'Delete domain forwarding'},
+					{ name: 'Create Forwarding Data', value: 'createForwardingData', action: 'Create domain forwarding'},
 				],
 				default: 'getForwardingData',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
-						domainSubresource: ['forwarding'],
+						resource: ['domainForwarding'],
 					},
 				},
 			},
 			{
-				displayName: 'Billing Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Cancel Subscription', value: 'deleteSubscription', },
-					{ name: 'Delete Payment Method', value: 'deletePaymentMethod', },
-					{ name: 'Get Catalog Item List', value: 'getCatalogList', },
-					{ name: 'Get Payment Method List', value: 'getPaymentList', },
-					{ name: 'Get Subscription List', value: 'getSubscriptionList', },
-					{ name: 'Set Default Payment Method', value: 'setPaymentMethod', },
+					{ name: 'Cancel Subscription', value: 'deleteSubscription', action: 'Cancel subscription'},
+					{ name: 'Delete Payment Method', value: 'deletePaymentMethod', action: 'Delete payment method'},
+					{ name: 'Get Catalog Item List', value: 'getCatalogList', action: 'Get catalog item list'},
+					{ name: 'Get Payment Method List', value: 'getPaymentList', action: 'Get payment method list'},
+					{ name: 'Get Subscription List', value: 'getSubscriptionList', action: 'Get subscription list'},
+					{ name: 'Set Default Payment Method', value: 'setPaymentMethod', action: 'Set default payment method'},
 				],
 				default: 'getCatalogList',
 				displayOptions: {
 					show: {
-						category:    ['billing']
+						resource: ['billing']
 					},
 				},
 			},
 			{
-				displayName: 'Reach Action',
+				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'List Contacts', value: 'listContacts', action: 'List contacts a reach',},
-					{ name: 'Create Contact', value: 'createContact', action: 'Create contact a reach',},
-					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete contact a reach',},
-					{ name: 'List Contact Groups', value: 'listContactGroups', action: 'List contact groups a reach',},
+					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts'},
+					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact'},
+					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact'},
+					{ name: 'List Contact Groups', value: 'listContactGroups', action: 'List Reach contact groups'},
 				],
 				default: 'listContacts',
 				displayOptions: {
@@ -496,7 +417,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm', 'listContainers', 'listProjects', 'listContents', 'createProject', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject'
 						]
@@ -510,7 +431,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['listContainers', 'listContents', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject']
 					}
 				}
@@ -522,7 +443,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'getVmMetrics'
 						]
@@ -536,7 +457,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'getVmMetrics'
 						]
@@ -550,7 +471,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['getAction']
 					}
 				}
@@ -562,7 +483,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['deleteBackup', 'restoreBackup']
 					}
 				}
@@ -574,7 +495,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'activateFirewall', 'deactivateFirewall', 'getFirewall', 'deleteFirewall', 'updateFirewallRule', 'deleteFirewallRule', 'createFirewallRule', 'syncFirewall'
 						]
@@ -588,7 +509,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['dns'],
+						resource: ['dns'],
 						operation: [
 							'getDnsSnapshot', 'restoreDnsSnapshot'
 						]
@@ -613,7 +534,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
+						resource: ['domain', 'whois', 'domainForwarding'],
 						operation: [
 							'getDomain', 'enableDomainLock', 'disableDomainLock', 
 							'enablePrivacyProtection', 'disablePrivacyProtection', 
@@ -630,7 +551,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
+						resource: ['domain', 'whois', 'domainForwarding'],
 						operation: [
 							'getWhoisProfile', 'deleteWhoisProfile', 'getWhoisProfileUsage'
 						]
@@ -644,7 +565,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['updateFirewallRule', 'deleteFirewallRule']
 					}
 				}
@@ -656,7 +577,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['getPostInstallScript', 'updatePostInstallScript', 'deletePostInstallScript']
 					}
 				}
@@ -668,7 +589,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['deletePublicKey']
 					}
 				}
@@ -680,7 +601,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['getTemplate']
 					}
 				}
@@ -692,7 +613,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['billing'],
+						resource: ['billing'],
 						operation: ['setPaymentMethod', 'deletePaymentMethod']
 					}
 				}
@@ -704,7 +625,7 @@ export class HostingerApi implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						category:    ['billing'],
+						resource: ['billing'],
 						operation: ['deleteSubscription']
 					}
 				}
@@ -717,7 +638,7 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
-						category:    ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updateHostname', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'updateRootPassword', 'setupVm'
 						]
@@ -744,7 +665,7 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
+						resource: ['domain', 'whois', 'domainForwarding'],
 						operation: [
 							'checkDomainAvailability', 'purchaseDomain', 
 							'updateDomainNameservers', 'createWhoisProfile', 
@@ -765,7 +686,7 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
-						resource: ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
 							'createProject'
 						]
@@ -799,7 +720,7 @@ export class HostingerApi implements INodeType {
 				description: 'Raw JSON body for POST/PUT requests',
 				displayOptions: {
 					show: {
-						resource: ['vps'],
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: ['purchaseVm']
 					}
 				}
