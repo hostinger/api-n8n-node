@@ -414,12 +414,13 @@ export class HostingerApi implements INodeType {
 				displayName: 'Virtual Machine ID',
 				name: 'virtualMachineId',
 				type: 'string',
+				required: true,
 				default: '',
 				displayOptions: {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
-							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'restartVm', 'updateRootPassword', 'setupVm', 'startVm', 'stopVm', 'listContainers', 'listProjects', 'listContents', 'createProject', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject'
+							'getAction', 'listActions', 'deleteBackup', 'listBackups', 'restoreBackup', 'createPTR', 'deletePTR', 'activateFirewall', 'deactivateFirewall', 'syncFirewall', 'getMonarx', 'addMonarx', 'removeMonarx', 'attachPublicKey', 'createRecovery', 'deleteRecovery', 'getSnapshot', 'createSnapshot', 'deleteSnapshot', 'restoreSnapshot', 'getVmPublicKeys', 'updateHostname', 'resetHostname', 'getVm', 'getVmMetrics', 'updateNameservers', 'updatePanelPassword', 'restartVm', 'updateRootPassword', 'setupVm', 'recreateVm', 'startVm', 'stopVm', 'listContainers', 'listProjects', 'listContents', 'createProject', 'deleteProject', 'getLogs', 'restartProject', 'startProject', 'stopProject', 'updateProject'
 						]
 					}
 				}
@@ -468,6 +469,7 @@ export class HostingerApi implements INodeType {
 				displayName: 'Action ID',
 				name: 'actionId',
 				type: 'string',
+				required: true,
 				default: '',
 				displayOptions: {
 					show: {
@@ -499,6 +501,82 @@ export class HostingerApi implements INodeType {
 						operation: [
 							'activateFirewall', 'deactivateFirewall', 'getFirewall', 'deleteFirewall', 'updateFirewallRule', 'deleteFirewallRule', 'createFirewallRule', 'syncFirewall'
 						]
+					}
+				}
+			},
+			{
+				displayName: 'Hostname',
+				name: 'hostname',
+				type: 'string',
+				required: true,
+				default: '',
+				placeholder: 'my.server.tld',
+				description: 'The new hostname for the VPS',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['updateHostname']
+					}
+				}
+			},
+			{
+				displayName: 'Template ID',
+				name: 'templateId',
+				type: 'number',
+				required: true,
+				default: '',
+				description: 'The ID of the OS template to use for recreating the VPS',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['recreateVm']
+					}
+				}
+			},
+			{
+				displayName: 'Root Password',
+				name: 'password',
+				type: 'string',
+				typeOptions: {
+					password: true
+				},
+				default: '',
+				placeholder: 'oMeNRusto#sIO',
+				description: 'Root password for the VPS. Must be at least 12 characters with uppercase, lowercase, and a number.',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['recreateVm']
+					}
+				}
+			},
+			{
+				displayName: 'Panel Password',
+				name: 'panelPassword',
+				type: 'string',
+				typeOptions: {
+					password: true
+				},
+				default: '',
+				placeholder: 'Mna58c#17a4d',
+				description: 'Control panel password. Must be at least 12 characters with uppercase, lowercase, and a number.',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['recreateVm']
+					}
+				}
+			},
+			{
+				displayName: 'Post Install Script ID',
+				name: 'postInstallScriptId',
+				type: 'number',
+				default: '',
+				description: 'Optional post-install script ID to run after VPS recreation',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
+						operation: ['recreateVm']
 					}
 				}
 			},
@@ -640,7 +718,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
 						operation: [
-							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updateHostname', 'updateNameservers', 'updatePanelPassword', 'recreateVm', 'updateRootPassword', 'setupVm'
+							'createFirewall', 'updateFirewallRule', 'createFirewallRule', 'updatePostInstallScript', 'createPostInstallScript', 'attachPublicKey', 'createPublicKey', 'createRecovery', 'updateNameservers', 'updatePanelPassword', 'updateRootPassword', 'setupVm'
 						]
 					}
 				}
@@ -877,7 +955,7 @@ export class HostingerApi implements INodeType {
 					const contactSurname = this.getNodeParameter('contactSurname', i) as string;
 					const contactGroupUuids = this.getNodeParameter('contactGroupUuids', i) as string;
 					const contactNote = this.getNodeParameter('contactNote', i) as string;
-					
+
 					const contactData: IDataObject = {
 						email: contactEmail
 					};
@@ -895,6 +973,24 @@ export class HostingerApi implements INodeType {
 					}
 
 					requestBody = contactData;
+				} else if (operation === 'updateHostname') {
+					// For updateHostname, build request body from hostname field
+					const hostname = this.getNodeParameter('hostname', i) as string;
+					requestBody = { hostname };
+				} else if (operation === 'recreateVm') {
+					// For recreateVm, build request body from individual fields
+					const templateId = this.getNodeParameter('templateId', i) as number;
+					const password = this.getNodeParameter('password', i) as string;
+					const panelPassword = this.getNodeParameter('panelPassword', i) as string;
+					const postInstallScriptId = this.getNodeParameter('postInstallScriptId', i) as number;
+
+					requestBody = {
+						template_id: templateId,
+						password: password
+					};
+
+					if (panelPassword) requestBody.panel_password = panelPassword;
+					if (postInstallScriptId) requestBody.post_install_script_id = postInstallScriptId;
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
