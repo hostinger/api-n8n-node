@@ -524,7 +524,7 @@ export class HostingerApi implements INodeType {
 				name: 'templateId',
 				type: 'number',
 				required: true,
-				default: '',
+				default: 1077,
 				description: 'The ID of the OS template to use for recreating the VPS',
 				displayOptions: {
 					show: {
