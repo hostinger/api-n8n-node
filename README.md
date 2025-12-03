@@ -98,6 +98,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.13**:
+  	- Added fields for Domain Purchase, Check Domain Availability and Update Domain Nameservers operations
+
 - **v1.0.12**:
   	- Refactored the node to use Resources and Operations
 

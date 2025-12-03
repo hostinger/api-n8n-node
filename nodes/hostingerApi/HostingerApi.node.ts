@@ -605,8 +605,8 @@ export class HostingerApi implements INodeType {
 				description: 'Primary nameserver IP address',
 				displayOptions: {
 					show: {
-						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['updateNameservers']
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates', 'domain'],
+						operation: ['updateNameservers', 'updateDomainNameservers']
 					}
 				}
 			},
@@ -619,8 +619,8 @@ export class HostingerApi implements INodeType {
 				description: 'Secondary nameserver IP address (optional)',
 				displayOptions: {
 					show: {
-						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['updateNameservers']
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates', 'domain'],
+						operation: ['updateNameservers', 'updateDomainNameservers']
 					}
 				}
 			},
@@ -633,8 +633,22 @@ export class HostingerApi implements INodeType {
 				description: 'Tertiary nameserver IP address (optional)',
 				displayOptions: {
 					show: {
-						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates'],
-						operation: ['updateNameservers']
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates', 'domain'],
+						operation: ['updateNameservers', 'updateDomainNameservers']
+					}
+				}
+			},
+			{
+				displayName: 'Nameserver 4',
+				name: 'ns4',
+				type: 'string',
+				default: '',
+				placeholder: '4.3.2.5',
+				description: 'Quaternary nameserver IP address (optional)',
+				displayOptions: {
+					show: {
+						resource: ['vps', 'vpsActions', 'vpsBackups', 'vpsDataCenters', 'vpsDocker', 'vpsFirewall', 'vpsMonarx', 'vpsScripts', 'vpsPTR', 'vpsPublicKeys', 'vpsSnapshots', 'vpsTemplates', 'domain'],
+						operation: ['updateNameservers', 'updateDomainNameservers']
 					}
 				}
 			},
@@ -739,6 +753,9 @@ export class HostingerApi implements INodeType {
 				name: 'domain',
 				type: 'string',
 				default: '',
+				required: true,
+				placeholder: 'my-new-domain.tld',
+				description: 'Full domain name (including TLD)',
 				displayOptions: {
 					show: {
 						resource: ['domain', 'whois', 'domainForwarding'],
@@ -746,8 +763,149 @@ export class HostingerApi implements INodeType {
 							'getDomain', 'enableDomainLock', 'disableDomainLock', 
 							'enablePrivacyProtection', 'disablePrivacyProtection', 
 							'updateDomainNameservers', 'getForwardingData', 
-							'deleteForwardingData'
+							'deleteForwardingData', 'purchaseDomain'
 						]
+					}
+				}
+			},
+			{
+				displayName: 'Domain Name',
+				name: 'domainName',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'mydomain',
+				description: 'Domain name to check availability (without TLD)',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['checkDomainAvailability']
+					}
+				}
+			},
+			{
+				displayName: 'TLDs',
+				name: 'tlds',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'com, net, org',
+				description: 'Comma-separated list of TLDs to check (e.g., com, net, org)',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['checkDomainAvailability']
+					}
+				}
+			},
+			{
+				displayName: 'With Alternatives',
+				name: 'withAlternatives',
+				type: 'boolean',
+				default: true,
+				description: 'Whether to include alternative domain suggestions',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['checkDomainAvailability']
+					}
+				}
+			},
+			{
+				displayName: 'Item ID',
+				name: 'itemId',
+				type: 'string',
+				default: '',
+				required: true,
+				placeholder: 'hostingercom-domain-com-usd-1y',
+				description: 'Catalog price item ID for the domain',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Owner Contact ID',
+				name: 'ownerContactId',
+				type: 'number',
+				default: '',
+				placeholder: '741288',
+				description: 'Owner contact WHOIS record ID',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Admin Contact ID',
+				name: 'adminContactId',
+				type: 'number',
+				default: '',
+				placeholder: '546123',
+				description: 'Administrative contact WHOIS record ID',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Billing Contact ID',
+				name: 'billingContactId',
+				type: 'number',
+				default: '',
+				placeholder: '741288',
+				description: 'Billing contact WHOIS record ID',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Tech Contact ID',
+				name: 'techContactId',
+				type: 'number',
+				default: '',
+				placeholder: '741288',
+				description: 'Technical contact WHOIS record ID',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Additional Details (JSON)',
+				name: 'additionalDetails',
+				type: 'json',
+				default: '{}',
+				description: 'Additional registration data as JSON (depends on TLD)',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
+					}
+				}
+			},
+			{
+				displayName: 'Coupon Code',
+				name: 'couponCode',
+				type: 'string',
+				default: '',
+				placeholder: 'COUPON1',
+				description: 'Discount coupon code',
+				displayOptions: {
+					show: {
+						resource: ['domain', 'whois', 'domainForwarding'],
+						operation: ['purchaseDomain']
 					}
 				}
 			},
@@ -806,10 +964,11 @@ export class HostingerApi implements INodeType {
 				name: 'paymentMethodId',
 				type: 'string',
 				default: '',
+				placeholder: '1327362',
 				displayOptions: {
 					show: {
-						resource: ['billing'],
-						operation: ['setPaymentMethod', 'deletePaymentMethod']
+						resource: ['billing', 'domain'],
+						operation: ['setPaymentMethod', 'deletePaymentMethod', 'purchaseDomain']
 					}
 				}
 			},
@@ -862,9 +1021,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['domain', 'whois', 'domainForwarding'],
 						operation: [
-							'checkDomainAvailability', 'purchaseDomain', 
-							'updateDomainNameservers', 'createWhoisProfile', 
-							'createForwardingData'
+							'createWhoisProfile', 'createForwardingData'
 						]
 					}
 				}
@@ -1152,6 +1309,74 @@ export class HostingerApi implements INodeType {
 							key: publicKey
 						};
 					}
+				} else if (operation === 'checkDomainAvailability') {
+					// For checkDomainAvailability, build request body from individual fields
+					const domainName = this.getNodeParameter('domainName', i) as string;
+					const tldsString = this.getNodeParameter('tlds', i) as string;
+					const withAlternatives = this.getNodeParameter('withAlternatives', i) as boolean;
+
+					// Convert comma-separated TLDs to array
+					const tlds = tldsString.split(',').map(tld => tld.trim()).filter(tld => tld);
+
+					requestBody = {
+						domain: domainName,
+						tlds: tlds
+					};
+
+					if (withAlternatives !== undefined) requestBody.with_alternatives = withAlternatives;
+				} else if (operation === 'purchaseDomain') {
+					// For purchaseDomain, build request body from individual fields
+					const domain = this.getNodeParameter('domain', i) as string;
+					const itemId = this.getNodeParameter('itemId', i) as string;
+					const paymentMethodId = this.getNodeParameter('paymentMethodId', i) as number;
+					const ownerContactId = this.getNodeParameter('ownerContactId', i) as number;
+					const adminContactId = this.getNodeParameter('adminContactId', i) as number;
+					const billingContactId = this.getNodeParameter('billingContactId', i) as number;
+					const techContactId = this.getNodeParameter('techContactId', i) as number;
+					const additionalDetailsStr = this.getNodeParameter('additionalDetails', i) as string;
+					const couponCode = this.getNodeParameter('couponCode', i) as string;
+
+					requestBody = {
+						domain: domain,
+						item_id: itemId
+					};
+
+					if (paymentMethodId) requestBody.payment_method_id = paymentMethodId;
+
+					// Build domain_contacts object if any contact IDs are provided
+					if (ownerContactId || adminContactId || billingContactId || techContactId) {
+						const domainContacts: IDataObject = {};
+						if (ownerContactId) domainContacts.owner_id = ownerContactId;
+						if (adminContactId) domainContacts.admin_id = adminContactId;
+						if (billingContactId) domainContacts.billing_id = billingContactId;
+						if (techContactId) domainContacts.tech_id = techContactId;
+						requestBody.domain_contacts = domainContacts;
+					}
+
+					// Parse additional_details JSON
+					if (additionalDetailsStr && additionalDetailsStr !== '{}') {
+						try {
+							requestBody.additional_details = JSON.parse(additionalDetailsStr);
+						} catch (e) {
+							requestBody.additional_details = {};
+						}
+					} else {
+						requestBody.additional_details = {};
+					}
+
+					if (couponCode) requestBody.coupons = couponCode;
+				} else if (operation === 'updateDomainNameservers') {
+					// For updateDomainNameservers, build request body from nameserver fields
+					const ns1 = this.getNodeParameter('ns1', i) as string;
+					const ns2 = this.getNodeParameter('ns2', i) as string;
+					const ns3 = this.getNodeParameter('ns3', i) as string;
+					const ns4 = this.getNodeParameter('ns4', i) as string;
+
+					requestBody = { ns1 };
+
+					if (ns2) requestBody.ns2 = ns2;
+					if (ns3) requestBody.ns3 = ns3;
+					if (ns4) requestBody.ns3 = ns4;
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
