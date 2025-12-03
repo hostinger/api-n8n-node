@@ -99,48 +99,48 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 ## Version history
 
 - **v1.0.13**:
-  	- Added fields for Domain Purchase, Check Domain Availability and Update Domain Nameservers operations
+  - Added fields for Domain Purchase, Check Domain Availability and Update Domain Nameservers operations
 
 - **v1.0.12**:
-  	- Refactored the node to use Resources and Operations
+  - Refactored the node to use Resources and Operations
 
 - **v1.0.11**:
-  	- Updated dependencies
+  - Updated dependencies
 
 - **v1.0.10**:
-  	- Updated dependencies
+  - Updated dependencies
 
 - **v1.0.9**:
-  	- Updated dependencies
+  - Updated dependencies
 
 - **v1.0.8**:
-  	- Added VPS Docker Manager endpoints
+  - Added VPS Docker Manager endpoints
 
 - **v1.0.7**:
-  	- Added n8n credentials test
+  - Added n8n credentials test
 
 - **v1.0.6**:
-  	- Updated dependencies
+  - Updated dependencies
 
 - **v1.0.5**:
-	- Added Email Marketing (Reach) endpoints
+  - Added Email Marketing (Reach) endpoints
 
 - **v1.0.4**:
-  	- Added Purchase VM Method
-  	- Added Billing methods
-  	- Added Domain Portfolio methods
-  	- Added Domain WHOIS methods
-  	- Added Domain Forwarding methods
+  - Added Purchase VM Method
+  - Added Billing methods
+  - Added Domain Portfolio methods
+  - Added Domain WHOIS methods
+  - Added Domain Forwarding methods
 	
 - **v1.0.3**:
-  	- No significant changes
+  - No significant changes
 
 - **v1.0.2**:
-  	- Fixed inputs on category selection
+  - Fixed inputs on category selection
 
 - **v1.0.1**:
-  	- Added `User-Agent` header
+  - Added `User-Agent` header
 
 - **v1.0.0**:
-  	- Initial release
-  	- Supports full suite of VPS operations including server management, monitoring, and networking.
+  - Initial release
+  - Supports full suite of VPS operations including server management, monitoring, and networking.

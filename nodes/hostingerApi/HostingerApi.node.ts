@@ -1364,7 +1364,7 @@ export class HostingerApi implements INodeType {
 						requestBody.additional_details = {};
 					}
 
-					if (couponCode) requestBody.coupons = couponCode;
+					if (couponCode) requestBody.coupons = [couponCode];
 				} else if (operation === 'updateDomainNameservers') {
 					// For updateDomainNameservers, build request body from nameserver fields
 					const ns1 = this.getNodeParameter('ns1', i) as string;
@@ -1376,7 +1376,7 @@ export class HostingerApi implements INodeType {
 
 					if (ns2) requestBody.ns2 = ns2;
 					if (ns3) requestBody.ns3 = ns3;
-					if (ns4) requestBody.ns3 = ns4;
+					if (ns4) requestBody.ns4 = ns4;
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
