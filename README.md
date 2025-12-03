@@ -131,7 +131,7 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
   - Added Domain Portfolio methods
   - Added Domain WHOIS methods
   - Added Domain Forwarding methods
-	
+
 - **v1.0.3**:
   - No significant changes
 
