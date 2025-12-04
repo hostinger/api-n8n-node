@@ -3,5 +3,14 @@
   "npm": {
     "publishArgs": ["--provenance", "--access", "public"],
     "skipChecks": true
+  },
+  "git": {
+    "commit": false,
+    "tag": false,
+    "push": false,
+    "requireCleanWorkingDir": false
+  },
+  "github": {
+    "release": false
   }
 }
