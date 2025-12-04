@@ -1,34 +1,35 @@
 {
   "name": "n8n-nodes-hostinger-api",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Hostinger API n8n Node",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://hostinger.com",
   "author": {
     "name": "Hostinger",
     "email": "minijus.savickas@hostinger.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hostinger/api-n8n-node.git"
+    "url": "https://github.com/hostinger/api-n8n-node.git"
   },
-  "main": "index.js",
   "scripts": {
-    "build": "tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
   },
   "files": [
     "dist"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
+    "strict": true,
     "credentials": [
       "dist/credentials/HostingerApi.credentials.js"
     ],
@@ -37,12 +38,11 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "~7.18.0",
-    "eslint": "~8.57.0",
-    "eslint-plugin-n8n-nodes-base": "^1.11.0",
-    "gulp": "^5.0.0",
-    "prettier": "^2.7.1",
-    "typescript": "~5.7.0"
+		"@n8n/node-cli": "*",
+		"eslint": "9.32.0",
+		"prettier": "3.6.2",
+		"release-it": "^19.0.4",
+		"typescript": "5.9.2"
   },
   "peerDependencies": {
     "n8n-workflow": "*"

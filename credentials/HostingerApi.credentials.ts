@@ -1,5 +1,6 @@
 import {
 	IAuthenticateGeneric,
+	Icon,
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
@@ -8,6 +9,7 @@ import {
 export class HostingerApi implements ICredentialType {
 	name = 'hostingerApi';
 	displayName = 'Hostinger API';
+	icon: Icon = { light: 'file:../nodes/hostingerApi/hostingerLogo.svg', dark: 'file:../nodes/hostingerApi/hostingerLogo.dark.svg' };
 	documentationUrl = 'https://developers.hostinger.com/';
 
 	properties: INodeProperties[] = [
