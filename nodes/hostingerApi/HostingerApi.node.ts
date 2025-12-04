@@ -416,7 +416,12 @@ export class HostingerApi implements INodeType {
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact'},
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contact Groups', value: 'listContactGroups', action: 'List Reach contact groups'},
+					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{name: 'Get Segment', value: 'getSegment', action: 'Get Reach segment'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get Reach segment contacts'},
+
 				],
 				default: 'listContacts',
 				displayOptions: {
@@ -1118,19 +1123,6 @@ export class HostingerApi implements INodeType {
 				}
 			},
 			{
-				displayName: 'Group UUIDs',
-				name: 'contactGroupUuids',
-				type: 'string',
-				default: '',
-				description: 'Comma-separated list of group UUIDs to assign the contact to',
-				displayOptions: {
-					show: {
-						resource: ['reach'],
-						operation: ['createContact']
-					}
-				}
-			},
-			{
 				displayName: 'Note',
 				name: 'contactNote',
 				type: 'string',
@@ -1155,19 +1147,6 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['reach'],
 						operation: ['deleteContact']
-					}
-				}
-			},
-			{
-				displayName: 'Group UUID',
-				name: 'groupUuid',
-				type: 'string',
-				default: '',
-				description: 'Filter contacts by group UUID',
-				displayOptions: {
-					show: {
-						resource: ['reach'],
-						operation: ['listContacts']
 					}
 				}
 			},
@@ -1203,6 +1182,19 @@ export class HostingerApi implements INodeType {
 					}
 				}
 			},
+			{
+				displayName: 'Segment UUID',
+				name: 'segmentUuid',
+				type: 'string',
+				default: '',
+				description: 'UUID of the segment',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['getSegment', 'getSegmentContacts']
+					}
+				}
+			}
 		]
 	};
 
@@ -1227,7 +1219,6 @@ export class HostingerApi implements INodeType {
 					const contactEmail = this.getNodeParameter('contactEmail', i) as string;
 					const contactName = this.getNodeParameter('contactName', i) as string;
 					const contactSurname = this.getNodeParameter('contactSurname', i) as string;
-					const contactGroupUuids = this.getNodeParameter('contactGroupUuids', i) as string;
 					const contactNote = this.getNodeParameter('contactNote', i) as string;
 
 					const contactData: IDataObject = {
@@ -1237,14 +1228,6 @@ export class HostingerApi implements INodeType {
 					if (contactName) contactData.name = contactName;
 					if (contactSurname) contactData.surname = contactSurname;
 					if (contactNote) contactData.note = contactNote;
-
-					// Handle group UUIDs - convert comma-separated string to array
-					if (contactGroupUuids) {
-						const groupUuids = contactGroupUuids.split(',').map(uuid => uuid.trim()).filter(uuid => uuid);
-						if (groupUuids.length > 0) {
-							contactData.group_uuids = groupUuids;
-						}
-					}
 
 					requestBody = contactData;
 				} else if (operation === 'updateHostname') {
@@ -1503,12 +1486,8 @@ export class HostingerApi implements INodeType {
 				//Reach
 				case 'listContacts': {
 					let contactsEndpoint = `/api/reach/v1/contacts?page=${getParam('page')}`;
-					const groupUuid = this.getNodeParameter('groupUuid', i) as string;
 					const subscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
-
-					if (groupUuid) {
-						contactsEndpoint += `&group_uuid=${groupUuid}`;
-					}
+	
 					if (subscriptionStatus) {
 						contactsEndpoint += `&subscription_status=${subscriptionStatus}`;
 					}
@@ -1517,7 +1496,9 @@ export class HostingerApi implements INodeType {
 				}
 				case 'createContact': method = 'POST'; endpoint = '/api/reach/v1/contacts'; break;
 				case 'deleteContact': method = 'DELETE'; endpoint = `/api/reach/v1/contacts/${getParam('contactUuid')}`; break;
-				case 'listContactGroups': endpoint = '/api/reach/v1/contacts/groups'; break;
+				case 'listSegments': method = 'GET'; endpoint = '/api/reach/v1/segmentation/segments'; break;
+				case 'getSegment': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}`; break;
+				case 'getSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}/contacts`; break;
 
 				default: throw new ApplicationError(`Unsupported operation: ${operation}`);
 			}
