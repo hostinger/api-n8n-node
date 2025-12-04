@@ -100,6 +100,10 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 - **v1.0.13**:
   - Added fields for Domain Purchase, Check Domain Availability and Update Domain Nameservers operations
+  - Refactored scripts for building, linting, and releasing using n8n-node CLI
+  - Added strict mode in n8n configuration
+  - Updated devDependencies to use latest versions and added release-it for version management
+  - Simplified tsconfig.json include paths
 
 - **v1.0.12**:
   - Refactored the node to use Resources and Operations

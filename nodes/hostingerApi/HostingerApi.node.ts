@@ -15,7 +15,7 @@ export class HostingerApi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Hostinger API',
 		name: 'hostingerApi',
-		icon: 'file:hostingerLogo.svg',
+		icon: { light: 'file:hostingerLogo.svg', dark: 'file:hostingerLogo.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -1357,7 +1357,7 @@ export class HostingerApi implements INodeType {
 					if (additionalDetailsStr && additionalDetailsStr !== '{}') {
 						try {
 							requestBody.additional_details = JSON.parse(additionalDetailsStr);
-						} catch (e) {
+						} catch {
 							requestBody.additional_details = {};
 						}
 					} else {
@@ -1381,7 +1381,9 @@ export class HostingerApi implements INodeType {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
 				}
-			} catch (e) {}
+			} catch {
+				// Silently ignore JSON parsing errors
+			}
 
 			switch (operation) {
 				//VPS Actions
@@ -1499,7 +1501,7 @@ export class HostingerApi implements INodeType {
 				case 'deleteSubscription': method = 'DELETE'; endpoint = `/api/billing/v1/subscriptions/${getParam('subscriptionId')}`; break;
 				case 'getSubscriptionList': method = 'GET'; endpoint = '/api/billing/v1/subscriptions'; break;
 				//Reach
-				case 'listContacts': 
+				case 'listContacts': {
 					let contactsEndpoint = `/api/reach/v1/contacts?page=${getParam('page')}`;
 					const groupUuid = this.getNodeParameter('groupUuid', i) as string;
 					const subscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
@@ -1512,6 +1514,7 @@ export class HostingerApi implements INodeType {
 					}
 					endpoint = contactsEndpoint;
 					break;
+				}
 				case 'createContact': method = 'POST'; endpoint = '/api/reach/v1/contacts'; break;
 				case 'deleteContact': method = 'DELETE'; endpoint = `/api/reach/v1/contacts/${getParam('contactUuid')}`; break;
 				case 'listContactGroups': endpoint = '/api/reach/v1/contacts/groups'; break;
