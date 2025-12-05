@@ -98,7 +98,14 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
-- **v1.0.13**:
+- **v1.0.15**:
+  - Added segment actions for Email Marketing (Reach)
+    - List Segments operation
+    - Get Segment operation
+    - Get Segment Contacts operation
+  - Removed contact groups functionality (replaced with segments)
+
+- **v1.0.14**:
   - Added fields for Domain Purchase, Check Domain Availability and Update Domain Nameservers operations
   - Refactored scripts for building, linting, and releasing using n8n-node CLI
   - Added strict mode in n8n configuration
