@@ -410,18 +410,17 @@ export class HostingerApi implements INodeType {
 				noDataExpression: true,
 				options: [
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts'},
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact'},
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact'},
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments'},
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{name: 'Get Segment', value: 'getSegment', action: 'Get Reach segment'},
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get Reach segment contacts'},
-
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts'},
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments'},
 				],
 				default: 'listContacts',
 				displayOptions: {
