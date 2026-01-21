@@ -46,5 +46,10 @@
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "overrides": {
+    "n8n-workflow": {
+      "form-data": "^4.0.4"
+    }
   }
 }
