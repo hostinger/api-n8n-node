@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-hostinger-api",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Hostinger API n8n Node",
   "keywords": [
     "n8n-community-node-package"
@@ -46,5 +46,11 @@
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "overrides": {
+    "n8n-workflow": {
+      "form-data": "^4.0.4",
+      "lodash": "^4.17.23"
+    }
   }
 }
