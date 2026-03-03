@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-		"@n8n/node-cli": "*",
+		"@n8n/node-cli": "0.18.0",
 		"eslint": "9.32.0",
 		"prettier": "3.6.2",
 		"release-it": "^19.0.4",
@@ -51,6 +51,9 @@
     "n8n-workflow": {
       "form-data": "^4.0.4",
       "lodash": "^4.17.23"
+    },
+    "eslint-plugin-n8n-nodes-base": {
+      "minimatch": "9.0.9"
     }
   }
 }
