@@ -54,6 +54,10 @@
     },
     "eslint-plugin-n8n-nodes-base": {
       "minimatch": "9.0.9"
-    }
+    },
+    "release-it": {
+      "undici": "6.24.1"
+    },
+    "flatted": "3.4.2"
   }
 }
