@@ -11,15 +11,15 @@ jobs:
     permissions:
       contents: write
       id-token: write
+
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '22.14.0'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -33,5 +33,4 @@ jobs:
       - name: Publish package
         run: npm run release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
