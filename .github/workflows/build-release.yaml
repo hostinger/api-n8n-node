@@ -19,14 +19,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Update NPM
-        run: npm install -g npm@latest
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Set git user
         run: |

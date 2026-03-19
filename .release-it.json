@@ -1,8 +1,5 @@
 {
   "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
-  "git": {
-    "requireCleanWorkingDir": false
-  },
   "npm": {
     "publishArgs": ["--provenance", "--access", "public"],
     "skipChecks": true
