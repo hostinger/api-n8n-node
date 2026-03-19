@@ -98,10 +98,13 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.18**:
+  - Fixed release workflow (clean working directory check, full git history fetch)
+  - Synced package.json version with npm registry
+
 - **v1.0.17**:
   - Fixed release workflow configuration
   - Added GITHUB_TOKEN for automated GitHub releases
-  - Synced package.json version with npm registry
 
 - **v1.0.15**:
   - Added segment actions for Email Marketing (Reach)
