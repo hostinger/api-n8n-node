@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@n8n/node-cli": "0.23.0",
+    "@n8n/node-cli": "^0.23.0",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
     "release-it": "^19.0.4",
@@ -58,6 +58,8 @@
     "release-it": {
       "undici": "6.24.1"
     },
-    "flatted": "3.4.2"
+    "flatted": "3.4.2",
+    "langsmith": "0.5.11",
+    "@langchain/community": "1.1.24"
   }
 }
