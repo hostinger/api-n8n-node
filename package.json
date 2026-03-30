@@ -58,6 +58,7 @@
     "release-it": {
       "undici": "6.24.1"
     },
+    "handlebars": "4.7.9",
     "flatted": "3.4.2",
     "langsmith": "0.5.11",
     "@langchain/community": "1.1.24"
