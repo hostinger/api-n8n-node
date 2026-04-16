@@ -59,7 +59,7 @@
       "undici": "6.24.1"
     },
     "flatted": "3.4.2",
-    "langsmith": "0.5.11",
+    "langsmith": "0.5.19",
     "@langchain/community": "1.1.24"
   }
 }
