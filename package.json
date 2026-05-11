@@ -48,6 +48,7 @@
     "n8n-workflow": "*"
   },
   "overrides": {
+    "uuid": ">=14.0.0",
     "n8n-workflow": {
       "form-data": "^4.0.4",
       "lodash": "^4.17.23"
