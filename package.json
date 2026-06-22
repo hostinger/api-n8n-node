@@ -50,7 +50,7 @@
   "overrides": {
     "uuid": ">=14.0.0",
     "n8n-workflow": {
-      "form-data": "^4.0.4",
+      "form-data": "^4.0.6",
       "lodash": "^4.17.23"
     },
     "eslint-plugin-n8n-nodes-base": {
