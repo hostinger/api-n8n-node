@@ -439,7 +439,7 @@ export class HostingerApi implements INodeType {
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
 					{ name: 'Update Profile Contact', value: 'updateProfileContact', action: 'Update Reach profile contact' },
 				],
-				default: 'listContacts',
+				default: 'listProfileContacts',
 				displayOptions: {
 					show: {
 						resource: ['reach']
@@ -1251,6 +1251,7 @@ export class HostingerApi implements INodeType {
 				displayName: 'Contact UUID',
 				name: 'contactUuid',
 				type: 'string',
+				required: true,
 				default: '',
 				description: 'UUID of the contact',
 				displayOptions: {
@@ -1313,6 +1314,7 @@ export class HostingerApi implements INodeType {
 				displayName: 'Segment UUID',
 				name: 'segmentUuid',
 				type: 'string',
+				required: true,
 				default: '',
 				description: 'UUID of the segment',
 				displayOptions: {
@@ -1737,10 +1739,24 @@ export class HostingerApi implements INodeType {
 			const operation = this.getNodeParameter('operation', i) as string;
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
+			const getPathParam = (name: string) => encodeURIComponent(getParam(name));
 			const getListParam = (name: string) => (this.getNodeParameter(name, i) as string)
 				.split(',')
 				.map(value => value.trim())
 				.filter(value => value);
+			const parseJsonParam = (name: string, displayName: string) => {
+				const raw = this.getNodeParameter(name, i) as string;
+
+				try {
+					return JSON.parse(raw);
+				} catch {
+					throw new NodeOperationError(
+						this.getNode(),
+						`Parameter "${displayName}" contains invalid JSON`,
+						{ itemIndex: i }
+					);
+				}
+			};
 			let method: IHttpRequestMethods = 'GET';
 			let endpoint = '';
 			let requestBody: IDataObject | undefined;
@@ -1899,7 +1915,7 @@ export class HostingerApi implements INodeType {
 					const tagUuids = getListParam('bulkContactTagUuids');
 
 					requestBody = {
-						contacts: JSON.parse(this.getNodeParameter('bulkContacts', i) as string)
+						contacts: parseJsonParam('bulkContacts', 'Contacts (JSON)')
 					};
 
 					if (tagUuids.length > 0) requestBody.tag_uuids = tagUuids;
@@ -1921,7 +1937,7 @@ export class HostingerApi implements INodeType {
 					if (phone) requestBody.phone = phone;
 					if (subscriptionStatus) requestBody.subscription_status = subscriptionStatus;
 					if (note) requestBody.note = note;
-					if (fields && fields !== '[]') requestBody.fields = JSON.parse(fields);
+					if (fields && fields !== '[]') requestBody.fields = parseJsonParam('contactUpdateFields', 'Custom Fields (JSON)');
 				} else if (operation === 'createContactField') {
 					const options = getListParam('contactFieldOptions');
 
@@ -1938,7 +1954,7 @@ export class HostingerApi implements INodeType {
 						label: getParam('contactFieldLabel')
 					};
 
-					if (options && options !== '[]') requestBody.options = JSON.parse(options);
+					if (options && options !== '[]') requestBody.options = parseJsonParam('contactFieldUpdateOptions', 'Options (JSON)');
 				} else if (operation === 'createTags') {
 					requestBody = { names: getListParam('tagNames') };
 				} else if (operation === 'updateTag') {
@@ -1953,7 +1969,7 @@ export class HostingerApi implements INodeType {
 					requestBody = {
 						name: getParam('segmentName'),
 						logic: getParam('segmentLogic'),
-						conditions: JSON.parse(this.getNodeParameter('segmentConditions', i) as string)
+						conditions: parseJsonParam('segmentConditions', 'Conditions (JSON)')
 					};
 				} else if (operation === 'updateProfileSegment') {
 					const segmentConditions = this.getNodeParameter('segmentUpdateConditions', i) as string;
@@ -1964,14 +1980,26 @@ export class HostingerApi implements INodeType {
 					// existing conditions alone when they are omitted.
 					if (segmentConditions && segmentConditions !== '[]') {
 						requestBody.logic = getParam('segmentLogic');
-						requestBody.conditions = JSON.parse(segmentConditions);
+						requestBody.conditions = parseJsonParam('segmentUpdateConditions', 'Conditions (JSON)');
 					}
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
 				}
-			} catch {
-				// Silently ignore JSON parsing errors
+			} catch (error) {
+				// Invalid JSON supplied by the user must fail the item rather than send a
+				// partial body. Everything else reaching this point is an operation with no
+				// Request Body parameter to read, which correctly leaves the body unset.
+				if (error instanceof NodeOperationError) {
+					if (!continueOnFail) throw error;
+
+					returnData.push({
+						json: { error: error.message },
+						pairedItem: { item: i },
+						error
+					});
+					continue;
+				}
 			}
 
 			switch (operation) {
@@ -2109,7 +2137,7 @@ export class HostingerApi implements INodeType {
 				case 'listProfiles': method = 'GET'; endpoint = '/api/reach/v1/profiles'; break;
 				//Reach - Profile contacts
 				case 'listProfileContacts': {
-					let profileContactsEndpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`;
+					let profileContactsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`;
 					const profileSubscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
 					const tagUuidFilter = this.getNodeParameter('tagUuidFilter', i) as string;
 					const contactSearch = this.getNodeParameter('contactSearch', i) as string;
@@ -2119,7 +2147,7 @@ export class HostingerApi implements INodeType {
 					}
 
 					if (tagUuidFilter) {
-						profileContactsEndpoint += `&tag_uuid=${tagUuidFilter}`;
+						profileContactsEndpoint += `&tag_uuid=${encodeURIComponent(tagUuidFilter)}`;
 					}
 
 					if (contactSearch) {
@@ -2129,33 +2157,33 @@ export class HostingerApi implements INodeType {
 					endpoint = profileContactsEndpoint;
 					break;
 				}
-				case 'createProfileContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts`; break;
-				case 'createProfileContactsBulk': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/bulk`; break;
-				case 'getProfileContact': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
-				case 'updateProfileContact': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
-				case 'deleteProfileContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
+				case 'createProfileContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts`; break;
+				case 'createProfileContactsBulk': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/bulk`; break;
+				case 'getProfileContact': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
+				case 'updateProfileContact': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
+				case 'deleteProfileContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
 				//Reach - Contact fields
-				case 'listContactFields': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields`; break;
-				case 'createContactField': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields`; break;
-				case 'updateContactField': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields/${getParam('contactFieldUuid')}`; break;
-				case 'deleteContactField': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields/${getParam('contactFieldUuid')}`; break;
+				case 'listContactFields': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields`; break;
+				case 'createContactField': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields`; break;
+				case 'updateContactField': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields/${getPathParam('contactFieldUuid')}`; break;
+				case 'deleteContactField': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields/${getPathParam('contactFieldUuid')}`; break;
 				//Reach - Tags
-				case 'listTags': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags`; break;
-				case 'createTags': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags`; break;
-				case 'updateTag': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}`; break;
-				case 'deleteTag': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}`; break;
-				case 'assignTagToContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts/${getParam('contactUuid')}`; break;
-				case 'assignTagToContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts`; break;
-				case 'removeTagFromContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts/${getParam('contactUuid')}`; break;
-				case 'removeTagFromContacts': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts`; break;
+				case 'listTags': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags`; break;
+				case 'createTags': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags`; break;
+				case 'updateTag': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}`; break;
+				case 'deleteTag': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}`; break;
+				case 'assignTagToContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts/${getPathParam('contactUuid')}`; break;
+				case 'assignTagToContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts`; break;
+				case 'removeTagFromContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts/${getPathParam('contactUuid')}`; break;
+				case 'removeTagFromContacts': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts`; break;
 				//Reach - Profile segments
-				case 'listProfileSegments': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments?page=${getParam('page')}&per_page=${getParam('perPage')}&count_type=${getParam('segmentCountType')}`; break;
-				case 'createProfileSegment': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments`; break;
-				case 'getProfileSegment': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
-				case 'updateProfileSegment': method = 'PUT'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
-				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
-				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}/count`; break;
-				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
+				case 'listProfileSegments': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments?page=${getParam('page')}&per_page=${getParam('perPage')}&count_type=${getParam('segmentCountType')}`; break;
+				case 'createProfileSegment': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments`; break;
+				case 'getProfileSegment': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
+				case 'updateProfileSegment': method = 'PUT'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
+				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
+				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/count`; break;
+				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
 
 				default: throw new ApplicationError(`Unsupported operation: ${operation}`);
 			}
