@@ -57,11 +57,21 @@ The Hostinger API node supports the following operations:
 	- Manage payment methods and subscriptions
 
 - **Email Marketing (Reach)**
-	- List and manage email contacts
-	- Create new contacts with custom fields
-	- Delete contacts by UUID
-	- Manage contact groups
-	- Filter contacts by subscription status
+	- List Reach profiles to resolve the profile UUID other operations need
+	- List, get, create, update and delete profile contacts
+	- Create contacts in bulk, optionally tagging them on the way in
+	- Filter contacts by subscription status, tag or search term
+	- Manage custom contact fields and their choices
+
+- **Email Marketing (Reach): Tags**
+	- List, create, rename and delete tags
+	- Assign or remove a tag for a single contact
+	- Assign or remove a tag for many contacts, or for every contact in a profile
+
+- **Email Marketing (Reach): Segments**
+	- List, get, create, update and delete segments
+	- List the contacts a segment matches
+	- Count the contacts a segment matches
 
 ## Credentials
 
@@ -97,6 +107,14 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 * [Hostinger VPS Overview](https://www.hostinger.com/vps-hosting)
 
 ## Version history
+
+- **v1.0.22**:
+  - Added profile-scoped actions for Email Marketing (Reach), covering the endpoints the public API now exposes
+  - Added `Reach` operations: List Profiles, List Profile Contacts, Get Profile Contact, Create Profile Contact, Create Contacts in Bulk, Update Profile Contact, Delete Profile Contact
+  - Added `Reach Contact Fields` resource: List, Create, Update and Delete Contact Field
+  - Added `Reach Tags` resource: List Tags, Create Tags, Update Tag, Delete Tag, Assign Tag to Contact(s), Remove Tag From Contact(s)
+  - Added `Reach Segments` resource: List, Get, Create, Update and Delete Profile Segment, plus List and Count Profile Segment Contacts
+  - Marked the profile-less contact and segment operations as deprecated; they keep working but fall back to the default profile
 
 - **v1.0.18**:
   - Fixed release workflow (clean working directory check, full git history fetch)

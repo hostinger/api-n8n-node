@@ -46,6 +46,9 @@ export class HostingerApi implements INodeType {
 					{ name: 'Domain Forwarding', value: 'domainForwarding', },
 					{ name: 'Domain WHOIS', value: 'whois', },
 					{ name: 'Reach', value: 'reach', },
+					{ name: 'Reach Contact Fields', value: 'reachContactFields', },
+					{ name: 'Reach Segments', value: 'reachSegments', },
+					{ name: 'Reach Tags', value: 'reachTags', },
 					{ name: 'VPS', value: 'vps', },
 					{ name: 'VPS Actions', value: 'vpsActions', },
 					{ name: 'VPS Backups', value: 'vpsBackups', },
@@ -67,8 +70,8 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Action', value: 'getAction', action: 'Get VPS action'},
-					{ name: 'List Actions', value: 'listActions', action: 'List VPS actions'},
+					{ name: 'Get Action', value: 'getAction', action: 'Get VPS action' },
+					{ name: 'List Actions', value: 'listActions', action: 'List VPS actions' },
 				],
 				default: 'getAction',
 				displayOptions: {
@@ -84,25 +87,25 @@ export class HostingerApi implements INodeType {
 				noDataExpression: true,
 				options: [
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Project', value: 'createProject', action: 'Create Docker project'},
+					{ name: 'Create Project', value: 'createProject', action: 'Create Docker project' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete Docker project'},
+					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete Docker project' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get Docker project logs'},
+					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get Docker project logs' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Containers', value: 'listContainers', action: 'List Docker containers'},
+					{ name: 'List Containers', value: 'listContainers', action: 'List Docker containers' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contents', value: 'listContents', action: 'List Docker containers content'},
+					{ name: 'List Contents', value: 'listContents', action: 'List Docker containers content' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Projects', value: 'listProjects', action: 'List Docker projects'},
+					{ name: 'List Projects', value: 'listProjects', action: 'List Docker projects' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Restart Project', value: 'restartProject', action: 'Restart Docker project'},
+					{ name: 'Restart Project', value: 'restartProject', action: 'Restart Docker project' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Start Project', value: 'startProject', action: 'Start Docker project'},
+					{ name: 'Start Project', value: 'startProject', action: 'Start Docker project' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Stop Project', value: 'stopProject', action: 'Stop Docker project'},
+					{ name: 'Stop Project', value: 'stopProject', action: 'Stop Docker project' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Project', value: 'updateProject', action: 'Update Docker project'},
+					{ name: 'Update Project', value: 'updateProject', action: 'Update Docker project' },
 				],
 				default: 'listProjects',
 				displayOptions: {
@@ -117,9 +120,9 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Delete Backup', value: 'deleteBackup', action: 'Delete VPS backup'},
-					{ name: 'List Backups', value: 'listBackups', action: 'List VPS backups'},
-					{ name: 'Restore Backup', value: 'restoreBackup', action: 'Restore VPS backup'},
+					{ name: 'Delete Backup', value: 'deleteBackup', action: 'Delete VPS backup' },
+					{ name: 'List Backups', value: 'listBackups', action: 'List VPS backups' },
+					{ name: 'Restore Backup', value: 'restoreBackup', action: 'Restore VPS backup' },
 				],
 				default: 'listBackups',
 				displayOptions: {
@@ -134,7 +137,7 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'List Data Centers', value: 'listDataCenters', action: 'List VPS data centers'},
+					{ name: 'List Data Centers', value: 'listDataCenters', action: 'List VPS data centers' },
 				],
 				default: 'listDataCenters',
 				displayOptions: {
@@ -149,8 +152,8 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create PTR', value: 'createPTR', action: 'Create PTR record'},
-					{ name: 'Delete PTR', value: 'deletePTR', action: 'Delete PTR record'},
+					{ name: 'Create PTR', value: 'createPTR', action: 'Create PTR record' },
+					{ name: 'Delete PTR', value: 'deletePTR', action: 'Delete PTR record' },
 				],
 				default: 'createPTR',
 				displayOptions: {
@@ -165,16 +168,16 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Firewall Activate', value: 'activateFirewall', action: 'Activate VPS firewall'},
-					{ name: 'Firewall Create', value: 'createFirewall', action: 'Create VPS firewall'},
-					{ name: 'Firewall Deactivate', value: 'deactivateFirewall', action: 'Deactivate VPS firewall'},
-					{ name: 'Firewall Delete', value: 'deleteFirewall', action: 'Delete VPS firewall'},
-					{ name: 'Firewall Get', value: 'getFirewall', action: 'Get VPS firewall'},
-					{ name: 'Firewall List', value: 'listFirewalls', action: 'List VPS firewalls'},
-					{ name: 'Firewall Rule Create', value: 'createFirewallRule', action: 'Create VPS firewall rule'},
-					{ name: 'Firewall Rule Delete', value: 'deleteFirewallRule', action: 'Delete VPS firewall rule'},
-					{ name: 'Firewall Rule Update', value: 'updateFirewallRule', action: 'Update VPS firewall rule'},
-					{ name: 'Firewall Sync', value: 'syncFirewall', action: 'Sync VPS firewall'},
+					{ name: 'Firewall Activate', value: 'activateFirewall', action: 'Activate VPS firewall' },
+					{ name: 'Firewall Create', value: 'createFirewall', action: 'Create VPS firewall' },
+					{ name: 'Firewall Deactivate', value: 'deactivateFirewall', action: 'Deactivate VPS firewall' },
+					{ name: 'Firewall Delete', value: 'deleteFirewall', action: 'Delete VPS firewall' },
+					{ name: 'Firewall Get', value: 'getFirewall', action: 'Get VPS firewall' },
+					{ name: 'Firewall List', value: 'listFirewalls', action: 'List VPS firewalls' },
+					{ name: 'Firewall Rule Create', value: 'createFirewallRule', action: 'Create VPS firewall rule' },
+					{ name: 'Firewall Rule Delete', value: 'deleteFirewallRule', action: 'Delete VPS firewall rule' },
+					{ name: 'Firewall Rule Update', value: 'updateFirewallRule', action: 'Update VPS firewall rule' },
+					{ name: 'Firewall Sync', value: 'syncFirewall', action: 'Sync VPS firewall' },
 				],
 				default: 'activateFirewall',
 				displayOptions: {
@@ -189,9 +192,9 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Monarx', value: 'getMonarx', action: 'Get VPS malware scanner status'},
-					{ name: 'Add Monarx', value: 'addMonarx', action: 'Add VPS malware scanner'},
-					{ name: 'Remove Monarx', value: 'removeMonarx', action: 'Remove VPS malware scanner'},
+					{ name: 'Get Monarx', value: 'getMonarx', action: 'Get VPS malware scanner status' },
+					{ name: 'Add Monarx', value: 'addMonarx', action: 'Add VPS malware scanner' },
+					{ name: 'Remove Monarx', value: 'removeMonarx', action: 'Remove VPS malware scanner' },
 				],
 				default: 'getMonarx',
 				displayOptions: {
@@ -206,8 +209,8 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Template', value: 'getTemplate', action: 'Get VPS template'},
-					{ name: 'List Templates', value: 'listTemplates', action: 'List VPS templates'},
+					{ name: 'Get Template', value: 'getTemplate', action: 'Get VPS template' },
+					{ name: 'List Templates', value: 'listTemplates', action: 'List VPS templates' },
 				],
 				default: 'getTemplate',
 				displayOptions: {
@@ -222,11 +225,11 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Post Install Script Create', value: 'createPostInstallScript', action: 'Create VPS post install script'},
-					{ name: 'Post Install Script Delete', value: 'deletePostInstallScript', action: 'Delete VPS post install script'},
-					{ name: 'Post Install Script Get', value: 'getPostInstallScript', action: 'Get VPS post install script'},
-					{ name: 'Post Install Script List', value: 'listPostInstallScripts', action: 'List VPS post install scripts'},
-					{ name: 'Post Install Script Update', value: 'updatePostInstallScript', action: 'Update VPS post install script'},
+					{ name: 'Post Install Script Create', value: 'createPostInstallScript', action: 'Create VPS post install script' },
+					{ name: 'Post Install Script Delete', value: 'deletePostInstallScript', action: 'Delete VPS post install script' },
+					{ name: 'Post Install Script Get', value: 'getPostInstallScript', action: 'Get VPS post install script' },
+					{ name: 'Post Install Script List', value: 'listPostInstallScripts', action: 'List VPS post install scripts' },
+					{ name: 'Post Install Script Update', value: 'updatePostInstallScript', action: 'Update VPS post install script' },
 				],
 				default: 'getPostInstallScript',
 				displayOptions: {
@@ -241,10 +244,10 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Attach Public Key', value: 'attachPublicKey', action: 'Attach VPS public key'},
-					{ name: 'Delete Public Key', value: 'deletePublicKey', action: 'Delete VPS public key'},
-					{ name: 'List Public Keys', value: 'listPublicKeys', action: 'List VPS public keys'},
-					{ name: 'Create Public Key', value: 'createPublicKey', action: 'Create VPS public key'},
+					{ name: 'Attach Public Key', value: 'attachPublicKey', action: 'Attach VPS public key' },
+					{ name: 'Delete Public Key', value: 'deletePublicKey', action: 'Delete VPS public key' },
+					{ name: 'List Public Keys', value: 'listPublicKeys', action: 'List VPS public keys' },
+					{ name: 'Create Public Key', value: 'createPublicKey', action: 'Create VPS public key' },
 				],
 				default: 'attachPublicKey',
 				displayOptions: {
@@ -259,10 +262,10 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Snapshot', value: 'getSnapshot', action: 'Get VPS snapshot'},
-					{ name: 'Create Snapshot', value: 'createSnapshot', action: 'Create VPS snapshot'},
-					{ name: 'Delete Snapshot', value: 'deleteSnapshot', action: 'Delete VPS snapshot'},
-					{ name: 'Restore Snapshot', value: 'restoreSnapshot', action: 'Restore VPS snapshot'},
+					{ name: 'Get Snapshot', value: 'getSnapshot', action: 'Get VPS snapshot' },
+					{ name: 'Create Snapshot', value: 'createSnapshot', action: 'Create VPS snapshot' },
+					{ name: 'Delete Snapshot', value: 'deleteSnapshot', action: 'Delete VPS snapshot' },
+					{ name: 'Restore Snapshot', value: 'restoreSnapshot', action: 'Restore VPS snapshot' },
 				],
 				default: 'getSnapshot',
 				displayOptions: {
@@ -277,28 +280,28 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Metrics', value: 'getVmMetrics', action: 'Get VPS metrics'},
-					{ name: 'Get Public Keys', value: 'getVmPublicKeys', action: 'Get VPS public keys'},
-					{ name: 'Get VPS', value: 'getVm', action: 'Get VPS'},
-					{ name: 'Hostname Reset', value: 'resetHostname', action: 'Reset VPS hostname'},
-					{ name: 'Hostname Update', value: 'updateHostname', action: 'Update VPS hostname'},
-					{ name: 'List VPS', value: 'listVms', action: 'List VPS'},
-					{ name: 'Purchase New VPS', value: 'purchaseVm', action: 'Purchase new VPS'},
-					{ name: 'Recreate', value: 'recreateVm', action: 'Recreate VPS'},
-					{ name: 'Restart', value: 'restartVm', action: 'Restart VPS'},
-					{ name: 'Setup', value: 'setupVm', action: 'Setup VPS'},
-					{ name: 'Start', value: 'startVm', action: 'Start VPS'},
-					{ name: 'Start Recovery', value: 'createRecovery', action: 'Start VPS recovery mode'},
-					{ name: 'Stop', value: 'stopVm', action: 'Stop VPS'},
-					{ name: 'Stop Recovery', value: 'deleteRecovery', action: 'Stop VPS recovery mode'},
-					{ name: 'Update Nameservers', value: 'updateNameservers', action: 'Update VPS nameservers'},
-					{ name: 'Update Panel Password', value: 'updatePanelPassword', action: 'Update VPS control panel password'},
-					{ name: 'Update Root Password', value: 'updateRootPassword', action: 'Update VPS root password'},
+					{ name: 'Get Metrics', value: 'getVmMetrics', action: 'Get VPS metrics' },
+					{ name: 'Get Public Keys', value: 'getVmPublicKeys', action: 'Get VPS public keys' },
+					{ name: 'Get VPS', value: 'getVm', action: 'Get VPS' },
+					{ name: 'Hostname Reset', value: 'resetHostname', action: 'Reset VPS hostname' },
+					{ name: 'Hostname Update', value: 'updateHostname', action: 'Update VPS hostname' },
+					{ name: 'List VPS', value: 'listVms', action: 'List VPS' },
+					{ name: 'Purchase New VPS', value: 'purchaseVm', action: 'Purchase new VPS' },
+					{ name: 'Recreate', value: 'recreateVm', action: 'Recreate VPS' },
+					{ name: 'Restart', value: 'restartVm', action: 'Restart VPS' },
+					{ name: 'Setup', value: 'setupVm', action: 'Setup VPS' },
+					{ name: 'Start', value: 'startVm', action: 'Start VPS' },
+					{ name: 'Start Recovery', value: 'createRecovery', action: 'Start VPS recovery mode' },
+					{ name: 'Stop', value: 'stopVm', action: 'Stop VPS' },
+					{ name: 'Stop Recovery', value: 'deleteRecovery', action: 'Stop VPS recovery mode' },
+					{ name: 'Update Nameservers', value: 'updateNameservers', action: 'Update VPS nameservers' },
+					{ name: 'Update Panel Password', value: 'updatePanelPassword', action: 'Update VPS control panel password' },
+					{ name: 'Update Root Password', value: 'updateRootPassword', action: 'Update VPS root password' },
 				],
 				default: 'getVm',
 				displayOptions: {
 					show: {
-					resource: ['vps'],
+						resource: ['vps'],
 					},
 				},
 			},
@@ -308,14 +311,14 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'DNS Snapshot Get', value: 'getDnsSnapshot', action: 'Get DNS snapshot'},
-					{ name: 'DNS Snapshot List', value: 'listDnsSnapshots', action: 'List DNS snapshots'},
-					{ name: 'DNS Snapshot Restore', value: 'restoreDnsSnapshot', action: 'Restore DNS snapshot'},
-					{ name: 'DNS Zone Delete', value: 'deleteDnsZone', action: 'Delete DNS zone'},
-					{ name: 'DNS Zone Get', value: 'getDnsZone', action: 'Get DNS zone'},
-					{ name: 'DNS Zone Reset', value: 'resetDnsZone', action: 'Reset DNS zone'},
-					{ name: 'DNS Zone Update', value: 'updateDnsZone', action: 'Update DNS zone'},
-					{ name: 'DNS Zone Validate', value: 'validateDnsZone', action: 'Validate DNS zone'},
+					{ name: 'DNS Snapshot Get', value: 'getDnsSnapshot', action: 'Get DNS snapshot' },
+					{ name: 'DNS Snapshot List', value: 'listDnsSnapshots', action: 'List DNS snapshots' },
+					{ name: 'DNS Snapshot Restore', value: 'restoreDnsSnapshot', action: 'Restore DNS snapshot' },
+					{ name: 'DNS Zone Delete', value: 'deleteDnsZone', action: 'Delete DNS zone' },
+					{ name: 'DNS Zone Get', value: 'getDnsZone', action: 'Get DNS zone' },
+					{ name: 'DNS Zone Reset', value: 'resetDnsZone', action: 'Reset DNS zone' },
+					{ name: 'DNS Zone Update', value: 'updateDnsZone', action: 'Update DNS zone' },
+					{ name: 'DNS Zone Validate', value: 'validateDnsZone', action: 'Validate DNS zone' },
 				],
 				default: 'listDnsSnapshots',
 				displayOptions: {
@@ -330,20 +333,20 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Check Domain Availability', value: 'checkDomainAvailability', action: 'Check domain availability',},
-					{ name: 'Disable Domain Lock', value: 'disableDomainLock', action: 'Disable domain lock'},
-					{ name: 'Disable Privacy Protection', value: 'disablePrivacyProtection', action: 'Disable domain privacy protection'},
-					{ name: 'Enable Domain Lock', value: 'enableDomainLock', action: 'Enable domain lock'},
-					{ name: 'Enable Privacy Protection', value: 'enablePrivacyProtection', action: 'Enable domain privacy protection'},
-					{ name: 'Get Domain', value: 'getDomain', action: 'Get a domain'},
-					{ name: 'List Domains', value: 'listDomains', action: 'List domains'},
-					{ name: 'Purchase Domain', value: 'purchaseDomain', action: 'Purchase domain'},
-					{ name: 'Update Nameservers', value: 'updateDomainNameservers', action: 'Update domain nameservers'},
+					{ name: 'Check Domain Availability', value: 'checkDomainAvailability', action: 'Check domain availability', },
+					{ name: 'Disable Domain Lock', value: 'disableDomainLock', action: 'Disable domain lock' },
+					{ name: 'Disable Privacy Protection', value: 'disablePrivacyProtection', action: 'Disable domain privacy protection' },
+					{ name: 'Enable Domain Lock', value: 'enableDomainLock', action: 'Enable domain lock' },
+					{ name: 'Enable Privacy Protection', value: 'enablePrivacyProtection', action: 'Enable domain privacy protection' },
+					{ name: 'Get Domain', value: 'getDomain', action: 'Get a domain' },
+					{ name: 'List Domains', value: 'listDomains', action: 'List domains' },
+					{ name: 'Purchase Domain', value: 'purchaseDomain', action: 'Purchase domain' },
+					{ name: 'Update Nameservers', value: 'updateDomainNameservers', action: 'Update domain nameservers' },
 				],
 				default: 'listDomains',
 				displayOptions: {
 					show: {
-					resource: ['domain'],
+						resource: ['domain'],
 					},
 				},
 			},
@@ -353,11 +356,11 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Create WHOIS Profile', value: 'createWhoisProfile', action: 'Create WHOIS profile'},
-					{ name: 'Delete WHOIS Profile', value: 'deleteWhoisProfile', action: 'Delete WHOIS profile'},
-					{ name: 'Get WHOIS Profile', value: 'getWhoisProfile', action: 'Get WHOIS profile'},
-					{ name: 'Get WHOIS Profile Usage', value: 'getWhoisProfileUsage', action: 'Get WHOIS profile usage'},
-					{ name: 'List WHOIS Profiles', value: 'listWhoisProfiles', action: 'List WHOIS profiles'},
+					{ name: 'Create WHOIS Profile', value: 'createWhoisProfile', action: 'Create WHOIS profile' },
+					{ name: 'Delete WHOIS Profile', value: 'deleteWhoisProfile', action: 'Delete WHOIS profile' },
+					{ name: 'Get WHOIS Profile', value: 'getWhoisProfile', action: 'Get WHOIS profile' },
+					{ name: 'Get WHOIS Profile Usage', value: 'getWhoisProfileUsage', action: 'Get WHOIS profile usage' },
+					{ name: 'List WHOIS Profiles', value: 'listWhoisProfiles', action: 'List WHOIS profiles' },
 				],
 				default: 'listWhoisProfiles',
 				displayOptions: {
@@ -372,9 +375,9 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Get Forwarding Data', value: 'getForwardingData', action: 'Get domain forwarding'},
-					{ name: 'Delete Forwarding Data', value: 'deleteForwardingData', action: 'Delete domain forwarding'},
-					{ name: 'Create Forwarding Data', value: 'createForwardingData', action: 'Create domain forwarding'},
+					{ name: 'Get Forwarding Data', value: 'getForwardingData', action: 'Get domain forwarding' },
+					{ name: 'Delete Forwarding Data', value: 'deleteForwardingData', action: 'Delete domain forwarding' },
+					{ name: 'Create Forwarding Data', value: 'createForwardingData', action: 'Create domain forwarding' },
 				],
 				default: 'getForwardingData',
 				displayOptions: {
@@ -389,12 +392,12 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Cancel Subscription', value: 'deleteSubscription', action: 'Cancel subscription'},
-					{ name: 'Delete Payment Method', value: 'deletePaymentMethod', action: 'Delete payment method'},
-					{ name: 'Get Catalog Item List', value: 'getCatalogList', action: 'Get catalog item list'},
-					{ name: 'Get Payment Method List', value: 'getPaymentList', action: 'Get payment method list'},
-					{ name: 'Get Subscription List', value: 'getSubscriptionList', action: 'Get subscription list'},
-					{ name: 'Set Default Payment Method', value: 'setPaymentMethod', action: 'Set default payment method'},
+					{ name: 'Cancel Subscription', value: 'deleteSubscription', action: 'Cancel subscription' },
+					{ name: 'Delete Payment Method', value: 'deletePaymentMethod', action: 'Delete payment method' },
+					{ name: 'Get Catalog Item List', value: 'getCatalogList', action: 'Get catalog item list' },
+					{ name: 'Get Payment Method List', value: 'getPaymentList', action: 'Get payment method list' },
+					{ name: 'Get Subscription List', value: 'getSubscriptionList', action: 'Get subscription list' },
+					{ name: 'Set Default Payment Method', value: 'setPaymentMethod', action: 'Set default payment method' },
 				],
 				default: 'getCatalogList',
 				displayOptions: {
@@ -410,22 +413,116 @@ export class HostingerApi implements INodeType {
 				noDataExpression: true,
 				options: [
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact'},
+					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact', description: 'Deprecated: use Create Profile Contact to target an explicit profile' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact'},
+					{ name: 'Create Contacts in Bulk', value: 'createProfileContactsBulk', action: 'Create Reach profile contacts in bulk' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{name: 'Get Segment', value: 'getSegment', action: 'Get Reach segment'},
+					{ name: 'Create Profile Contact', value: 'createProfileContact', action: 'Create Reach profile contact' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get Reach segment contacts'},
+					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact', description: 'Deprecated: use Delete Profile Contact to target an explicit profile' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts'},
+					{ name: 'Delete Profile Contact', value: 'deleteProfileContact', action: 'Delete Reach profile contact' },
 					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments'},
+					{ name: 'Get Profile Contact', value: 'getProfileContact', action: 'Get Reach profile contact' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Get Segment', value: 'getSegment', action: 'Get Reach segment', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get Reach segment contacts', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts', description: 'Deprecated: use List Profile Contacts to target an explicit profile' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Profile Contacts', value: 'listProfileContacts', action: 'List Reach profile contacts' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Profiles', value: 'listProfiles', action: 'List Reach profiles' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Update Profile Contact', value: 'updateProfileContact', action: 'Update Reach profile contact' },
 				],
 				default: 'listContacts',
 				displayOptions: {
 					show: {
 						resource: ['reach']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Create Contact Field', value: 'createContactField', action: 'Create Reach contact field' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Delete Contact Field', value: 'deleteContactField', action: 'Delete Reach contact field' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Contact Fields', value: 'listContactFields', action: 'List Reach contact fields' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Update Contact Field', value: 'updateContactField', action: 'Update Reach contact field' },
+				],
+				default: 'listContactFields',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Count Profile Segment Contacts', value: 'countProfileSegmentContacts', action: 'Count Reach profile segment contacts' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Create Profile Segment', value: 'createProfileSegment', action: 'Create Reach profile segment' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Delete Profile Segment', value: 'deleteProfileSegment', action: 'Delete Reach profile segment' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Get Profile Segment', value: 'getProfileSegment', action: 'Get Reach profile segment' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Profile Segment Contacts', value: 'listProfileSegmentContacts', action: 'List Reach profile segment contacts' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Profile Segments', value: 'listProfileSegments', action: 'List Reach profile segments' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Update Profile Segment', value: 'updateProfileSegment', action: 'Update Reach profile segment' },
+				],
+				default: 'listProfileSegments',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Assign Tag to Contact', value: 'assignTagToContact', action: 'Assign Reach tag to contact' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Assign Tag to Contacts', value: 'assignTagToContacts', action: 'Assign Reach tag to multiple contacts' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Create Tags', value: 'createTags', action: 'Create Reach tags' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Delete Tag', value: 'deleteTag', action: 'Delete Reach tag' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'List Tags', value: 'listTags', action: 'List Reach tags' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Remove Tag From Contact', value: 'removeTagFromContact', action: 'Remove Reach tag from contact' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Remove Tag From Contacts', value: 'removeTagFromContacts', action: 'Remove Reach tag from multiple contacts' },
+					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
+					{ name: 'Update Tag', value: 'updateTag', action: 'Update Reach tag' },
+				],
+				default: 'listTags',
+				displayOptions: {
+					show: {
+						resource: ['reachTags']
 					},
 				},
 			},
@@ -764,9 +861,9 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['domain', 'whois', 'domainForwarding'],
 						operation: [
-							'getDomain', 'enableDomainLock', 'disableDomainLock', 
-							'enablePrivacyProtection', 'disablePrivacyProtection', 
-							'updateDomainNameservers', 'getForwardingData', 
+							'getDomain', 'enableDomainLock', 'disableDomainLock',
+							'enablePrivacyProtection', 'disablePrivacyProtection',
+							'updateDomainNameservers', 'getForwardingData',
 							'deleteForwardingData', 'purchaseDomain'
 						]
 					}
@@ -1091,7 +1188,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach'],
-						operation: ['createContact']
+						operation: ['createContact', 'createProfileContact']
 					}
 				}
 			},
@@ -1104,7 +1201,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach'],
-						operation: ['createContact']
+						operation: ['createContact', 'createProfileContact']
 					}
 				}
 			},
@@ -1117,7 +1214,21 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach'],
-						operation: ['createContact']
+						operation: ['createContact', 'createProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Phone',
+				name: 'contactPhone',
+				type: 'string',
+				default: '',
+				placeholder: '+37060000000',
+				description: 'Phone number of the contact in E.164 format',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['createContact', 'createProfileContact']
 					}
 				}
 			},
@@ -1130,7 +1241,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach'],
-						operation: ['createContact']
+						operation: ['createContact', 'createProfileContact', 'createProfileContactsBulk']
 					}
 				}
 			},
@@ -1141,11 +1252,13 @@ export class HostingerApi implements INodeType {
 				name: 'contactUuid',
 				type: 'string',
 				default: '',
-				description: 'UUID of the contact to delete',
+				description: 'UUID of the contact',
 				displayOptions: {
 					show: {
-						resource: ['reach'],
-						operation: ['deleteContact']
+						resource: ['reach', 'reachTags'],
+						operation: [
+							'deleteContact', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'assignTagToContact', 'removeTagFromContact'
+						]
 					}
 				}
 			},
@@ -1163,7 +1276,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach'],
-						operation: ['listContacts']
+						operation: ['listContacts', 'listProfileContacts']
 					}
 				}
 			},
@@ -1176,8 +1289,23 @@ export class HostingerApi implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['reach'],
-						operation: ['listContacts']
+						resource: ['reach', 'reachSegments'],
+						operation: [
+							'listContacts', 'listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Per Page',
+				name: 'perPage',
+				type: 'number',
+				default: 50,
+				description: 'Number of results to return per page',
+				displayOptions: {
+					show: {
+						resource: ['reach', 'reachSegments'],
+						operation: ['listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts']
 					}
 				}
 			},
@@ -1189,8 +1317,409 @@ export class HostingerApi implements INodeType {
 				description: 'UUID of the segment',
 				displayOptions: {
 					show: {
+						resource: ['reach', 'reachSegments'],
+						operation: [
+							'getSegment', 'getSegmentContacts', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Profile UUID',
+				name: 'profileUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the Reach profile. Use the List Profiles operation to look it up.',
+				displayOptions: {
+					show: {
+						resource: ['reach', 'reachContactFields', 'reachSegments', 'reachTags'],
+						operation: [
+							'listProfileContacts', 'createProfileContact', 'createProfileContactsBulk', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'listContactFields', 'createContactField', 'updateContactField', 'deleteContactField', 'listProfileSegments', 'createProfileSegment', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts', 'listTags', 'createTags', 'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Tag UUID Filter',
+				name: 'tagUuidFilter',
+				type: 'string',
+				default: '',
+				description: 'Only return contacts assigned to this tag',
+				displayOptions: {
+					show: {
 						resource: ['reach'],
-						operation: ['getSegment', 'getSegmentContacts']
+						operation: ['listProfileContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Search',
+				name: 'contactSearch',
+				type: 'string',
+				default: '',
+				description: 'Search contacts by email, name or surname',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['listProfileContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Contacts (JSON)',
+				name: 'bulkContacts',
+				type: 'json',
+				required: true,
+				default: `[
+				{
+					"email": "contact@example.com",
+					"name": "John",
+					"surname": "Doe"
+				}
+				]`,
+				description: 'Contacts to create. Each entry accepts email, name, surname and phone.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['createProfileContactsBulk']
+					}
+				}
+			},
+			{
+				displayName: 'Tag UUIDs',
+				name: 'bulkContactTagUuids',
+				type: 'string',
+				default: '',
+				description: 'Comma-separated list of tag UUIDs to assign to every created contact',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['createProfileContactsBulk']
+					}
+				}
+			},
+			{
+				displayName: 'Email',
+				name: 'contactUpdateEmail',
+				type: 'string',
+				default: '',
+				description: 'New email address for the contact. Leave empty to keep the current value.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Name',
+				name: 'contactUpdateName',
+				type: 'string',
+				default: '',
+				description: 'New first name for the contact. Leave empty to keep the current value.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Surname',
+				name: 'contactUpdateSurname',
+				type: 'string',
+				default: '',
+				description: 'New last name for the contact. Leave empty to keep the current value.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Phone',
+				name: 'contactUpdatePhone',
+				type: 'string',
+				default: '',
+				placeholder: '+37060000000',
+				description: 'New phone number in E.164 format. Leave empty to keep the current value.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Subscription Status',
+				name: 'contactUpdateSubscriptionStatus',
+				type: 'options',
+				options: [
+					{ name: 'Confirmed', value: 'confirmed', },
+					{ name: 'Pending', value: 'pending', },
+					{ name: 'Subscribed', value: 'subscribed', },
+					{ name: 'Unchanged', value: '', },
+					{ name: 'Unsubscribed', value: 'unsubscribed', },
+				],
+				default: '',
+				description: 'New subscription status for the contact',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Note',
+				name: 'contactUpdateNote',
+				type: 'string',
+				default: '',
+				description: 'New note for the contact (max 75 characters)',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Custom Fields (JSON)',
+				name: 'contactUpdateFields',
+				type: 'json',
+				default: '[]',
+				description: 'Custom field values to set. Each entry needs the field uuid plus value or selected_option_uuids.',
+				displayOptions: {
+					show: {
+						resource: ['reach'],
+						operation: ['updateProfileContact']
+					}
+				}
+			},
+			{
+				displayName: 'Field UUID',
+				name: 'contactFieldUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the custom contact field',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields'],
+						operation: ['updateContactField', 'deleteContactField']
+					}
+				}
+			},
+			{
+				displayName: 'Type',
+				name: 'contactFieldType',
+				type: 'options',
+				options: [
+					{ name: 'Date', value: 'date', },
+					{ name: 'Multi Choice', value: 'multi_choice', },
+					{ name: 'Number', value: 'number', },
+					{ name: 'Single Choice', value: 'single_choice', },
+					{ name: 'Text', value: 'text', },
+				],
+				default: 'text',
+				description: 'Type of the custom contact field',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields'],
+						operation: ['createContactField']
+					}
+				}
+			},
+			{
+				displayName: 'Label',
+				name: 'contactFieldLabel',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'Label shown for the custom contact field',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields'],
+						operation: ['createContactField', 'updateContactField']
+					}
+				}
+			},
+			{
+				displayName: 'Options',
+				name: 'contactFieldOptions',
+				type: 'string',
+				default: '',
+				description: 'Comma-separated list of choices. Required for single choice and multi choice fields.',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields'],
+						operation: ['createContactField']
+					}
+				}
+			},
+			{
+				displayName: 'Options (JSON)',
+				name: 'contactFieldUpdateOptions',
+				type: 'json',
+				default: '[]',
+				description: 'Replaces the choice set. Entries with a uuid are relabelled, entries without one are created, and omitted choices are deleted along with the values contacts hold for them. Leave empty to keep the current choices.',
+				displayOptions: {
+					show: {
+						resource: ['reachContactFields'],
+						operation: ['updateContactField']
+					}
+				}
+			},
+			{
+				displayName: 'Tag UUID',
+				name: 'tagUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the tag',
+				displayOptions: {
+					show: {
+						resource: ['reachTags'],
+						operation: [
+							'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts'
+						]
+					}
+				}
+			},
+			{
+				displayName: 'Tag Names',
+				name: 'tagNames',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'Comma-separated list of tag names to create. Existing tags are returned as they are.',
+				displayOptions: {
+					show: {
+						resource: ['reachTags'],
+						operation: ['createTags']
+					}
+				}
+			},
+			{
+				displayName: 'Tag Name',
+				name: 'tagName',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'New name for the tag. Names are unique within a profile.',
+				displayOptions: {
+					show: {
+						resource: ['reachTags'],
+						operation: ['updateTag']
+					}
+				}
+			},
+			{
+				displayName: 'Contact UUIDs',
+				name: 'tagContactUuids',
+				type: 'string',
+				default: '',
+				description: 'Comma-separated list of contact UUIDs. Ignored when All Contacts is enabled.',
+				displayOptions: {
+					show: {
+						resource: ['reachTags'],
+						operation: ['assignTagToContacts', 'removeTagFromContacts']
+					}
+				}
+			},
+			{
+				displayName: 'All Contacts',
+				name: 'tagAllContacts',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to apply the change to every contact in the profile instead of a list of UUIDs',
+				displayOptions: {
+					show: {
+						resource: ['reachTags'],
+						operation: ['assignTagToContacts', 'removeTagFromContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Count Type',
+				name: 'segmentCountType',
+				type: 'options',
+				options: [
+					{ name: 'All', value: 'all', },
+					{ name: 'Subscribed', value: 'subscribed', },
+				],
+				default: 'all',
+				description: 'Which contacts to include in the returned segment counts',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['listProfileSegments']
+					}
+				}
+			},
+			{
+				displayName: 'Segment Name',
+				name: 'segmentName',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'Name of the segment',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['createProfileSegment', 'updateProfileSegment']
+					}
+				}
+			},
+			{
+				displayName: 'Logic',
+				name: 'segmentLogic',
+				type: 'options',
+				options: [
+					{ name: 'AND', value: 'AND', },
+					{ name: 'OR', value: 'OR', },
+				],
+				default: 'AND',
+				description: 'Whether every condition must match or any single condition is enough',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['createProfileSegment', 'updateProfileSegment']
+					}
+				}
+			},
+			{
+				displayName: 'Conditions (JSON)',
+				name: 'segmentConditions',
+				type: 'json',
+				required: true,
+				default: `[
+  {
+    "attribute": "email",
+    "operator": "contains",
+    "value": "@example.com"
+  }
+]`,
+				description: 'Segment conditions. Use cf:{fieldUuid} as the attribute to target a custom contact field.',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['createProfileSegment']
+					}
+				}
+			},
+			{
+				displayName: 'Conditions (JSON)',
+				name: 'segmentUpdateConditions',
+				type: 'json',
+				default: '[]',
+				description: 'Replaces the segment conditions. Use cf:{fieldUuid} as the attribute to target a custom contact field. Leave empty to rename the segment without touching its conditions.',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['updateProfileSegment']
 					}
 				}
 			}
@@ -1208,16 +1737,21 @@ export class HostingerApi implements INodeType {
 			const operation = this.getNodeParameter('operation', i) as string;
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
+			const getListParam = (name: string) => (this.getNodeParameter(name, i) as string)
+				.split(',')
+				.map(value => value.trim())
+				.filter(value => value);
 			let method: IHttpRequestMethods = 'GET';
 			let endpoint = '';
 			let requestBody: IDataObject | undefined;
 
 			try {
 				// For Reach createContact, build request body from individual fields
-				if (resource === 'reach' && operation === 'createContact') {
+				if (resource === 'reach' && (operation === 'createContact' || operation === 'createProfileContact')) {
 					const contactEmail = this.getNodeParameter('contactEmail', i) as string;
 					const contactName = this.getNodeParameter('contactName', i) as string;
 					const contactSurname = this.getNodeParameter('contactSurname', i) as string;
+					const contactPhone = this.getNodeParameter('contactPhone', i) as string;
 					const contactNote = this.getNodeParameter('contactNote', i) as string;
 
 					const contactData: IDataObject = {
@@ -1226,6 +1760,7 @@ export class HostingerApi implements INodeType {
 
 					if (contactName) contactData.name = contactName;
 					if (contactSurname) contactData.surname = contactSurname;
+					if (contactPhone) contactData.phone = contactPhone;
 					if (contactNote) contactData.note = contactNote;
 
 					requestBody = contactData;
@@ -1359,6 +1894,78 @@ export class HostingerApi implements INodeType {
 					if (ns2) requestBody.ns2 = ns2;
 					if (ns3) requestBody.ns3 = ns3;
 					if (ns4) requestBody.ns4 = ns4;
+				} else if (operation === 'createProfileContactsBulk') {
+					const contactNote = this.getNodeParameter('contactNote', i) as string;
+					const tagUuids = getListParam('bulkContactTagUuids');
+
+					requestBody = {
+						contacts: JSON.parse(this.getNodeParameter('bulkContacts', i) as string)
+					};
+
+					if (tagUuids.length > 0) requestBody.tag_uuids = tagUuids;
+					if (contactNote) requestBody.note = contactNote;
+				} else if (operation === 'updateProfileContact') {
+					const email = this.getNodeParameter('contactUpdateEmail', i) as string;
+					const name = this.getNodeParameter('contactUpdateName', i) as string;
+					const surname = this.getNodeParameter('contactUpdateSurname', i) as string;
+					const phone = this.getNodeParameter('contactUpdatePhone', i) as string;
+					const subscriptionStatus = this.getNodeParameter('contactUpdateSubscriptionStatus', i) as string;
+					const note = this.getNodeParameter('contactUpdateNote', i) as string;
+					const fields = this.getNodeParameter('contactUpdateFields', i) as string;
+
+					requestBody = {};
+
+					if (email) requestBody.email = email;
+					if (name) requestBody.name = name;
+					if (surname) requestBody.surname = surname;
+					if (phone) requestBody.phone = phone;
+					if (subscriptionStatus) requestBody.subscription_status = subscriptionStatus;
+					if (note) requestBody.note = note;
+					if (fields && fields !== '[]') requestBody.fields = JSON.parse(fields);
+				} else if (operation === 'createContactField') {
+					const options = getListParam('contactFieldOptions');
+
+					requestBody = {
+						type: getParam('contactFieldType'),
+						label: getParam('contactFieldLabel')
+					};
+
+					if (options.length > 0) requestBody.options = options;
+				} else if (operation === 'updateContactField') {
+					const options = this.getNodeParameter('contactFieldUpdateOptions', i) as string;
+
+					requestBody = {
+						label: getParam('contactFieldLabel')
+					};
+
+					if (options && options !== '[]') requestBody.options = JSON.parse(options);
+				} else if (operation === 'createTags') {
+					requestBody = { names: getListParam('tagNames') };
+				} else if (operation === 'updateTag') {
+					requestBody = { value: getParam('tagName') };
+				} else if (operation === 'assignTagToContacts' || operation === 'removeTagFromContacts') {
+					const allContacts = this.getNodeParameter('tagAllContacts', i) as boolean;
+
+					requestBody = allContacts
+						? { all_contacts: true }
+						: { contact_uuids: getListParam('tagContactUuids') };
+				} else if (operation === 'createProfileSegment') {
+					requestBody = {
+						name: getParam('segmentName'),
+						logic: getParam('segmentLogic'),
+						conditions: JSON.parse(this.getNodeParameter('segmentConditions', i) as string)
+					};
+				} else if (operation === 'updateProfileSegment') {
+					const segmentConditions = this.getNodeParameter('segmentUpdateConditions', i) as string;
+
+					requestBody = { name: getParam('segmentName') };
+
+					// The API only accepts logic together with conditions, and leaves the
+					// existing conditions alone when they are omitted.
+					if (segmentConditions && segmentConditions !== '[]') {
+						requestBody.logic = getParam('segmentLogic');
+						requestBody.conditions = JSON.parse(segmentConditions);
+					}
 				} else {
 					// For other actions, use the request body field
 					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
@@ -1486,7 +2093,7 @@ export class HostingerApi implements INodeType {
 				case 'listContacts': {
 					let contactsEndpoint = `/api/reach/v1/contacts?page=${getParam('page')}`;
 					const subscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
-	
+
 					if (subscriptionStatus) {
 						contactsEndpoint += `&subscription_status=${subscriptionStatus}`;
 					}
@@ -1498,6 +2105,57 @@ export class HostingerApi implements INodeType {
 				case 'listSegments': method = 'GET'; endpoint = '/api/reach/v1/segmentation/segments'; break;
 				case 'getSegment': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}`; break;
 				case 'getSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}/contacts`; break;
+				//Reach - Profiles
+				case 'listProfiles': method = 'GET'; endpoint = '/api/reach/v1/profiles'; break;
+				//Reach - Profile contacts
+				case 'listProfileContacts': {
+					let profileContactsEndpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`;
+					const profileSubscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
+					const tagUuidFilter = this.getNodeParameter('tagUuidFilter', i) as string;
+					const contactSearch = this.getNodeParameter('contactSearch', i) as string;
+
+					if (profileSubscriptionStatus) {
+						profileContactsEndpoint += `&subscription_status=${profileSubscriptionStatus}`;
+					}
+
+					if (tagUuidFilter) {
+						profileContactsEndpoint += `&tag_uuid=${tagUuidFilter}`;
+					}
+
+					if (contactSearch) {
+						profileContactsEndpoint += `&search=${encodeURIComponent(contactSearch)}`;
+					}
+
+					endpoint = profileContactsEndpoint;
+					break;
+				}
+				case 'createProfileContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts`; break;
+				case 'createProfileContactsBulk': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/bulk`; break;
+				case 'getProfileContact': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
+				case 'updateProfileContact': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
+				case 'deleteProfileContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/${getParam('contactUuid')}`; break;
+				//Reach - Contact fields
+				case 'listContactFields': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields`; break;
+				case 'createContactField': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields`; break;
+				case 'updateContactField': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields/${getParam('contactFieldUuid')}`; break;
+				case 'deleteContactField': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/contacts/fields/${getParam('contactFieldUuid')}`; break;
+				//Reach - Tags
+				case 'listTags': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags`; break;
+				case 'createTags': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags`; break;
+				case 'updateTag': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}`; break;
+				case 'deleteTag': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}`; break;
+				case 'assignTagToContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts/${getParam('contactUuid')}`; break;
+				case 'assignTagToContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts`; break;
+				case 'removeTagFromContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts/${getParam('contactUuid')}`; break;
+				case 'removeTagFromContacts': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/tags/${getParam('tagUuid')}/contacts`; break;
+				//Reach - Profile segments
+				case 'listProfileSegments': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments?page=${getParam('page')}&per_page=${getParam('perPage')}&count_type=${getParam('segmentCountType')}`; break;
+				case 'createProfileSegment': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments`; break;
+				case 'getProfileSegment': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
+				case 'updateProfileSegment': method = 'PUT'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
+				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}`; break;
+				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}/count`; break;
+				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getParam('profileUuid')}/segmentation/segments/${getParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
 
 				default: throw new ApplicationError(`Unsupported operation: ${operation}`);
 			}
