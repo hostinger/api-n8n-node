@@ -1,9 +1,9 @@
 {
-	"node": "n8n-nodes-base.HostingerApi",
+	"node": "n8n-nodes-hostinger-api.HostingerApi",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": [
-		"API"
+		"Development"
 	],
 	"resources": {
 		"credentialDocumentation": [

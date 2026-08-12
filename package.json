@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-hostinger-api",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Hostinger API n8n Node",
   "keywords": [
     "n8n-community-node-package"
@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@n8n/node-cli": "^0.23.0",
+    "@n8n/node-cli": "^0.43.2",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
     "release-it": "^21.0.1",
@@ -46,22 +46,5 @@
   },
   "peerDependencies": {
     "n8n-workflow": "*"
-  },
-  "overrides": {
-    "uuid": ">=14.0.0",
-    "form-data": "^4.0.6",
-    "n8n-workflow": {
-      "form-data": "^4.0.6",
-      "lodash": "^4.17.23"
-    },
-    "eslint-plugin-n8n-nodes-base": {
-      "minimatch": "9.0.9"
-    },
-    "release-it": {
-      "undici": "^6.27.0"
-    },
-    "flatted": "3.4.2",
-    "langsmith": "^0.7.0",
-    "@langchain/community": "1.1.24"
   }
 }

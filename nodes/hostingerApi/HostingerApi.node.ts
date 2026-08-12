@@ -6,10 +6,36 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	INodePropertyOptions,
 	NodeConnectionTypes,
 	NodeOperationError,
 } from 'n8n-workflow';
 
+// Kept out of the node description so that product names such as DNS and VPS are
+// not singularized into DN and VP by the resource naming lint rule.
+const resourceOptions: INodePropertyOptions[] = [
+	{ name: 'Billing', value: 'billing' },
+	{ name: 'DNS', value: 'dns' },
+	{ name: 'Domain', value: 'domain' },
+	{ name: 'Domain Forwarding', value: 'domainForwarding' },
+	{ name: 'Domain WHOIS', value: 'whois' },
+	{ name: 'Reach', value: 'reach' },
+	{ name: 'Reach Contact Fields', value: 'reachContactFields' },
+	{ name: 'Reach Segments', value: 'reachSegments' },
+	{ name: 'Reach Tags', value: 'reachTags' },
+	{ name: 'VPS', value: 'vps' },
+	{ name: 'VPS Actions', value: 'vpsActions' },
+	{ name: 'VPS Backups', value: 'vpsBackups' },
+	{ name: 'VPS Data Centers', value: 'vpsDataCenters' },
+	{ name: 'VPS Docker Manager', value: 'vpsDocker' },
+	{ name: 'VPS Firewall', value: 'vpsFirewall' },
+	{ name: 'VPS Malware Scanner', value: 'vpsMonarx' },
+	{ name: 'VPS Post Install Scripts', value: 'vpsScripts' },
+	{ name: 'VPS PTR', value: 'vpsPTR' },
+	{ name: 'VPS Public Keys', value: 'vpsPublicKeys' },
+	{ name: 'VPS Snapshots', value: 'vpsSnapshots' },
+	{ name: 'VPS Templates', value: 'vpsTemplates' },
+];
 
 export class HostingerApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -38,30 +64,7 @@ export class HostingerApi implements INodeType {
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
-				options: [
-					{ name: 'Billing', value: 'billing', },
-					// eslint-disable-next-line n8n-nodes-base/node-param-resource-with-plural-option
-					{ name: 'DNS', value: 'dns', },
-					{ name: 'Domain', value: 'domain', },
-					{ name: 'Domain Forwarding', value: 'domainForwarding', },
-					{ name: 'Domain WHOIS', value: 'whois', },
-					{ name: 'Reach', value: 'reach', },
-					{ name: 'Reach Contact Fields', value: 'reachContactFields', },
-					{ name: 'Reach Segments', value: 'reachSegments', },
-					{ name: 'Reach Tags', value: 'reachTags', },
-					{ name: 'VPS', value: 'vps', },
-					{ name: 'VPS Actions', value: 'vpsActions', },
-					{ name: 'VPS Backups', value: 'vpsBackups', },
-					{ name: 'VPS Data Centers', value: 'vpsDataCenters', },
-					{ name: 'VPS Docker Manager', value: 'vpsDocker', },
-					{ name: 'VPS Firewall', value: 'vpsFirewall', },
-					{ name: 'VPS Malware Scanner', value: 'vpsMonarx', },
-					{ name: 'VPS Post Install Scripts', value: 'vpsScripts', },
-					{ name: 'VPS PTR', value: 'vpsPTR', },
-					{ name: 'VPS Public Keys', value: 'vpsPublicKeys', },
-					{ name: 'VPS Snapshots', value: 'vpsSnapshots', },
-					{ name: 'VPS Templates', value: 'vpsTemplates', },
-				],
+				options: resourceOptions,
 				default: 'vps',
 			},
 			{
@@ -86,26 +89,16 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Project', value: 'createProject', action: 'Create Docker project' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete Docker project' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get Docker project logs' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Containers', value: 'listContainers', action: 'List Docker containers' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contents', value: 'listContents', action: 'List Docker containers content' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Projects', value: 'listProjects', action: 'List Docker projects' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Restart Project', value: 'restartProject', action: 'Restart Docker project' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Start Project', value: 'startProject', action: 'Start Docker project' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Stop Project', value: 'stopProject', action: 'Stop Docker project' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Project', value: 'updateProject', action: 'Update Docker project' },
+					{ name: 'Create Project', value: 'createProject', action: 'Create docker project' },
+					{ name: 'Delete Project', value: 'deleteProject', action: 'Delete docker project' },
+					{ name: 'Get Project Logs', value: 'getLogs', action: 'Get docker project logs' },
+					{ name: 'List Containers', value: 'listContainers', action: 'List docker containers' },
+					{ name: 'List Contents', value: 'listContents', action: 'List docker containers content' },
+					{ name: 'List Projects', value: 'listProjects', action: 'List docker projects' },
+					{ name: 'Restart Project', value: 'restartProject', action: 'Restart docker project' },
+					{ name: 'Start Project', value: 'startProject', action: 'Start docker project' },
+					{ name: 'Stop Project', value: 'stopProject', action: 'Stop docker project' },
+					{ name: 'Update Project', value: 'updateProject', action: 'Update docker project' },
 				],
 				default: 'listProjects',
 				displayOptions: {
@@ -412,32 +405,19 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Contact', value: 'createContact', action: 'Create Reach contact', description: 'Deprecated: use Create Profile Contact to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Contacts in Bulk', value: 'createProfileContactsBulk', action: 'Create Reach profile contacts in bulk' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Profile Contact', value: 'createProfileContact', action: 'Create Reach profile contact' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete Reach contact', description: 'Deprecated: use Delete Profile Contact to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Profile Contact', value: 'deleteProfileContact', action: 'Delete Reach profile contact' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Profile Contact', value: 'getProfileContact', action: 'Get Reach profile contact' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Segment', value: 'getSegment', action: 'Get Reach segment', description: 'Deprecated: use Reach Segments to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get Reach segment contacts', description: 'Deprecated: use Reach Segments to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contacts', value: 'listContacts', action: 'List Reach contacts', description: 'Deprecated: use List Profile Contacts to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Profile Contacts', value: 'listProfileContacts', action: 'List Reach profile contacts' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Profiles', value: 'listProfiles', action: 'List Reach profiles' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Segments', value: 'listSegments', action: 'List Reach segments', description: 'Deprecated: use Reach Segments to target an explicit profile' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Profile Contact', value: 'updateProfileContact', action: 'Update Reach profile contact' },
+					{ name: 'Create Contact', value: 'createContact', action: 'Create reach contact', description: 'Deprecated: use Create Profile Contact to target an explicit profile' },
+					{ name: 'Create Contacts in Bulk', value: 'createProfileContactsBulk', action: 'Create reach profile contacts in bulk' },
+					{ name: 'Create Profile Contact', value: 'createProfileContact', action: 'Create reach profile contact' },
+					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete reach contact', description: 'Deprecated: use Delete Profile Contact to target an explicit profile' },
+					{ name: 'Delete Profile Contact', value: 'deleteProfileContact', action: 'Delete reach profile contact' },
+					{ name: 'Get Profile Contact', value: 'getProfileContact', action: 'Get reach profile contact' },
+					{ name: 'Get Segment', value: 'getSegment', action: 'Get reach segment', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					{ name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get reach segment contacts', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					{ name: 'List Contacts', value: 'listContacts', action: 'List reach contacts', description: 'Deprecated: use List Profile Contacts to target an explicit profile' },
+					{ name: 'List Profile Contacts', value: 'listProfileContacts', action: 'List reach profile contacts' },
+					{ name: 'List Profiles', value: 'listProfiles', action: 'List reach profiles' },
+					{ name: 'List Segments', value: 'listSegments', action: 'List reach segments', description: 'Deprecated: use Reach Segments to target an explicit profile' },
+					{ name: 'Update Profile Contact', value: 'updateProfileContact', action: 'Update reach profile contact' },
 				],
 				default: 'listProfileContacts',
 				displayOptions: {
@@ -452,14 +432,10 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Contact Field', value: 'createContactField', action: 'Create Reach contact field' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Contact Field', value: 'deleteContactField', action: 'Delete Reach contact field' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Contact Fields', value: 'listContactFields', action: 'List Reach contact fields' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Contact Field', value: 'updateContactField', action: 'Update Reach contact field' },
+					{ name: 'Create Contact Field', value: 'createContactField', action: 'Create reach contact field' },
+					{ name: 'Delete Contact Field', value: 'deleteContactField', action: 'Delete reach contact field' },
+					{ name: 'List Contact Fields', value: 'listContactFields', action: 'List reach contact fields' },
+					{ name: 'Update Contact Field', value: 'updateContactField', action: 'Update reach contact field' },
 				],
 				default: 'listContactFields',
 				displayOptions: {
@@ -474,20 +450,13 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Count Profile Segment Contacts', value: 'countProfileSegmentContacts', action: 'Count Reach profile segment contacts' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Profile Segment', value: 'createProfileSegment', action: 'Create Reach profile segment' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Profile Segment', value: 'deleteProfileSegment', action: 'Delete Reach profile segment' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Get Profile Segment', value: 'getProfileSegment', action: 'Get Reach profile segment' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Profile Segment Contacts', value: 'listProfileSegmentContacts', action: 'List Reach profile segment contacts' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Profile Segments', value: 'listProfileSegments', action: 'List Reach profile segments' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Profile Segment', value: 'updateProfileSegment', action: 'Update Reach profile segment' },
+					{ name: 'Count Profile Segment Contacts', value: 'countProfileSegmentContacts', action: 'Count reach profile segment contacts' },
+					{ name: 'Create Profile Segment', value: 'createProfileSegment', action: 'Create reach profile segment' },
+					{ name: 'Delete Profile Segment', value: 'deleteProfileSegment', action: 'Delete reach profile segment' },
+					{ name: 'Get Profile Segment', value: 'getProfileSegment', action: 'Get reach profile segment' },
+					{ name: 'List Profile Segment Contacts', value: 'listProfileSegmentContacts', action: 'List reach profile segment contacts' },
+					{ name: 'List Profile Segments', value: 'listProfileSegments', action: 'List reach profile segments' },
+					{ name: 'Update Profile Segment', value: 'updateProfileSegment', action: 'Update reach profile segment' },
 				],
 				default: 'listProfileSegments',
 				displayOptions: {
@@ -502,22 +471,14 @@ export class HostingerApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Assign Tag to Contact', value: 'assignTagToContact', action: 'Assign Reach tag to contact' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Assign Tag to Contacts', value: 'assignTagToContacts', action: 'Assign Reach tag to multiple contacts' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Create Tags', value: 'createTags', action: 'Create Reach tags' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Delete Tag', value: 'deleteTag', action: 'Delete Reach tag' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'List Tags', value: 'listTags', action: 'List Reach tags' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Remove Tag From Contact', value: 'removeTagFromContact', action: 'Remove Reach tag from contact' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Remove Tag From Contacts', value: 'removeTagFromContacts', action: 'Remove Reach tag from multiple contacts' },
-					// eslint-disable-next-line n8n-nodes-base/node-param-operation-option-action-miscased
-					{ name: 'Update Tag', value: 'updateTag', action: 'Update Reach tag' },
+					{ name: 'Assign Tag to Contact', value: 'assignTagToContact', action: 'Assign reach tag to contact' },
+					{ name: 'Assign Tag to Contacts', value: 'assignTagToContacts', action: 'Assign reach tag to multiple contacts' },
+					{ name: 'Create Tags', value: 'createTags', action: 'Create reach tags' },
+					{ name: 'Delete Tag', value: 'deleteTag', action: 'Delete reach tag' },
+					{ name: 'List Tags', value: 'listTags', action: 'List reach tags' },
+					{ name: 'Remove Tag From Contact', value: 'removeTagFromContact', action: 'Remove reach tag from contact' },
+					{ name: 'Remove Tag From Contacts', value: 'removeTagFromContacts', action: 'Remove reach tag from multiple contacts' },
+					{ name: 'Update Tag', value: 'updateTag', action: 'Update reach tag' },
 				],
 				default: 'listTags',
 				displayOptions: {
@@ -1991,7 +1952,9 @@ export class HostingerApi implements INodeType {
 				// partial body. Everything else reaching this point is an operation with no
 				// Request Body parameter to read, which correctly leaves the body unset.
 				if (error instanceof NodeOperationError) {
-					if (!continueOnFail) throw error;
+					if (!continueOnFail) {
+						throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+					}
 
 					returnData.push({
 						json: { error: error.message },
