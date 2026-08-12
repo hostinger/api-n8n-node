@@ -1945,7 +1945,7 @@ export class HostingerApi implements INodeType {
 					}
 				} else {
 					// For other actions, use the request body field
-					requestBody = JSON.parse(this.getNodeParameter('requestBody', i) as string);
+					requestBody = parseJsonParam('requestBody', 'Request Body');
 				}
 			} catch (error) {
 				// Invalid JSON supplied by the user must fail the item rather than send a
