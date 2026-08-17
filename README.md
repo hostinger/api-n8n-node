@@ -62,6 +62,8 @@ The Hostinger API node supports the following operations:
 	- Create contacts in bulk, optionally tagging them on the way in
 	- Filter contacts by subscription status, tag or search term
 	- Manage custom contact fields and their choices
+	- Check the remaining plan limits for the current period
+	- Check the MX, SPF, DKIM and DMARC status of the profile domain
 
 - **Email Marketing (Reach): Tags**
 	- List, create, rename and delete tags
@@ -72,6 +74,21 @@ The Hostinger API node supports the following operations:
 	- List, get, create, update and delete segments
 	- List the contacts a segment matches
 	- Count the contacts a segment matches
+
+- **Email Marketing (Reach): Automations**
+	- List automations, filtered by status and ordered by creation date
+	- Get a single automation with its contact journey counts
+	- List the steps an automation runs
+
+- **Email Marketing (Reach): Campaigns**
+	- List campaigns, filtered by status and type
+	- Get a single campaign with its setup and delivery progress
+	- Get campaign performance: opens, clicks and unsubscribes
+
+- **Email Marketing (Reach): Forms**
+	- List signup forms
+	- Get a single form with its template URL and the tags it applies
+	- Delete a form
 
 ## Credentials
 
@@ -107,6 +124,16 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 * [Hostinger VPS Overview](https://www.hostinger.com/vps-hosting)
 
 ## Version history
+
+- **v1.0.24**:
+  - Added the Reach public API endpoints exposed since the previous release
+  - Added `Reach Automations` resource: List Automations, Get Automation, List Automation Steps
+  - Added `Reach Campaigns` resource: List Campaigns, Get Campaign, Get Campaign Statistics
+  - Added `Reach Forms` resource: List Forms, Get Form, Delete Form
+  - Added `Reach` operations: Get Profile Limits and Get Profile DNS Status
+
+- **v1.0.23**:
+  - Updated dependencies
 
 - **v1.0.22**:
   - Added profile-scoped actions for Email Marketing (Reach), covering the endpoints the public API now exposes

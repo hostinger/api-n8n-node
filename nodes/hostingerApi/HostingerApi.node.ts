@@ -20,7 +20,10 @@ const resourceOptions: INodePropertyOptions[] = [
 	{ name: 'Domain Forwarding', value: 'domainForwarding' },
 	{ name: 'Domain WHOIS', value: 'whois' },
 	{ name: 'Reach', value: 'reach' },
+	{ name: 'Reach Automations', value: 'reachAutomations' },
+	{ name: 'Reach Campaigns', value: 'reachCampaigns' },
 	{ name: 'Reach Contact Fields', value: 'reachContactFields' },
+	{ name: 'Reach Forms', value: 'reachForms' },
 	{ name: 'Reach Segments', value: 'reachSegments' },
 	{ name: 'Reach Tags', value: 'reachTags' },
 	{ name: 'VPS', value: 'vps' },
@@ -411,6 +414,8 @@ export class HostingerApi implements INodeType {
 					{ name: 'Delete Contact', value: 'deleteContact', action: 'Delete reach contact', description: 'Deprecated: use Delete Profile Contact to target an explicit profile' },
 					{ name: 'Delete Profile Contact', value: 'deleteProfileContact', action: 'Delete reach profile contact' },
 					{ name: 'Get Profile Contact', value: 'getProfileContact', action: 'Get reach profile contact' },
+					{ name: 'Get Profile DNS Status', value: 'getProfileDnsStatus', action: 'Get reach profile domain DNS status' },
+					{ name: 'Get Profile Limits', value: 'getProfileLimits', action: 'Get reach profile plan limits' },
 					{ name: 'Get Segment', value: 'getSegment', action: 'Get reach segment', description: 'Deprecated: use Reach Segments to target an explicit profile' },
 					{ name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get reach segment contacts', description: 'Deprecated: use Reach Segments to target an explicit profile' },
 					{ name: 'List Contacts', value: 'listContacts', action: 'List reach contacts', description: 'Deprecated: use List Profile Contacts to target an explicit profile' },
@@ -484,6 +489,57 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reachTags']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{ name: 'Get Automation', value: 'getAutomation', action: 'Get reach automation' },
+					{ name: 'List Automation Steps', value: 'listAutomationSteps', action: 'List reach automation steps' },
+					{ name: 'List Automations', value: 'listAutomations', action: 'List reach automations' },
+				],
+				default: 'listAutomations',
+				displayOptions: {
+					show: {
+						resource: ['reachAutomations']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{ name: 'Get Campaign', value: 'getCampaign', action: 'Get reach campaign' },
+					{ name: 'Get Campaign Statistics', value: 'getCampaignStatistics', action: 'Get reach campaign statistics' },
+					{ name: 'List Campaigns', value: 'listCampaigns', action: 'List reach campaigns' },
+				],
+				default: 'listCampaigns',
+				displayOptions: {
+					show: {
+						resource: ['reachCampaigns']
+					},
+				},
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{ name: 'Delete Form', value: 'deleteForm', action: 'Delete reach form' },
+					{ name: 'Get Form', value: 'getForm', action: 'Get reach form' },
+					{ name: 'List Forms', value: 'listForms', action: 'List reach forms' },
+				],
+				default: 'listForms',
+				displayOptions: {
+					show: {
+						resource: ['reachForms']
 					},
 				},
 			},
@@ -1251,9 +1307,9 @@ export class HostingerApi implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['reach', 'reachSegments'],
+						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachForms', 'reachSegments'],
 						operation: [
-							'listContacts', 'listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts'
+							'listContacts', 'listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'listAutomations', 'listCampaigns', 'listForms'
 						]
 					}
 				}
@@ -1266,8 +1322,8 @@ export class HostingerApi implements INodeType {
 				description: 'Number of results to return per page',
 				displayOptions: {
 					show: {
-						resource: ['reach', 'reachSegments'],
-						operation: ['listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts']
+						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachForms', 'reachSegments'],
+						operation: ['listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'listAutomations', 'listCampaigns', 'listForms']
 					}
 				}
 			},
@@ -1296,9 +1352,9 @@ export class HostingerApi implements INodeType {
 				description: 'UUID of the Reach profile. Use the List Profiles operation to look it up.',
 				displayOptions: {
 					show: {
-						resource: ['reach', 'reachContactFields', 'reachSegments', 'reachTags'],
+						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachContactFields', 'reachForms', 'reachSegments', 'reachTags'],
 						operation: [
-							'listProfileContacts', 'createProfileContact', 'createProfileContactsBulk', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'listContactFields', 'createContactField', 'updateContactField', 'deleteContactField', 'listProfileSegments', 'createProfileSegment', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts', 'listTags', 'createTags', 'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts'
+							'listProfileContacts', 'createProfileContact', 'createProfileContactsBulk', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'getProfileDnsStatus', 'getProfileLimits', 'listContactFields', 'createContactField', 'updateContactField', 'deleteContactField', 'listProfileSegments', 'createProfileSegment', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts', 'listTags', 'createTags', 'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts', 'listAutomations', 'getAutomation', 'listAutomationSteps', 'listCampaigns', 'getCampaign', 'getCampaignStatistics', 'listForms', 'getForm', 'deleteForm'
 						]
 					}
 				}
@@ -1683,6 +1739,123 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['reachSegments'],
 						operation: ['updateProfileSegment']
+					}
+				}
+			},
+			{
+				displayName: 'Automation UUID',
+				name: 'automationUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the automation',
+				displayOptions: {
+					show: {
+						resource: ['reachAutomations'],
+						operation: ['getAutomation', 'listAutomationSteps']
+					}
+				}
+			},
+			{
+				displayName: 'Status',
+				name: 'automationStatus',
+				type: 'options',
+				options: [
+					{ name: 'Active', value: 'active', },
+					{ name: 'All', value: '', },
+					{ name: 'Draft', value: 'draft', },
+					{ name: 'Paused', value: 'paused', },
+				],
+				default: '',
+				description: 'Filter automations by status. There is no completed status, an automation that has finished for every contact still reports as active.',
+				displayOptions: {
+					show: {
+						resource: ['reachAutomations'],
+						operation: ['listAutomations']
+					}
+				}
+			},
+			{
+				displayName: 'Sort Direction',
+				name: 'sortDirection',
+				type: 'options',
+				options: [
+					{ name: 'Newest First', value: 'desc', },
+					{ name: 'Oldest First', value: 'asc', },
+				],
+				default: 'desc',
+				description: 'Order the results by creation date',
+				displayOptions: {
+					show: {
+						resource: ['reachAutomations', 'reachCampaigns'],
+						operation: ['listAutomations', 'listCampaigns']
+					}
+				}
+			},
+			{
+				displayName: 'Campaign UUID',
+				name: 'campaignUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the campaign',
+				displayOptions: {
+					show: {
+						resource: ['reachCampaigns'],
+						operation: ['getCampaign', 'getCampaignStatistics']
+					}
+				}
+			},
+			{
+				displayName: 'Status',
+				name: 'campaignStatus',
+				type: 'options',
+				options: [
+					{ name: 'All', value: '', },
+					{ name: 'Draft', value: 'draft', },
+					{ name: 'Failed', value: 'failed', },
+					{ name: 'Scheduled', value: 'scheduled', },
+					{ name: 'Sending', value: 'sending', },
+					{ name: 'Sent', value: 'publish', },
+				],
+				default: '',
+				description: 'Filter campaigns by status. A fully sent campaign carries the publish status upstream.',
+				displayOptions: {
+					show: {
+						resource: ['reachCampaigns'],
+						operation: ['listCampaigns']
+					}
+				}
+			},
+			{
+				displayName: 'Type',
+				name: 'campaignType',
+				type: 'options',
+				options: [
+					{ name: 'Automation Email', value: 'automation', },
+					{ name: 'Campaign', value: 'campaign', },
+					{ name: 'Double Opt-In Confirmation', value: 'double_opt_in', },
+				],
+				default: 'campaign',
+				description: 'Which kind of emails to return',
+				displayOptions: {
+					show: {
+						resource: ['reachCampaigns'],
+						operation: ['listCampaigns']
+					}
+				}
+			},
+			{
+				displayName: 'Form UUID',
+				name: 'formUuid',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'UUID of the signup form',
+				displayOptions: {
+					show: {
+						resource: ['reachForms'],
+						operation: ['getForm', 'deleteForm']
 					}
 				}
 			}
@@ -2147,6 +2320,41 @@ export class HostingerApi implements INodeType {
 				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
 				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/count`; break;
 				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
+				//Reach - Profile plan and domain
+				case 'getProfileLimits': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/limits`; break;
+				case 'getProfileDnsStatus': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/domains/dns-status`; break;
+				//Reach - Automations
+				case 'listAutomations': {
+					let automationsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations?page=${getParam('page')}&per_page=${getParam('perPage')}&sort_direction=${getParam('sortDirection')}`;
+					const automationStatus = this.getNodeParameter('automationStatus', i) as string;
+
+					if (automationStatus) {
+						automationsEndpoint += `&status=${automationStatus}`;
+					}
+
+					endpoint = automationsEndpoint;
+					break;
+				}
+				case 'getAutomation': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations/${getPathParam('automationUuid')}`; break;
+				case 'listAutomationSteps': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations/${getPathParam('automationUuid')}/steps`; break;
+				//Reach - Campaigns
+				case 'listCampaigns': {
+					let campaignsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns?page=${getParam('page')}&per_page=${getParam('perPage')}&type=${getParam('campaignType')}&sort_direction=${getParam('sortDirection')}`;
+					const campaignStatus = this.getNodeParameter('campaignStatus', i) as string;
+
+					if (campaignStatus) {
+						campaignsEndpoint += `&status=${campaignStatus}`;
+					}
+
+					endpoint = campaignsEndpoint;
+					break;
+				}
+				case 'getCampaign': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns/${getPathParam('campaignUuid')}`; break;
+				case 'getCampaignStatistics': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns/${getPathParam('campaignUuid')}/statistics`; break;
+				//Reach - Forms
+				case 'listForms': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
+				case 'getForm': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms/${getPathParam('formUuid')}`; break;
+				case 'deleteForm': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms/${getPathParam('formUuid')}`; break;
 
 				default: throw new ApplicationError(`Unsupported operation: ${operation}`);
 			}
