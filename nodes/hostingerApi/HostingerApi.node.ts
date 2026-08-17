@@ -1874,15 +1874,23 @@ export class HostingerApi implements INodeType {
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
 			const getPathParam = (name: string) => encodeURIComponent(getParam(name));
-			const getListParam = (name: string) => (this.getNodeParameter(name, i) as string)
-				.split(',')
-				.map(value => value.trim())
-				.filter(value => value);
+			const getListParam = (name: string) => {
+				const raw = this.getNodeParameter(name, i);
+				const values = Array.isArray(raw) ? raw : String(raw).split(',');
+
+				return values
+					.map(value => String(value).trim())
+					.filter(value => value);
+			};
 			const parseJsonParam = (name: string, displayName: string) => {
-				const raw = this.getNodeParameter(name, i) as string;
+				const raw = this.getNodeParameter(name, i);
+
+				if (typeof raw !== 'string') {
+					return raw as IDataObject;
+				}
 
 				try {
-					return JSON.parse(raw);
+					return JSON.parse(raw) as IDataObject;
 				} catch {
 					throw new NodeOperationError(
 						this.getNode(),
@@ -1979,11 +1987,8 @@ export class HostingerApi implements INodeType {
 				} else if (operation === 'checkDomainAvailability') {
 					// For checkDomainAvailability, build request body from individual fields
 					const domainName = this.getNodeParameter('domainName', i) as string;
-					const tldsString = this.getNodeParameter('tlds', i) as string;
 					const withAlternatives = this.getNodeParameter('withAlternatives', i) as boolean;
-
-					// Convert comma-separated TLDs to array
-					const tlds = tldsString.split(',').map(tld => tld.trim()).filter(tld => tld);
+					const tlds = getListParam('tlds');
 
 					requestBody = {
 						domain: domainName,
