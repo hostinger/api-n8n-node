@@ -125,6 +125,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.25**:
+  - Fixed Purchase Domain silently discarding invalid JSON in Additional Details; it now reports a validation error instead
+
 - **v1.0.24**:
   - Added the Reach public API endpoints exposed since the previous release
   - Added `Reach Automations` resource: List Automations, Get Automation, List Automation Steps

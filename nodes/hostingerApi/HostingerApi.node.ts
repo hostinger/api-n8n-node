@@ -2020,16 +2020,9 @@ export class HostingerApi implements INodeType {
 						requestBody.domain_contacts = domainContacts;
 					}
 
-					// Parse additional_details JSON
-					if (additionalDetailsStr && additionalDetailsStr !== '{}') {
-						try {
-							requestBody.additional_details = JSON.parse(additionalDetailsStr);
-						} catch {
-							requestBody.additional_details = {};
-						}
-					} else {
-						requestBody.additional_details = {};
-					}
+					requestBody.additional_details = additionalDetailsStr && additionalDetailsStr !== '{}'
+						? parseJsonParam('additionalDetails', 'Additional Details (JSON)')
+						: {};
 
 					if (couponCode) requestBody.coupons = [couponCode];
 				} else if (operation === 'updateDomainNameservers') {
