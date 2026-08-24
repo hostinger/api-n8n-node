@@ -63,6 +63,8 @@ The Hostinger API node supports the following operations:
 	- Filter contacts by subscription status, tag or search term
 	- Manage custom contact fields and their choices
 	- Check the remaining plan limits for the current period
+	- Check which plan features the profile can use before building something it cannot activate
+	- Check the connected sending domain, its verification status and any suspended senders
 	- Check the MX, SPF, DKIM and DMARC status of the profile domain
 
 - **Email Marketing (Reach): Tags**
@@ -74,6 +76,8 @@ The Hostinger API node supports the following operations:
 	- List, get, create, update and delete segments
 	- List the contacts a segment matches
 	- Count the contacts a segment matches
+	- List the attributes, operators and allowed values a condition can use
+	- Preview the contacts a set of conditions matches without saving a segment
 
 - **Email Marketing (Reach): Automations**
 	- List automations, filtered by status and ordered by creation date
@@ -124,6 +128,11 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 * [Hostinger VPS Overview](https://www.hostinger.com/vps-hosting)
 
 ## Version history
+
+- **v1.0.26**:
+  - Added the Reach public API endpoints exposed since the previous release
+  - Added `Reach` operations: Get Profile Sending Domain and List Profile Plan Features
+  - Added `Reach Segments` operations: List Segment Filter Attributes and Preview Segment Filter Contacts
 
 - **v1.0.25**:
   - Fixed Purchase Domain silently discarding invalid JSON in Additional Details; it now reports a validation error instead
