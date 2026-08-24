@@ -416,10 +416,12 @@ export class HostingerApi implements INodeType {
 					{ name: 'Get Profile Contact', value: 'getProfileContact', action: 'Get reach profile contact' },
 					{ name: 'Get Profile DNS Status', value: 'getProfileDnsStatus', action: 'Get reach profile domain DNS status' },
 					{ name: 'Get Profile Limits', value: 'getProfileLimits', action: 'Get reach profile plan limits' },
+					{ name: 'Get Profile Sending Domain', value: 'getProfileDomain', action: 'Get reach profile sending domain' },
 					{ name: 'Get Segment', value: 'getSegment', action: 'Get reach segment', description: 'Deprecated: use Reach Segments to target an explicit profile' },
 					{ name: 'Get Segment Contacts', value: 'getSegmentContacts', action: 'Get reach segment contacts', description: 'Deprecated: use Reach Segments to target an explicit profile' },
 					{ name: 'List Contacts', value: 'listContacts', action: 'List reach contacts', description: 'Deprecated: use List Profile Contacts to target an explicit profile' },
 					{ name: 'List Profile Contacts', value: 'listProfileContacts', action: 'List reach profile contacts' },
+					{ name: 'List Profile Plan Features', value: 'listProfileFeatures', action: 'List reach profile plan features' },
 					{ name: 'List Profiles', value: 'listProfiles', action: 'List reach profiles' },
 					{ name: 'List Segments', value: 'listSegments', action: 'List reach segments', description: 'Deprecated: use Reach Segments to target an explicit profile' },
 					{ name: 'Update Profile Contact', value: 'updateProfileContact', action: 'Update reach profile contact' },
@@ -461,6 +463,8 @@ export class HostingerApi implements INodeType {
 					{ name: 'Get Profile Segment', value: 'getProfileSegment', action: 'Get reach profile segment' },
 					{ name: 'List Profile Segment Contacts', value: 'listProfileSegmentContacts', action: 'List reach profile segment contacts' },
 					{ name: 'List Profile Segments', value: 'listProfileSegments', action: 'List reach profile segments' },
+					{ name: 'List Segment Filter Attributes', value: 'listSegmentFilterAttributes', action: 'List reach segment filter attributes' },
+					{ name: 'Preview Segment Filter Contacts', value: 'previewSegmentFilterContacts', action: 'Preview reach segment filter contacts' },
 					{ name: 'Update Profile Segment', value: 'updateProfileSegment', action: 'Update reach profile segment' },
 				],
 				default: 'listProfileSegments',
@@ -1309,7 +1313,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachForms', 'reachSegments'],
 						operation: [
-							'listContacts', 'listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'listAutomations', 'listCampaigns', 'listForms'
+							'listContacts', 'listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'previewSegmentFilterContacts', 'listAutomations', 'listCampaigns', 'listForms'
 						]
 					}
 				}
@@ -1323,7 +1327,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachForms', 'reachSegments'],
-						operation: ['listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'listAutomations', 'listCampaigns', 'listForms']
+						operation: ['listProfileContacts', 'listProfileSegments', 'listProfileSegmentContacts', 'previewSegmentFilterContacts', 'listAutomations', 'listCampaigns', 'listForms']
 					}
 				}
 			},
@@ -1354,7 +1358,7 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['reach', 'reachAutomations', 'reachCampaigns', 'reachContactFields', 'reachForms', 'reachSegments', 'reachTags'],
 						operation: [
-							'listProfileContacts', 'createProfileContact', 'createProfileContactsBulk', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'getProfileDnsStatus', 'getProfileLimits', 'listContactFields', 'createContactField', 'updateContactField', 'deleteContactField', 'listProfileSegments', 'createProfileSegment', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts', 'listTags', 'createTags', 'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts', 'listAutomations', 'getAutomation', 'listAutomationSteps', 'listCampaigns', 'getCampaign', 'getCampaignStatistics', 'listForms', 'getForm', 'deleteForm'
+							'listProfileContacts', 'createProfileContact', 'createProfileContactsBulk', 'getProfileContact', 'updateProfileContact', 'deleteProfileContact', 'getProfileDnsStatus', 'getProfileDomain', 'getProfileLimits', 'listProfileFeatures', 'listContactFields', 'createContactField', 'updateContactField', 'deleteContactField', 'listProfileSegments', 'createProfileSegment', 'getProfileSegment', 'updateProfileSegment', 'deleteProfileSegment', 'countProfileSegmentContacts', 'listProfileSegmentContacts', 'listSegmentFilterAttributes', 'previewSegmentFilterContacts', 'listTags', 'createTags', 'updateTag', 'deleteTag', 'assignTagToContact', 'assignTagToContacts', 'removeTagFromContact', 'removeTagFromContacts', 'listAutomations', 'getAutomation', 'listAutomationSteps', 'listCampaigns', 'getCampaign', 'getCampaignStatistics', 'listForms', 'getForm', 'deleteForm'
 						]
 					}
 				}
@@ -1705,7 +1709,7 @@ export class HostingerApi implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['reachSegments'],
-						operation: ['createProfileSegment', 'updateProfileSegment']
+						operation: ['createProfileSegment', 'updateProfileSegment', 'previewSegmentFilterContacts']
 					}
 				}
 			},
@@ -1721,11 +1725,11 @@ export class HostingerApi implements INodeType {
     "value": "@example.com"
   }
 ]`,
-				description: 'Segment conditions. Use cf:{fieldUuid} as the attribute to target a custom contact field.',
+				description: 'Segment conditions. Use cf:{fieldUuid} as the attribute to target a custom contact field. Use List Segment Filter Attributes to discover the valid attribute, operator and value combinations.',
 				displayOptions: {
 					show: {
 						resource: ['reachSegments'],
-						operation: ['createProfileSegment']
+						operation: ['createProfileSegment', 'previewSegmentFilterContacts']
 					}
 				}
 			},
@@ -1739,6 +1743,58 @@ export class HostingerApi implements INodeType {
 					show: {
 						resource: ['reachSegments'],
 						operation: ['updateProfileSegment']
+					}
+				}
+			},
+			{
+				displayName: 'Search',
+				name: 'filterContactSearch',
+				type: 'string',
+				default: '',
+				description: 'Narrow the preview to contacts whose email matches',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['previewSegmentFilterContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Sort By',
+				name: 'filterSortBy',
+				type: 'options',
+				options: [
+					{ name: 'Default', value: '', },
+					{ name: 'Email', value: 'email', },
+					{ name: 'Name', value: 'name', },
+					{ name: 'Phone', value: 'phone', },
+					{ name: 'Subscription Status', value: 'subscription_status', },
+					{ name: 'Surname', value: 'surname', },
+				],
+				default: '',
+				description: 'Field to order the matching contacts by',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['previewSegmentFilterContacts']
+					}
+				}
+			},
+			{
+				displayName: 'Sort Direction',
+				name: 'filterSortDirection',
+				type: 'options',
+				options: [
+					{ name: 'Ascending', value: 'asc', },
+					{ name: 'Default', value: '', },
+					{ name: 'Descending', value: 'desc', },
+				],
+				default: '',
+				description: 'Order to apply to the selected sort field',
+				displayOptions: {
+					show: {
+						resource: ['reachSegments'],
+						operation: ['previewSegmentFilterContacts']
 					}
 				}
 			},
@@ -2114,6 +2170,21 @@ export class HostingerApi implements INodeType {
 						requestBody.logic = getParam('segmentLogic');
 						requestBody.conditions = parseJsonParam('segmentUpdateConditions', 'Conditions (JSON)');
 					}
+				} else if (operation === 'previewSegmentFilterContacts') {
+					const search = getParam('filterContactSearch');
+					const sortBy = getParam('filterSortBy');
+					const sortDirection = getParam('filterSortDirection');
+
+					requestBody = {
+						conditions: parseJsonParam('segmentConditions', 'Conditions (JSON)'),
+						logic: getParam('segmentLogic'),
+						page: this.getNodeParameter('page', i) as number,
+						per_page: this.getNodeParameter('perPage', i) as number
+					};
+
+					if (search) requestBody.search = search;
+					if (sortBy) requestBody.sort_by = sortBy;
+					if (sortDirection) requestBody.sort_direction = sortDirection;
 				} else {
 					// For other actions, use the request body field
 					requestBody = parseJsonParam('requestBody', 'Request Body');
@@ -2318,8 +2389,13 @@ export class HostingerApi implements INodeType {
 				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
 				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/count`; break;
 				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
+				//Reach - Segment filters
+				case 'listSegmentFilterAttributes': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/filters/attributes`; break;
+				case 'previewSegmentFilterContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/filters/contacts`; break;
 				//Reach - Profile plan and domain
 				case 'getProfileLimits': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/limits`; break;
+				case 'listProfileFeatures': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/features`; break;
+				case 'getProfileDomain': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/domains`; break;
 				case 'getProfileDnsStatus': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/domains/dns-status`; break;
 				//Reach - Automations
 				case 'listAutomations': {
