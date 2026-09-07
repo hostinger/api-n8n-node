@@ -110,6 +110,30 @@ To use this node, you will need to authenticate with the Hostinger API.
 
 No known version incompatibilities at this time.
 
+### Known dependency constraint: `stream-json`
+
+`stream-json` is pinned to `1.9.1` and **cannot currently be upgraded**. Dependabot
+flags it for [GHSA-528h-pc64-c93x](https://github.com/advisories/GHSA-528h-pc64-c93x)
+(moderate, CWE-407), but no upgrade path exists:
+
+- It is a **transitive dev dependency only**
+  (`@n8n/node-cli` -> `@n8n/backend-common` -> `stream-json`), marked `"dev": true`
+  in `package-lock.json`. This package publishes only `dist/`, so it never reaches users.
+- `@n8n/backend-common` pins `stream-json` to exactly `1.9.1`. This is still true on
+  the latest `@n8n/node-cli` (`0.47.1`), so bumping the CLI does not help.
+- The advisory range is `<=3.4.0`. The first patched release, `3.5.0`, is **ESM-only**
+  (`"type": "module"`, Node >= 22) and renamed `Assembler.js` to `src/assembler.js`
+  behind a restrictive `exports` map. Because `@n8n/backend-common` is CommonJS and
+  calls `require("stream-json/Assembler")`, an `overrides` entry pointing at `3.5.0+`
+  breaks the toolchain with `MODULE_NOT_FOUND`.
+- The vulnerable code path is **not reachable**. The advisory covers the
+  `pick`/`ignore`/`filter`/`replace` filters; the only consumer
+  (`@n8n/backend-common/dist/utils/flatted-async.js`) uses just `parser()` and
+  `Assembler`, and nothing else in the tree imports `stream-json`.
+
+Revisit once `@n8n/backend-common` relaxes its pin or ships a `stream-json 3.x`
+compatible release.
+
 ## Usage
 
 1. **Add the Hostinger API node** to your workflow.
