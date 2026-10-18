@@ -25,7 +25,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Overrides only patch vulnerable transitive dev dependencies. n8n strict lint
+      # rejects the field, and it has no effect for consumers, so drop it before release.
+      - name: Remove overrides from package.json
+        run: npm pkg delete overrides
+
+      - name: Check if version is already published
+        id: version
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          if [ -n "$(npm view "${NAME}@${VERSION}" version 2>/dev/null)" ]; then
+            echo "${NAME}@${VERSION} is already published, skipping release"
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish package
+        if: steps.version.outputs.published == 'false'
         run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
