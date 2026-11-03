@@ -129,6 +129,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.27**:
+  - Updated dependencies with security fixes
+
 - **v1.0.26**:
   - Added the Reach public API endpoints exposed since the previous release
   - Added `Reach` operations: Get Profile Sending Domain and List Profile Plan Features
