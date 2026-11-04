@@ -48,6 +48,7 @@
     "n8n-workflow": "*"
   },
   "overrides": {
-    "handlebars": "^4.7.10"
+    "handlebars": "^4.7.10",
+    "qs": "^6.16.1"
   }
 }
