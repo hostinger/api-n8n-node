@@ -1929,7 +1929,7 @@ export class HostingerApi implements INodeType {
 			const operation = this.getNodeParameter('operation', i) as string;
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
-			const getPathParam = (name: string) => encodeURIComponent(getParam(name));
+			const getUrlParam = (name: string) => encodeURIComponent(getParam(name));
 			const getListParam = (name: string) => {
 				const raw = this.getNodeParameter(name, i);
 				const values = Array.isArray(raw) ? raw : String(raw).split(',');
@@ -2209,146 +2209,146 @@ export class HostingerApi implements INodeType {
 
 			switch (operation) {
 				//VPS Actions
-				case 'getAction': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/actions/${getParam('actionId')}`; break;
-				case 'listActions': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/actions`; break;
+				case 'getAction': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/actions/${getUrlParam('actionId')}`; break;
+				case 'listActions': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/actions`; break;
 				//VPS Backups
-				case 'deleteBackup': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/backups/${getParam('backupId')}`; break;
-				case 'listBackups': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/backups`; break;
-				case 'restoreBackup': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/backups/${getParam('backupId')}/restore`; break;
+				case 'deleteBackup': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/backups/${getUrlParam('backupId')}`; break;
+				case 'listBackups': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/backups`; break;
+				case 'restoreBackup': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/backups/${getUrlParam('backupId')}/restore`; break;
 				//VPS Data Centers
 				case 'listDataCenters': endpoint = '/api/vps/v1/data-centers'; break;
 				//VPS Docker
-				case 'listContainers': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/containers`; break;
-				case 'listContents': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}`; break;
-				case 'listProjects': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker`; break;
-				case 'createProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker`; break;
-				case 'deleteProject': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/down`; break;
-				case 'getLogs': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/logs`; break;
-				case 'restartProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/restart`; break;
-				case 'startProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/start`; break;
-				case 'stopProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/stop`; break;
-				case 'updateProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/docker/${getParam('dockerProjectName')}/update`; break;
+				case 'listContainers': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/containers`; break;
+				case 'listContents': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}`; break;
+				case 'listProjects': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker`; break;
+				case 'createProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker`; break;
+				case 'deleteProject': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/down`; break;
+				case 'getLogs': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/logs`; break;
+				case 'restartProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/restart`; break;
+				case 'startProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/start`; break;
+				case 'stopProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/stop`; break;
+				case 'updateProject': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/docker/${getUrlParam('dockerProjectName')}/update`; break;
 				//VPS PTR
-				case 'createPTR': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/ptr`; break;
-				case 'deletePTR': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/ptr`; break;
+				case 'createPTR': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/ptr`; break;
+				case 'deletePTR': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/ptr`; break;
 				//VPS Firewall
-				case 'activateFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/activate/${getParam('virtualMachineId')}`; break;
-				case 'deactivateFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/deactivate/${getParam('virtualMachineId')}`; break;
-				case 'getFirewall': endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}`; break;
-				case 'deleteFirewall': method = 'DELETE'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}`; break;
+				case 'activateFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/activate/${getUrlParam('virtualMachineId')}`; break;
+				case 'deactivateFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/deactivate/${getUrlParam('virtualMachineId')}`; break;
+				case 'getFirewall': endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}`; break;
+				case 'deleteFirewall': method = 'DELETE'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}`; break;
 				case 'listFirewalls': endpoint = '/api/vps/v1/firewall'; break;
 				case 'createFirewall': method = 'POST'; endpoint = '/api/vps/v1/firewall'; break;
-				case 'updateFirewallRule': method = 'PUT'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/rules/${getParam('ruleId')}`; break;
-				case 'deleteFirewallRule': method = 'DELETE'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/rules/${getParam('ruleId')}`; break;
-				case 'createFirewallRule': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/rules`; break;
-				case 'syncFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getParam('firewallId')}/sync/${getParam('virtualMachineId')}`; break;
+				case 'updateFirewallRule': method = 'PUT'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/rules/${getUrlParam('ruleId')}`; break;
+				case 'deleteFirewallRule': method = 'DELETE'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/rules/${getUrlParam('ruleId')}`; break;
+				case 'createFirewallRule': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/rules`; break;
+				case 'syncFirewall': method = 'POST'; endpoint = `/api/vps/v1/firewall/${getUrlParam('firewallId')}/sync/${getUrlParam('virtualMachineId')}`; break;
 				//VPS Malware
-				case 'getMonarx': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/monarx`; break;
-				case 'addMonarx': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/monarx`; break;
-				case 'removeMonarx': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/monarx`; break;
+				case 'getMonarx': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/monarx`; break;
+				case 'addMonarx': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/monarx`; break;
+				case 'removeMonarx': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/monarx`; break;
 				//VPS Templates
-				case 'getTemplate': endpoint = `/api/vps/v1/templates/${getParam('templateId')}`; break;
+				case 'getTemplate': endpoint = `/api/vps/v1/templates/${getUrlParam('templateId')}`; break;
 				case 'listTemplates': endpoint = '/api/vps/v1/templates'; break;
 				//VPS Post-install scripts
-				case 'getPostInstallScript': endpoint = `/api/vps/v1/post-install-scripts/${getParam('postInstallScriptId')}`; break;
-				case 'updatePostInstallScript': method = 'PUT'; endpoint = `/api/vps/v1/post-install-scripts/${getParam('postInstallScriptId')}`; break;
-				case 'deletePostInstallScript': method = 'DELETE'; endpoint = `/api/vps/v1/post-install-scripts/${getParam('postInstallScriptId')}`; break;
+				case 'getPostInstallScript': endpoint = `/api/vps/v1/post-install-scripts/${getUrlParam('postInstallScriptId')}`; break;
+				case 'updatePostInstallScript': method = 'PUT'; endpoint = `/api/vps/v1/post-install-scripts/${getUrlParam('postInstallScriptId')}`; break;
+				case 'deletePostInstallScript': method = 'DELETE'; endpoint = `/api/vps/v1/post-install-scripts/${getUrlParam('postInstallScriptId')}`; break;
 				case 'listPostInstallScripts': endpoint = '/api/vps/v1/post-install-scripts'; break;
 				case 'createPostInstallScript': method = 'POST'; endpoint = '/api/vps/v1/post-install-scripts'; break;
 				//VPS Public Keys
-				case 'attachPublicKey': method = 'POST'; endpoint = `/api/vps/v1/public-keys/attach/${getParam('virtualMachineId')}`; break;
-				case 'deletePublicKey': method = 'DELETE'; endpoint = `/api/vps/v1/public-keys/${getParam('publicKeyId')}`; break;
+				case 'attachPublicKey': method = 'POST'; endpoint = `/api/vps/v1/public-keys/attach/${getUrlParam('virtualMachineId')}`; break;
+				case 'deletePublicKey': method = 'DELETE'; endpoint = `/api/vps/v1/public-keys/${getUrlParam('publicKeyId')}`; break;
 				case 'listPublicKeys': endpoint = '/api/vps/v1/public-keys'; break;
 				case 'createPublicKey': method = 'POST'; endpoint = '/api/vps/v1/public-keys'; break;
 				//VPS Recovery
-				case 'createRecovery': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/recovery`; break;
-				case 'deleteRecovery': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/recovery`; break;
+				case 'createRecovery': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/recovery`; break;
+				case 'deleteRecovery': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/recovery`; break;
 				//VPS Snapshots
-				case 'getSnapshot': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/snapshot`; break;
-				case 'createSnapshot': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/snapshot`; break;
-				case 'deleteSnapshot': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/snapshot`; break;
-				case 'restoreSnapshot': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/snapshot/restore`; break;
+				case 'getSnapshot': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/snapshot`; break;
+				case 'createSnapshot': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/snapshot`; break;
+				case 'deleteSnapshot': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/snapshot`; break;
+				case 'restoreSnapshot': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/snapshot/restore`; break;
 				//VPS Virtual Machine
-				case 'getVmPublicKeys': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/public-keys`; break;
-				case 'updateHostname': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
-				case 'resetHostname': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/hostname`; break;
-				case 'getVm': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}`; break;
+				case 'getVmPublicKeys': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/public-keys`; break;
+				case 'updateHostname': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/hostname`; break;
+				case 'resetHostname': method = 'DELETE'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/hostname`; break;
+				case 'getVm': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}`; break;
 				case 'listVms': endpoint = '/api/vps/v1/virtual-machines'; break;
 				case 'purchaseVm': method = 'POST'; endpoint = '/api/vps/v1/virtual-machines'; break;
-				case 'getVmMetrics': endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/metrics?date_from=${getParam('date_from')}&date_to=${getParam('date_to')}`; break;
-				case 'updateNameservers': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/nameservers`; break;
-				case 'updatePanelPassword': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/panel-password`; break;
-				case 'recreateVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/recreate`; break;
-				case 'restartVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/restart`; break;
-				case 'updateRootPassword': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/root-password`; break;
-				case 'setupVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/setup`; break;
-				case 'startVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/start`; break;
-				case 'stopVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getParam('virtualMachineId')}/stop`; break;
+				case 'getVmMetrics': endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/metrics?date_from=${getUrlParam('date_from')}&date_to=${getUrlParam('date_to')}`; break;
+				case 'updateNameservers': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/nameservers`; break;
+				case 'updatePanelPassword': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/panel-password`; break;
+				case 'recreateVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/recreate`; break;
+				case 'restartVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/restart`; break;
+				case 'updateRootPassword': method = 'PUT'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/root-password`; break;
+				case 'setupVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/setup`; break;
+				case 'startVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/start`; break;
+				case 'stopVm': method = 'POST'; endpoint = `/api/vps/v1/virtual-machines/${getUrlParam('virtualMachineId')}/stop`; break;
 				//DNS Snapshots
-				case 'getDnsSnapshot': endpoint = `/api/dns/v1/snapshots/${getParam('domain')}/${getParam('snapshotId')}`; break;
-				case 'listDnsSnapshots': endpoint = `/api/dns/v1/snapshots/${getParam('domain')}`; break;
-				case 'restoreDnsSnapshot': method = 'POST'; endpoint = `/api/dns/v1/snapshots/${getParam('domain')}/${getParam('snapshotId')}/restore`; break;
+				case 'getDnsSnapshot': endpoint = `/api/dns/v1/snapshots/${getUrlParam('domain')}/${getUrlParam('snapshotId')}`; break;
+				case 'listDnsSnapshots': endpoint = `/api/dns/v1/snapshots/${getUrlParam('domain')}`; break;
+				case 'restoreDnsSnapshot': method = 'POST'; endpoint = `/api/dns/v1/snapshots/${getUrlParam('domain')}/${getUrlParam('snapshotId')}/restore`; break;
 				//DNS Zone
-				case 'getDnsZone': endpoint = `/api/dns/v1/zones/${getParam('domain')}`; break;
-				case 'updateDnsZone': method = 'PUT'; endpoint = `/api/dns/v1/zones/${getParam('domain')}`; break;
-				case 'deleteDnsZone': method = 'DELETE'; endpoint = `/api/dns/v1/zones/${getParam('domain')}`; break;
-				case 'resetDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getParam('domain')}/reset`; break;
-				case 'validateDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getParam('domain')}/validate`; break;
+				case 'getDnsZone': endpoint = `/api/dns/v1/zones/${getUrlParam('domain')}`; break;
+				case 'updateDnsZone': method = 'PUT'; endpoint = `/api/dns/v1/zones/${getUrlParam('domain')}`; break;
+				case 'deleteDnsZone': method = 'DELETE'; endpoint = `/api/dns/v1/zones/${getUrlParam('domain')}`; break;
+				case 'resetDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getUrlParam('domain')}/reset`; break;
+				case 'validateDnsZone': method = 'POST'; endpoint = `/api/dns/v1/zones/${getUrlParam('domain')}/validate`; break;
 				//Domains - Availability
 				case 'checkDomainAvailability': method = 'POST'; endpoint = '/api/domains/v1/availability'; break;
 				//Domains - Portfolio
-				case 'getDomain': method = 'GET'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}`; break;
+				case 'getDomain': method = 'GET'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}`; break;
 				case 'listDomains': method = 'GET'; endpoint = '/api/domains/v1/portfolio'; break;
 				case 'purchaseDomain': method = 'POST'; endpoint = '/api/domains/v1/portfolio'; break;
-				case 'enableDomainLock': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/domain-lock`; break;
-				case 'disableDomainLock': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/domain-lock`; break;
-				case 'enablePrivacyProtection': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/privacy-protection`; break;
-				case 'disablePrivacyProtection': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/privacy-protection`; break;
-				case 'updateDomainNameservers': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getParam('domain')}/nameservers`; break;
+				case 'enableDomainLock': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}/domain-lock`; break;
+				case 'disableDomainLock': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}/domain-lock`; break;
+				case 'enablePrivacyProtection': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}/privacy-protection`; break;
+				case 'disablePrivacyProtection': method = 'DELETE'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}/privacy-protection`; break;
+				case 'updateDomainNameservers': method = 'PUT'; endpoint = `/api/domains/v1/portfolio/${getUrlParam('domain')}/nameservers`; break;
 				//Domains - WHOIS
-				case 'getWhoisProfile': method = 'GET'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}`; break;
-				case 'deleteWhoisProfile': method = 'DELETE'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}`; break;
+				case 'getWhoisProfile': method = 'GET'; endpoint = `/api/domains/v1/whois/${getUrlParam('whoisId')}`; break;
+				case 'deleteWhoisProfile': method = 'DELETE'; endpoint = `/api/domains/v1/whois/${getUrlParam('whoisId')}`; break;
 				case 'listWhoisProfiles': method = 'GET'; endpoint = '/api/domains/v1/whois'; break;
 				case 'createWhoisProfile': method = 'POST'; endpoint = '/api/domains/v1/whois'; break;
-				case 'getWhoisProfileUsage': method = 'GET'; endpoint = `/api/domains/v1/whois/${getParam('whoisId')}/usage`; break;
+				case 'getWhoisProfileUsage': method = 'GET'; endpoint = `/api/domains/v1/whois/${getUrlParam('whoisId')}/usage`; break;
 				//Domains - Forwarding
-				case 'getForwardingData': method = 'GET'; endpoint = `/api/domains/v1/forwarding/${getParam('domain')}`; break;
-				case 'deleteForwardingData': method = 'DELETE'; endpoint = `/api/domains/v1/forwarding/${getParam('domain')}`; break;
+				case 'getForwardingData': method = 'GET'; endpoint = `/api/domains/v1/forwarding/${getUrlParam('domain')}`; break;
+				case 'deleteForwardingData': method = 'DELETE'; endpoint = `/api/domains/v1/forwarding/${getUrlParam('domain')}`; break;
 				case 'createForwardingData': method = 'POST'; endpoint = '/api/domains/v1/forwarding'; break;
 				//Billing
 				case 'getCatalogList': method = 'GET'; endpoint = '/api/billing/v1/catalog'; break;
-				case 'setPaymentMethod': method = 'POST'; endpoint = `/api/billing/v1/payment-methods/${getParam('paymentMethodId')}`; break;
-				case 'deletePaymentMethod': method = 'DELETE'; endpoint = `/api/billing/v1/payment-methods/${getParam('paymentMethodId')}`; break;
+				case 'setPaymentMethod': method = 'POST'; endpoint = `/api/billing/v1/payment-methods/${getUrlParam('paymentMethodId')}`; break;
+				case 'deletePaymentMethod': method = 'DELETE'; endpoint = `/api/billing/v1/payment-methods/${getUrlParam('paymentMethodId')}`; break;
 				case 'getPaymentList': method = 'GET'; endpoint = '/api/billing/v1/payment-methods'; break;
-				case 'deleteSubscription': method = 'DELETE'; endpoint = `/api/billing/v1/subscriptions/${getParam('subscriptionId')}`; break;
+				case 'deleteSubscription': method = 'DELETE'; endpoint = `/api/billing/v1/subscriptions/${getUrlParam('subscriptionId')}`; break;
 				case 'getSubscriptionList': method = 'GET'; endpoint = '/api/billing/v1/subscriptions'; break;
 				//Reach
 				case 'listContacts': {
-					let contactsEndpoint = `/api/reach/v1/contacts?page=${getParam('page')}`;
+					let contactsEndpoint = `/api/reach/v1/contacts?page=${getUrlParam('page')}`;
 					const subscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
 
 					if (subscriptionStatus) {
-						contactsEndpoint += `&subscription_status=${subscriptionStatus}`;
+						contactsEndpoint += `&subscription_status=${encodeURIComponent(subscriptionStatus)}`;
 					}
 					endpoint = contactsEndpoint;
 					break;
 				}
 				case 'createContact': method = 'POST'; endpoint = '/api/reach/v1/contacts'; break;
-				case 'deleteContact': method = 'DELETE'; endpoint = `/api/reach/v1/contacts/${getParam('contactUuid')}`; break;
+				case 'deleteContact': method = 'DELETE'; endpoint = `/api/reach/v1/contacts/${getUrlParam('contactUuid')}`; break;
 				case 'listSegments': method = 'GET'; endpoint = '/api/reach/v1/segmentation/segments'; break;
-				case 'getSegment': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}`; break;
-				case 'getSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getParam('segmentUuid')}/contacts`; break;
+				case 'getSegment': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getUrlParam('segmentUuid')}`; break;
+				case 'getSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/segmentation/segments/${getUrlParam('segmentUuid')}/contacts`; break;
 				//Reach - Profiles
 				case 'listProfiles': method = 'GET'; endpoint = '/api/reach/v1/profiles'; break;
 				//Reach - Profile contacts
 				case 'listProfileContacts': {
-					let profileContactsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`;
+					let profileContactsEndpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}`;
 					const profileSubscriptionStatus = this.getNodeParameter('subscriptionStatus', i) as string;
 					const tagUuidFilter = this.getNodeParameter('tagUuidFilter', i) as string;
 					const contactSearch = this.getNodeParameter('contactSearch', i) as string;
 
 					if (profileSubscriptionStatus) {
-						profileContactsEndpoint += `&subscription_status=${profileSubscriptionStatus}`;
+						profileContactsEndpoint += `&subscription_status=${encodeURIComponent(profileSubscriptionStatus)}`;
 					}
 
 					if (tagUuidFilter) {
@@ -2362,73 +2362,73 @@ export class HostingerApi implements INodeType {
 					endpoint = profileContactsEndpoint;
 					break;
 				}
-				case 'createProfileContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts`; break;
-				case 'createProfileContactsBulk': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/bulk`; break;
-				case 'getProfileContact': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
-				case 'updateProfileContact': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
-				case 'deleteProfileContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/${getPathParam('contactUuid')}`; break;
+				case 'createProfileContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts`; break;
+				case 'createProfileContactsBulk': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/bulk`; break;
+				case 'getProfileContact': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/${getUrlParam('contactUuid')}`; break;
+				case 'updateProfileContact': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/${getUrlParam('contactUuid')}`; break;
+				case 'deleteProfileContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/${getUrlParam('contactUuid')}`; break;
 				//Reach - Contact fields
-				case 'listContactFields': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields`; break;
-				case 'createContactField': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields`; break;
-				case 'updateContactField': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields/${getPathParam('contactFieldUuid')}`; break;
-				case 'deleteContactField': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/contacts/fields/${getPathParam('contactFieldUuid')}`; break;
+				case 'listContactFields': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/fields`; break;
+				case 'createContactField': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/fields`; break;
+				case 'updateContactField': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/fields/${getUrlParam('contactFieldUuid')}`; break;
+				case 'deleteContactField': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/contacts/fields/${getUrlParam('contactFieldUuid')}`; break;
 				//Reach - Tags
-				case 'listTags': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags`; break;
-				case 'createTags': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags`; break;
-				case 'updateTag': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}`; break;
-				case 'deleteTag': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}`; break;
-				case 'assignTagToContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts/${getPathParam('contactUuid')}`; break;
-				case 'assignTagToContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts`; break;
-				case 'removeTagFromContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts/${getPathParam('contactUuid')}`; break;
-				case 'removeTagFromContacts': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/tags/${getPathParam('tagUuid')}/contacts`; break;
+				case 'listTags': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags`; break;
+				case 'createTags': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags`; break;
+				case 'updateTag': method = 'PATCH'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}`; break;
+				case 'deleteTag': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}`; break;
+				case 'assignTagToContact': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}/contacts/${getUrlParam('contactUuid')}`; break;
+				case 'assignTagToContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}/contacts`; break;
+				case 'removeTagFromContact': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}/contacts/${getUrlParam('contactUuid')}`; break;
+				case 'removeTagFromContacts': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/tags/${getUrlParam('tagUuid')}/contacts`; break;
 				//Reach - Profile segments
-				case 'listProfileSegments': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments?page=${getParam('page')}&per_page=${getParam('perPage')}&count_type=${getParam('segmentCountType')}`; break;
-				case 'createProfileSegment': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments`; break;
-				case 'getProfileSegment': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
-				case 'updateProfileSegment': method = 'PUT'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
-				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}`; break;
-				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/count`; break;
-				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/segments/${getPathParam('segmentUuid')}/contacts?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
+				case 'listProfileSegments': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}&count_type=${getUrlParam('segmentCountType')}`; break;
+				case 'createProfileSegment': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments`; break;
+				case 'getProfileSegment': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments/${getUrlParam('segmentUuid')}`; break;
+				case 'updateProfileSegment': method = 'PUT'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments/${getUrlParam('segmentUuid')}`; break;
+				case 'deleteProfileSegment': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments/${getUrlParam('segmentUuid')}`; break;
+				case 'countProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments/${getUrlParam('segmentUuid')}/count`; break;
+				case 'listProfileSegmentContacts': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/segments/${getUrlParam('segmentUuid')}/contacts?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}`; break;
 				//Reach - Segment filters
-				case 'listSegmentFilterAttributes': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/filters/attributes`; break;
-				case 'previewSegmentFilterContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/segmentation/filters/contacts`; break;
+				case 'listSegmentFilterAttributes': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/filters/attributes`; break;
+				case 'previewSegmentFilterContacts': method = 'POST'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/segmentation/filters/contacts`; break;
 				//Reach - Profile plan and domain
-				case 'getProfileLimits': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/limits`; break;
-				case 'listProfileFeatures': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/features`; break;
-				case 'getProfileDomain': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/domains`; break;
-				case 'getProfileDnsStatus': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/domains/dns-status`; break;
+				case 'getProfileLimits': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/limits`; break;
+				case 'listProfileFeatures': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/features`; break;
+				case 'getProfileDomain': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/domains`; break;
+				case 'getProfileDnsStatus': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/domains/dns-status`; break;
 				//Reach - Automations
 				case 'listAutomations': {
-					let automationsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations?page=${getParam('page')}&per_page=${getParam('perPage')}&sort_direction=${getParam('sortDirection')}`;
+					let automationsEndpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/automations?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}&sort_direction=${getUrlParam('sortDirection')}`;
 					const automationStatus = this.getNodeParameter('automationStatus', i) as string;
 
 					if (automationStatus) {
-						automationsEndpoint += `&status=${automationStatus}`;
+						automationsEndpoint += `&status=${encodeURIComponent(automationStatus)}`;
 					}
 
 					endpoint = automationsEndpoint;
 					break;
 				}
-				case 'getAutomation': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations/${getPathParam('automationUuid')}`; break;
-				case 'listAutomationSteps': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/automations/${getPathParam('automationUuid')}/steps`; break;
+				case 'getAutomation': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/automations/${getUrlParam('automationUuid')}`; break;
+				case 'listAutomationSteps': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/automations/${getUrlParam('automationUuid')}/steps`; break;
 				//Reach - Campaigns
 				case 'listCampaigns': {
-					let campaignsEndpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns?page=${getParam('page')}&per_page=${getParam('perPage')}&type=${getParam('campaignType')}&sort_direction=${getParam('sortDirection')}`;
+					let campaignsEndpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/campaigns?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}&type=${getUrlParam('campaignType')}&sort_direction=${getUrlParam('sortDirection')}`;
 					const campaignStatus = this.getNodeParameter('campaignStatus', i) as string;
 
 					if (campaignStatus) {
-						campaignsEndpoint += `&status=${campaignStatus}`;
+						campaignsEndpoint += `&status=${encodeURIComponent(campaignStatus)}`;
 					}
 
 					endpoint = campaignsEndpoint;
 					break;
 				}
-				case 'getCampaign': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns/${getPathParam('campaignUuid')}`; break;
-				case 'getCampaignStatistics': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/campaigns/${getPathParam('campaignUuid')}/statistics`; break;
+				case 'getCampaign': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/campaigns/${getUrlParam('campaignUuid')}`; break;
+				case 'getCampaignStatistics': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/campaigns/${getUrlParam('campaignUuid')}/statistics`; break;
 				//Reach - Forms
-				case 'listForms': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms?page=${getParam('page')}&per_page=${getParam('perPage')}`; break;
-				case 'getForm': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms/${getPathParam('formUuid')}`; break;
-				case 'deleteForm': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getPathParam('profileUuid')}/forms/${getPathParam('formUuid')}`; break;
+				case 'listForms': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/forms?page=${getUrlParam('page')}&per_page=${getUrlParam('perPage')}`; break;
+				case 'getForm': method = 'GET'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/forms/${getUrlParam('formUuid')}`; break;
+				case 'deleteForm': method = 'DELETE'; endpoint = `/api/reach/v1/profiles/${getUrlParam('profileUuid')}/forms/${getUrlParam('formUuid')}`; break;
 
 				default: throw new ApplicationError(`Unsupported operation: ${operation}`);
 			}
@@ -2456,7 +2456,8 @@ export class HostingerApi implements INodeType {
 					returnData.push({
 						json: {
 							error: (error as Error).message,
-							request: requestConfig
+							// Never echo requestConfig: n8n injects the Authorization header into it, and bodies carry passwords
+							request: { method, url: requestConfig.url },
 						},
 						pairedItem: { item: i },
 						error: executionError
