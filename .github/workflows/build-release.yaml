@@ -25,11 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Overrides only patch vulnerable transitive dev dependencies. n8n strict lint
-      # rejects the field, and it has no effect for consumers, so drop it before release.
-      - name: Remove overrides from package.json
-        run: npm pkg delete overrides
-
       - name: Check if version is already published
         id: version
         run: |
