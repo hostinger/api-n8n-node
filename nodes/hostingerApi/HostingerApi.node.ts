@@ -1929,7 +1929,15 @@ export class HostingerApi implements INodeType {
 			const operation = this.getNodeParameter('operation', i) as string;
 
 			const getParam = (name: string) => this.getNodeParameter(name, i) as string;
-			const getUrlParam = (name: string) => encodeURIComponent(getParam(name));
+			const getUrlParam = (name: string) => {
+				const value = String(getParam(name));
+				// encodeURIComponent leaves `.` and `..` intact, which would be resolved as dot-segments and retarget the call
+				if (value === '.' || value === '..') {
+					throw new NodeOperationError(this.getNode(), `Invalid value for parameter "${name}"`, { itemIndex: i });
+				}
+
+				return encodeURIComponent(value);
+			};
 			const getListParam = (name: string) => {
 				const raw = this.getNodeParameter(name, i);
 				const values = Array.isArray(raw) ? raw : String(raw).split(',');

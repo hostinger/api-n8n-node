@@ -129,6 +129,9 @@ Helpful link for beginners: [Try it out](https://docs.n8n.io/try-it-out/)
 
 ## Version history
 
+- **v1.0.28**:
+  - Fixed `.` and `..` values in ID parameters being resolved as path dot-segments, which let them retarget the API call (e.g. to the parent resource); such values are now rejected
+
 - **v1.0.27**:
   - Fixed failed requests with Continue On Fail echoing the API token and request body (passwords) into the output item; only the method and URL are returned now
   - Fixed parameters interpolated into request URLs not being URL-encoded, which let values such as `../` change the targeted endpoint
